@@ -13,7 +13,7 @@ namespace Transcripcion
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Trancripciones());
+            Application.Run(new Hash());
         }
     }
 }

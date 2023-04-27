@@ -1,6 +1,6 @@
 ﻿namespace Transcripcion
 {
-    partial class Trancripciones
+    partial class Hash
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -28,212 +28,521 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Trancripciones));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Hash));
             this.buttonAgregar = new System.Windows.Forms.Button();
-            this.label = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.listaCanciones = new System.Windows.Forms.ListBox();
+            this.listBoxArchivos = new System.Windows.Forms.ListBox();
             this.buttonEliminar = new System.Windows.Forms.Button();
-            this.Reproductor = new AxWMPLib.AxWindowsMediaPlayer();
-            this.listBoxConversacion = new System.Windows.Forms.ListBox();
-            this.btnAgregar = new System.Windows.Forms.Button();
-            this.btnModificar = new System.Windows.Forms.Button();
-            this.btneEliminar = new System.Windows.Forms.Button();
-            this.radioButtonA = new System.Windows.Forms.RadioButton();
-            this.radioButtonB = new System.Windows.Forms.RadioButton();
-            ((System.ComponentModel.ISupportInitialize)(this.Reproductor)).BeginInit();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.btnCopiar = new System.Windows.Forms.Button();
+            this.DgvElementos = new System.Windows.Forms.DataGridView();
+            this.Sel = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lblImg = new System.Windows.Forms.Label();
+            this.lblAudio = new System.Windows.Forms.Label();
+            this.lblClip = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lblTxt = new System.Windows.Forms.Label();
+            this.lblVarios = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.rdbtnProcedimiento = new System.Windows.Forms.RadioButton();
+            this.rbtnVuelo = new System.Windows.Forms.RadioButton();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvElementos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonAgregar
             // 
-            this.buttonAgregar.BackColor = System.Drawing.Color.Green;
+            this.buttonAgregar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonAgregar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonAgregar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonAgregar.Location = new System.Drawing.Point(791, 431);
+            this.buttonAgregar.Location = new System.Drawing.Point(347, 506);
             this.buttonAgregar.Name = "buttonAgregar";
-            this.buttonAgregar.Size = new System.Drawing.Size(102, 46);
+            this.buttonAgregar.Size = new System.Drawing.Size(82, 46);
             this.buttonAgregar.TabIndex = 2;
-            this.buttonAgregar.Text = "Seleccionar Audio";
+            this.buttonAgregar.Text = "Carpeta Origen";
             this.buttonAgregar.UseVisualStyleBackColor = false;
             this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
             // 
-            // label
+            // listBoxArchivos
             // 
-            this.label.AutoSize = true;
-            this.label.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label.Location = new System.Drawing.Point(443, 616);
-            this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(140, 13);
-            this.label.TabIndex = 3;
-            this.label.Text = "Produccón Correa Jonathan";
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.textBox1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(12, 478);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(763, 78);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(809, 61);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(176, 18);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Lista de Reproducción";
-            // 
-            // listaCanciones
-            // 
-            this.listaCanciones.AllowDrop = true;
-            this.listaCanciones.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.listaCanciones.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listaCanciones.CausesValidation = false;
-            this.listaCanciones.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listaCanciones.FormattingEnabled = true;
-            this.listaCanciones.ItemHeight = 16;
-            this.listaCanciones.Location = new System.Drawing.Point(791, 100);
-            this.listaCanciones.Name = "listaCanciones";
-            this.listaCanciones.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listaCanciones.Size = new System.Drawing.Size(214, 306);
-            this.listaCanciones.TabIndex = 7;
-            this.listaCanciones.SelectedIndexChanged += new System.EventHandler(this.listaCanciones_SelectedIndexChanged);
-            this.listaCanciones.DragDrop += new System.Windows.Forms.DragEventHandler(this.listaCanciones_DragDrop);
-            this.listaCanciones.DragEnter += new System.Windows.Forms.DragEventHandler(this.listaCanciones_DragEnter);
+            this.listBoxArchivos.AllowDrop = true;
+            this.listBoxArchivos.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.listBoxArchivos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listBoxArchivos.CausesValidation = false;
+            this.listBoxArchivos.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBoxArchivos.FormattingEnabled = true;
+            this.listBoxArchivos.ItemHeight = 16;
+            this.listBoxArchivos.Location = new System.Drawing.Point(347, 70);
+            this.listBoxArchivos.Name = "listBoxArchivos";
+            this.listBoxArchivos.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxArchivos.Size = new System.Drawing.Size(238, 402);
+            this.listBoxArchivos.TabIndex = 7;
+            this.listBoxArchivos.DragDrop += new System.Windows.Forms.DragEventHandler(this.listaCanciones_DragDrop);
+            this.listBoxArchivos.DragEnter += new System.Windows.Forms.DragEventHandler(this.listaCanciones_DragEnter);
             // 
             // buttonEliminar
             // 
             this.buttonEliminar.BackColor = System.Drawing.Color.Red;
             this.buttonEliminar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEliminar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonEliminar.Location = new System.Drawing.Point(920, 431);
+            this.buttonEliminar.Location = new System.Drawing.Point(511, 505);
             this.buttonEliminar.Name = "buttonEliminar";
-            this.buttonEliminar.Size = new System.Drawing.Size(85, 46);
+            this.buttonEliminar.Size = new System.Drawing.Size(74, 46);
             this.buttonEliminar.TabIndex = 8;
-            this.buttonEliminar.Text = "Eliminar Audio";
+            this.buttonEliminar.Text = "Eliminar";
             this.buttonEliminar.UseVisualStyleBackColor = false;
             this.buttonEliminar.Click += new System.EventHandler(this.buttonEliminar_Click);
             // 
-            // Reproductor
+            // label1
             // 
-            this.Reproductor.Enabled = true;
-            this.Reproductor.Location = new System.Drawing.Point(3, 12);
-            this.Reproductor.Name = "Reproductor";
-            this.Reproductor.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Reproductor.OcxState")));
-            this.Reproductor.Size = new System.Drawing.Size(772, 81);
-            this.Reproductor.TabIndex = 0;
-            this.Reproductor.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.Reproductor_PlayStateChange);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(121, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "N° Hash";
             // 
-            // listBoxConversacion
+            // label2
             // 
-            this.listBoxConversacion.AllowDrop = true;
-            this.listBoxConversacion.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.listBoxConversacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBoxConversacion.CausesValidation = false;
-            this.listBoxConversacion.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBoxConversacion.FormattingEnabled = true;
-            this.listBoxConversacion.ItemHeight = 16;
-            this.listBoxConversacion.Location = new System.Drawing.Point(3, 100);
-            this.listBoxConversacion.Name = "listBoxConversacion";
-            this.listBoxConversacion.Size = new System.Drawing.Size(772, 306);
-            this.listBoxConversacion.TabIndex = 9;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.Control;
+            this.label2.Location = new System.Drawing.Point(123, 68);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Entrega";
             // 
-            // btnAgregar
+            // textBox2
             // 
-            this.btnAgregar.BackColor = System.Drawing.Color.Green;
-            this.btnAgregar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnAgregar.Location = new System.Drawing.Point(15, 562);
-            this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(81, 46);
-            this.btnAgregar.TabIndex = 10;
-            this.btnAgregar.Text = "Agregar";
-            this.btnAgregar.UseVisualStyleBackColor = false;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            this.textBox2.Location = new System.Drawing.Point(36, 84);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(243, 20);
+            this.textBox2.TabIndex = 16;
             // 
-            // btnModificar
+            // label3
             // 
-            this.btnModificar.BackColor = System.Drawing.Color.Green;
-            this.btnModificar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnModificar.Location = new System.Drawing.Point(117, 562);
-            this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(87, 46);
-            this.btnModificar.TabIndex = 11;
-            this.btnModificar.Text = "Modificar";
-            this.btnModificar.UseVisualStyleBackColor = false;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.Control;
+            this.label3.Location = new System.Drawing.Point(121, 270);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 13);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Recibe";
             // 
-            // btneEliminar
+            // textBox3
             // 
-            this.btneEliminar.BackColor = System.Drawing.Color.Green;
-            this.btneEliminar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btneEliminar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btneEliminar.Location = new System.Drawing.Point(226, 562);
-            this.btneEliminar.Name = "btneEliminar";
-            this.btneEliminar.Size = new System.Drawing.Size(79, 46);
-            this.btneEliminar.TabIndex = 12;
-            this.btneEliminar.Text = "Eliminar";
-            this.btneEliminar.UseVisualStyleBackColor = false;
+            this.textBox3.Location = new System.Drawing.Point(36, 286);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(243, 20);
+            this.textBox3.TabIndex = 18;
             // 
-            // radioButtonA
+            // btnCopiar
             // 
-            this.radioButtonA.AutoSize = true;
-            this.radioButtonA.Checked = true;
-            this.radioButtonA.ForeColor = System.Drawing.Color.White;
-            this.radioButtonA.Location = new System.Drawing.Point(12, 423);
-            this.radioButtonA.Name = "radioButtonA";
-            this.radioButtonA.Size = new System.Drawing.Size(32, 17);
-            this.radioButtonA.TabIndex = 13;
-            this.radioButtonA.TabStop = true;
-            this.radioButtonA.Text = "A";
-            this.radioButtonA.UseVisualStyleBackColor = true;
+            this.btnCopiar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnCopiar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCopiar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnCopiar.Location = new System.Drawing.Point(250, 506);
+            this.btnCopiar.Name = "btnCopiar";
+            this.btnCopiar.Size = new System.Drawing.Size(78, 44);
+            this.btnCopiar.TabIndex = 22;
+            this.btnCopiar.Text = "Copiar";
+            this.btnCopiar.UseVisualStyleBackColor = false;
+            this.btnCopiar.Click += new System.EventHandler(this.btnCopiar_Click);
             // 
-            // radioButtonB
+            // DgvElementos
             // 
-            this.radioButtonB.AutoSize = true;
-            this.radioButtonB.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.radioButtonB.Location = new System.Drawing.Point(12, 446);
-            this.radioButtonB.Name = "radioButtonB";
-            this.radioButtonB.Size = new System.Drawing.Size(32, 17);
-            this.radioButtonB.TabIndex = 14;
-            this.radioButtonB.TabStop = true;
-            this.radioButtonB.Text = "B";
-            this.radioButtonB.UseVisualStyleBackColor = true;
+            this.DgvElementos.AllowUserToAddRows = false;
+            this.DgvElementos.AllowUserToDeleteRows = false;
+            this.DgvElementos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DgvElementos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DgvElementos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.DgvElementos.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DgvElementos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvElementos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.DgvElementos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvElementos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Sel});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle2;
+            this.DgvElementos.Location = new System.Drawing.Point(600, 70);
+            this.DgvElementos.Margin = new System.Windows.Forms.Padding(2);
+            this.DgvElementos.MultiSelect = false;
+            this.DgvElementos.Name = "DgvElementos";
+            this.DgvElementos.ReadOnly = true;
+            this.DgvElementos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvElementos.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.DgvElementos.RowHeadersVisible = false;
+            this.DgvElementos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            this.DgvElementos.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.DgvElementos.RowTemplate.Height = 60;
+            this.DgvElementos.RowTemplate.ReadOnly = true;
+            this.DgvElementos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.DgvElementos.Size = new System.Drawing.Size(618, 402);
+            this.DgvElementos.TabIndex = 62;
             // 
-            // Trancripciones
+            // Sel
+            // 
+            this.Sel.FalseValue = "";
+            this.Sel.HeaderText = "Sel";
+            this.Sel.IndeterminateValue = "";
+            this.Sel.Name = "Sel";
+            this.Sel.ReadOnly = true;
+            this.Sel.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Sel.TrueValue = "";
+            this.Sel.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.Control;
+            this.label4.Location = new System.Drawing.Point(116, 114);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(75, 13);
+            this.label4.TabIndex = 64;
+            this.label4.Text = "Nro, Control";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(102, 130);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(111, 20);
+            this.textBox5.TabIndex = 63;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.Control;
+            this.label6.Location = new System.Drawing.Point(757, 495);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(74, 15);
+            this.label6.TabIndex = 66;
+            this.label6.Text = "Imagenes:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.Control;
+            this.label7.Location = new System.Drawing.Point(403, 32);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(133, 18);
+            this.label7.TabIndex = 67;
+            this.label7.Text = "Listado Archivos";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.Control;
+            this.label8.Location = new System.Drawing.Point(111, 311);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(75, 13);
+            this.label8.TabIndex = 69;
+            this.label8.Text = "Nro, Control";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(94, 327);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(126, 20);
+            this.textBox6.TabIndex = 68;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.Control;
+            this.label9.Location = new System.Drawing.Point(648, 494);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(47, 15);
+            this.label9.TabIndex = 70;
+            this.label9.Text = "Audio:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.SystemColors.Control;
+            this.label11.Location = new System.Drawing.Point(897, 495);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(43, 15);
+            this.label11.TabIndex = 70;
+            this.label11.Text = "Clips:";
+            // 
+            // lblImg
+            // 
+            this.lblImg.AutoSize = true;
+            this.lblImg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImg.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblImg.Location = new System.Drawing.Point(837, 496);
+            this.lblImg.Name = "lblImg";
+            this.lblImg.Size = new System.Drawing.Size(15, 15);
+            this.lblImg.TabIndex = 71;
+            this.lblImg.Text = "0";
+            // 
+            // lblAudio
+            // 
+            this.lblAudio.AutoSize = true;
+            this.lblAudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAudio.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblAudio.Location = new System.Drawing.Point(701, 495);
+            this.lblAudio.Name = "lblAudio";
+            this.lblAudio.Size = new System.Drawing.Size(15, 15);
+            this.lblAudio.TabIndex = 72;
+            this.lblAudio.Text = "0";
+            // 
+            // lblClip
+            // 
+            this.lblClip.AutoSize = true;
+            this.lblClip.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClip.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblClip.Location = new System.Drawing.Point(946, 496);
+            this.lblClip.Name = "lblClip";
+            this.lblClip.Size = new System.Drawing.Size(15, 15);
+            this.lblClip.TabIndex = 73;
+            this.lblClip.Text = "0";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.SystemColors.Control;
+            this.label13.Location = new System.Drawing.Point(1009, 494);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(46, 15);
+            this.label13.TabIndex = 74;
+            this.label13.Text = "Texto:";
+            // 
+            // lblTxt
+            // 
+            this.lblTxt.AutoSize = true;
+            this.lblTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTxt.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblTxt.Location = new System.Drawing.Point(1062, 495);
+            this.lblTxt.Name = "lblTxt";
+            this.lblTxt.Size = new System.Drawing.Size(15, 15);
+            this.lblTxt.TabIndex = 75;
+            this.lblTxt.Text = "0";
+            // 
+            // lblVarios
+            // 
+            this.lblVarios.AutoSize = true;
+            this.lblVarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVarios.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblVarios.Location = new System.Drawing.Point(1178, 496);
+            this.lblVarios.Name = "lblVarios";
+            this.lblVarios.Size = new System.Drawing.Size(15, 15);
+            this.lblVarios.TabIndex = 77;
+            this.lblVarios.Text = "0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.SystemColors.Control;
+            this.label10.Location = new System.Drawing.Point(1120, 496);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(51, 15);
+            this.label10.TabIndex = 76;
+            this.label10.Text = "Varios:";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(119, 35);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(77, 20);
+            this.numericUpDown1.TabIndex = 78;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.Control;
+            this.label5.Location = new System.Drawing.Point(854, 36);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(107, 18);
+            this.label5.TabIndex = 79;
+            this.label5.Text = "Listado Hash";
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button1.Location = new System.Drawing.Point(16, 505);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(78, 44);
+            this.button1.TabIndex = 80;
+            this.button1.Text = "Imprimir";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.SystemColors.Control;
+            this.label12.Location = new System.Drawing.Point(131, 359);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 13);
+            this.label12.TabIndex = 81;
+            this.label12.Text = "Nota";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(12, 375);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(290, 46);
+            this.textBox1.TabIndex = 82;
+            // 
+            // rdbtnProcedimiento
+            // 
+            this.rdbtnProcedimiento.AutoSize = true;
+            this.rdbtnProcedimiento.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbtnProcedimiento.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.rdbtnProcedimiento.Location = new System.Drawing.Point(45, 167);
+            this.rdbtnProcedimiento.Name = "rdbtnProcedimiento";
+            this.rdbtnProcedimiento.Size = new System.Drawing.Size(118, 19);
+            this.rdbtnProcedimiento.TabIndex = 84;
+            this.rdbtnProcedimiento.TabStop = true;
+            this.rdbtnProcedimiento.Text = "Procedimiento";
+            this.rdbtnProcedimiento.UseVisualStyleBackColor = true;
+            // 
+            // rbtnVuelo
+            // 
+            this.rbtnVuelo.AutoSize = true;
+            this.rbtnVuelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbtnVuelo.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.rbtnVuelo.Location = new System.Drawing.Point(191, 167);
+            this.rbtnVuelo.Name = "rbtnVuelo";
+            this.rbtnVuelo.Size = new System.Drawing.Size(61, 19);
+            this.rbtnVuelo.TabIndex = 85;
+            this.rbtnVuelo.TabStop = true;
+            this.rbtnVuelo.Text = "Vuelo";
+            this.rbtnVuelo.UseVisualStyleBackColor = true;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(74, 192);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(166, 46);
+            this.textBox4.TabIndex = 86;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.textBox4);
+            this.groupBox1.Controls.Add(this.rbtnVuelo);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.rdbtnProcedimiento);
+            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.textBox5);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.textBox6);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox1.Location = new System.Drawing.Point(16, 17);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(312, 464);
+            this.groupBox1.TabIndex = 87;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Datos";
+            // 
+            // Hash
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1017, 638);
-            this.Controls.Add(this.radioButtonB);
-            this.Controls.Add(this.radioButtonA);
-            this.Controls.Add(this.btneEliminar);
-            this.Controls.Add(this.btnModificar);
-            this.Controls.Add(this.btnAgregar);
-            this.Controls.Add(this.listBoxConversacion);
+            this.ClientSize = new System.Drawing.Size(1229, 610);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblVarios);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.lblTxt);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.lblClip);
+            this.Controls.Add(this.lblAudio);
+            this.Controls.Add(this.lblImg);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.DgvElementos);
+            this.Controls.Add(this.btnCopiar);
             this.Controls.Add(this.buttonEliminar);
-            this.Controls.Add(this.listaCanciones);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label);
+            this.Controls.Add(this.listBoxArchivos);
             this.Controls.Add(this.buttonAgregar);
-            this.Controls.Add(this.Reproductor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Trancripciones";
+            this.Name = "Hash";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Focus";
-            ((System.ComponentModel.ISupportInitialize)(this.Reproductor)).EndInit();
+            this.Text = "Hash Copy";
+            ((System.ComponentModel.ISupportInitialize)(this.DgvElementos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -241,18 +550,40 @@
 
         #endregion
         private System.Windows.Forms.Button buttonAgregar;
-        private System.Windows.Forms.Label label;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox listaCanciones;
-        private AxWMPLib.AxWindowsMediaPlayer Reproductor;
+        private System.Windows.Forms.ListBox listBoxArchivos;
         private System.Windows.Forms.Button buttonEliminar;
-        private System.Windows.Forms.ListBox listBoxConversacion;
-        private System.Windows.Forms.Button btnAgregar;
-        private System.Windows.Forms.Button btnModificar;
-        private System.Windows.Forms.Button btneEliminar;
-        private System.Windows.Forms.RadioButton radioButtonA;
-        private System.Windows.Forms.RadioButton radioButtonB;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button btnCopiar;
+        private System.Windows.Forms.DataGridView DgvElementos;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Sel;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblImg;
+        private System.Windows.Forms.Label lblAudio;
+        private System.Windows.Forms.Label lblClip;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lblTxt;
+        private System.Windows.Forms.Label lblVarios;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.RadioButton rdbtnProcedimiento;
+        private System.Windows.Forms.RadioButton rbtnVuelo;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
