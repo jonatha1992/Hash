@@ -209,8 +209,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>1.1282cm</Top>
-            <Left>0.48027cm</Left>
+            <Top>7.4782cm</Top>
+            <Left>1.8567cm</Left>
             <Height>3.06762cm</Height>
             <Width>18.05277cm</Width>
             <Style>
@@ -1071,6 +1071,7 @@ Legajo: </Value>
                             <Color>LightGrey</Color>
                             <Style>Solid</Style>
                           </Border>
+                          <BackgroundColor>DimGray</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -1210,8 +1211,8 @@ Legajo: </Value>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <Top>9.9587cm</Top>
-            <Left>9.2837cm</Left>
+            <Top>1.48769cm</Top>
+            <Left>0.82423cm</Left>
             <Height>1.2cm</Height>
             <Width>7.72521cm</Width>
             <ZIndex>8</ZIndex>
@@ -1230,7 +1231,7 @@ Legajo: </Value>
           </Border>
         </Style>
       </Body>
-      <Width>7.45781in</Width>
+      <Width>7.83837in</Width>
       <Page>
         <PageHeader>
           <Height>3.42604cm</Height>
