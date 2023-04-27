@@ -1,6 +1,4 @@
 ﻿//using BE;
-using Microsoft.Reporting.WinForms;
-using System;
 using System.Windows.Forms;
 
 namespace Hash

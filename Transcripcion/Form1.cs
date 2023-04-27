@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Hash;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Security.Policy;
 using System.Windows.Forms;
 
 
@@ -116,7 +114,7 @@ namespace Transcripcion
                 MessageBox.Show(ex.Message);
             }
         }
-   
+
         private void listaCanciones_DragDrop(object sender, DragEventArgs e)
         {
             try
@@ -164,24 +162,21 @@ namespace Transcripcion
             }
         }
 
-     
+
 
         private void btnCopiar_Click(object sender, EventArgs e)
         {
             try
             {
-
                 FolderBrowserDialog dialogoSeleccionCarpeta = new FolderBrowserDialog();
                 DialogResult resultado = dialogoSeleccionCarpeta.ShowDialog();
 
                 // Verificar si el usuario seleccionó una carpeta
                 if (resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(dialogoSeleccionCarpeta.SelectedPath))
                 {
-                     CarpetaDestino = dialogoSeleccionCarpeta.SelectedPath;
+                    CarpetaDestino = dialogoSeleccionCarpeta.SelectedPath;
                     // La carpeta seleccionada por el usuario
 
-
-             
                     foreach (var ruta in RutaArchivos)
                     {
                         string rutaArchivoOrigen = ruta;
@@ -201,61 +196,8 @@ namespace Transcripcion
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
 
-public class Archivo
-{
-
-    public int Nro_Orden { get; set; }
-    public string Nombre { get; set; }
-    public string Extension { get; set; }
-    public int Peso { get; set; }
-    public string Hash { get; set; }
-    public string Si { get => "SI"; } 
-    public Archivo() { }
-    public Archivo(string rutaArchivo)
-    {
-        this.Extension = Path.GetExtension(rutaArchivo);
-        this.Peso = (int)new FileInfo(rutaArchivo).Length;
-        this.Nombre = Path.GetFileName(rutaArchivo);
-
-        using (var stream = new BufferedStream(File.OpenRead(rutaArchivo), 1200000))
-        {
-            SHA1 sha =  SHA1.Create();
-            byte[] hashBytes = sha.ComputeHash(stream);
-            this.Hash = BitConverter.ToString(hashBytes).Replace("-", "");
-        }
-    }
-}
-
-public class Formulario_Hash
-{
-    public int Hash { get; set; }
-    public int Nro_Control { get; set; }
-    public int Imagenes { get; set; }
-    public int Clips  { get; set; }
-    public int Audio  { get; set; }
-    public int Texto  { get; set; }
-    public int Varios  { get; set; }
-    public string  Procedimiento  { get; set; }
-    public List<Archivo> ListaArchivos { get; set; }
-
-    public Formulario_Hash()
-    {
-        ListaArchivos = new List<Archivo>();
-    }
-    public void Contar()
-    {
-        Imagenes = ListaArchivos.Count(x => x.Extension == ".jpg" || x.Extension == ".png" || x.Extension == ".bmp");
-        Clips = ListaArchivos.Count(a => a.Extension == ".mp4" || a.Extension == ".avi" || a.Extension == ".mov");
-        Audio = ListaArchivos.Count(a => a.Extension == ".mp3" || a.Extension == ".wav" || a.Extension == ".flac");
-        Texto= ListaArchivos.Count(a => a.Extension == ".pdf" || a.Extension == ".txt" || a.Extension == ".docx" || a.Extension == ".doc");
-        Varios= ListaArchivos.Count(a => a.Extension != ".txt" && a.Extension != ".doc" && a.Extension != ".docx" && a.Extension != ".pdf"
-        && a.Extension != ".png" && a.Extension != ".jpg" && a.Extension != ".jpeg" && a.Extension != ".gif" && a.Extension != ".bmp"
-        && a.Extension != ".mp4" && a.Extension != ".avi" && a.Extension != ".wmv" && a.Extension != ".mov");
-    }
-
-}
