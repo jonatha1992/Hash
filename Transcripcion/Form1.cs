@@ -85,7 +85,15 @@ namespace Transcripcion
 
             DgvElementos.DataSource = null;
             DgvElementos.DataSource = formulario.ListaArchivos;
-            DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            DgvElementos.Columns["Nro_Orden"].HeaderText = "Nro Orden";
+            DgvElementos.Columns["SI"].HeaderText = "Reprodu- cible";
+            DgvElementos.Columns["Extension"].HeaderText = "Ext.";
+            DgvElementos.Columns["Nro_Orden"].Width = 30;
+            DgvElementos.Columns["Extension"].Width= 25;
+            DgvElementos.Columns["Si"].Width = 25;
+            DgvElementos.Columns["Peso"].Width = 60;
+            //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
         }
 
         private void buttonEliminar_Click(object sender, EventArgs e)
@@ -163,7 +171,7 @@ namespace Transcripcion
             {
                 FolderBrowserDialog dialogoSeleccionCarpeta = new FolderBrowserDialog();
                 DialogResult resultado = dialogoSeleccionCarpeta.ShowDialog();
-
+                bool carpetaAbierta = false;
                 // Verificar si el usuario seleccionó una carpeta
                 if (resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(dialogoSeleccionCarpeta.SelectedPath))
                 {
@@ -176,9 +184,17 @@ namespace Transcripcion
                         string nombreArchivoDestino = Path.GetFileName(rutaArchivoOrigen);
                         string rutaArchivoDestino = Path.Combine(CarpetaDestino, nombreArchivoDestino);
                         File.Copy(rutaArchivoOrigen, rutaArchivoDestino, true);
+                        if (!carpetaAbierta)
+                        {
+                            // Abre el explorador de archivos y navega a la carpeta deseada
+                            System.Diagnostics.Process.Start(CarpetaDestino);
+
+                            // Establece la variable carpetaAbierta en true para indicar que ya se ha abierto la carpeta
+                            carpetaAbierta = true;
+                        }
                     }
 
-                    MessageBox.Show("Archivos copiados exitosamente.");
+                    MessageBox.Show("Archivos copiados exitosamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -257,42 +273,34 @@ namespace Transcripcion
                 MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void textBoxControlOfEntrega_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                MessageBox.Show("Se iria a buscar en la base de datos", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void textBoxConOfRecibe_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                MessageBox.Show("Se iria a buscar en la base de datos", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
 
-public class Oficial
-{
-
-    public int Legajo { get; set; }
-    public string NombreCompleto { get; set; }
-    public Jerarquia Jerarquia { get; set; }
-
-   
-    public Oficial(int legaj ,string nombrecompleto )
-    {
-        this.Legajo = legaj;
-        this.NombreCompleto = nombrecompleto;
-    }
-
-    public override string ToString()
-    {
-        return Jerarquia.Abreviatura +" " + NombreCompleto;
-    }
-}
-
-public class Jerarquia
-{
-    public string Abreviatura { get; set; }
-    public string jerarquia { get; set; }
 
 
-    public Jerarquia(string jerar, string Abre)
-    {
-        jerarquia = jerar;
-        Abreviatura = Abre;
-    }
-    public override string ToString()
-    {
-        return jerarquia;
-    }
-}

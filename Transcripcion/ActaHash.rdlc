@@ -111,7 +111,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>1.37787cm</Height>
+                  <Height>1.00745cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -124,6 +124,7 @@
                                 <TextRun>
                                   <Value>Nro Orden</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
@@ -160,6 +161,7 @@
                                 <TextRun>
                                   <Value>Nombre del archivo</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
@@ -196,6 +198,7 @@
                                 <TextRun>
                                   <Value>Tamaño (bytes)</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
@@ -232,6 +235,7 @@
                                 <TextRun>
                                   <Value>Formato de</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
@@ -246,6 +250,7 @@
                                 <TextRun>
                                   <Value>Archivo</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
@@ -282,6 +287,7 @@
                                 <TextRun>
                                   <Value>Hash SHA1</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
@@ -318,6 +324,7 @@
                                 <TextRun>
                                   <Value>Repro-ducible</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
@@ -358,7 +365,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Nro_Orden.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -390,7 +399,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Nombre.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -422,7 +433,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Peso.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -454,7 +467,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Extension.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -486,7 +501,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Hash.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -518,7 +535,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!Si.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -570,8 +589,8 @@
             <DataSetName>DataSetElemento</DataSetName>
             <Top>5.93555cm</Top>
             <Left>0.22628cm</Left>
-            <Height>1.96199cm</Height>
-            <Width>18.18505cm</Width>
+            <Height>1.59157cm</Height>
+            <Width>18.18504cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -1377,7 +1396,6 @@ Legajo: </Value>
       <Page>
         <PageHeader>
           <Height>3.42604cm</Height>
-          <PrintOnFirstPage>true</PrintOnFirstPage>
           <ReportItems>
             <Image Name="Image5">
               <Source>Embedded</Source>
