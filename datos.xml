@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Base>
+  <Jerarquias>
+    <Jerarquia>
+      <Id>1</Id>
+      <jerarquia>Ayudante</jerarquia>
+      <Abreviatura>Of. Ayte.</Abreviatura>
+    </Jerarquia>
+    <Jerarquia>
+      <Id>2</Id>
+      <jerarquia>Principal</jerarquia>
+      <Abreviatura>Of. Ppal.</Abreviatura>
+    </Jerarquia>
+    <Jerarquia>
+      <Id>3</Id>
+      <jerarquia>Mayor</jerarquia>
+      <Abreviatura>Of. My.</Abreviatura>
+    </Jerarquia>
+    <Jerarquia>
+      <Id>4</Id>
+      <jerarquia>Jefe</jerarquia>
+      <Abreviatura>Of. Jefe</Abreviatura>
+    </Jerarquia>
+    <Jerarquia>
+      <Id>5</Id>
+      <jerarquia>Subinspector</jerarquia>
+      <Abreviatura>Subinspector</Abreviatura>
+    </Jerarquia>
+    <Jerarquia>
+      <Id>6</Id>
+      <jerarquia>Inspector</jerarquia>
+      <Abreviatura>Inspector</Abreviatura>
+    </Jerarquia>
+    <Jerarquia>
+      <Id>7</Id>
+      <jerarquia>Comisionado Mayor</jerarquia>
+      <Abreviatura>Com. My.</Abreviatura>
+    </Jerarquia>
+    <Jerarquia>
+      <Id>8</Id>
+      <jerarquia>Comisionado General</jerarquia>
+      <Abreviatura>Com. Gral.</Abreviatura>
+    </Jerarquia>
+  </Jerarquias>
+  <Oficiales>
+    <Oficial>
+      <Legajo>506896</Legajo>
+      <Nombre>Jonathan Correa</Nombre>
+      <jerarquia>Principal</jerarquia>
+    </Oficial>
+  </Oficiales>
+</Base>
