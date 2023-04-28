@@ -56,7 +56,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vista Previa";
-            //this.Load += new System.EventHandler(this.FormImpresion_Load);
+            this.Load += new System.EventHandler(this.FormImpresion_Load);
             this.ResumeLayout(false);
 
         }

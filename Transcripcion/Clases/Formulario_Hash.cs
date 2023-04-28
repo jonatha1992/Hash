@@ -5,14 +5,17 @@ namespace Hash
 {
     public class Formulario_Hash
     {
-        public int Hash { get; set; }
-        public int Nro_Control { get; set; }
+        public int Nro_Hash { get; set; }
         public int Imagenes { get; set; }
         public int Clips { get; set; }
         public int Audio { get; set; }
         public int Texto { get; set; }
         public int Varios { get; set; }
+        public string Tipo{ get; set; }
         public string Procedimiento { get; set; }
+        //public string Nota { get; set; }
+        public Oficial OfEntrega { get; set; }
+        public Oficial OfRecibe { get; set; }
         public List<Archivo> ListaArchivos { get; set; }
 
         public Formulario_Hash()

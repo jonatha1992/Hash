@@ -14,9 +14,23 @@ namespace Transcripcion
         Formulario_Hash formulario = new Formulario_Hash();
         string CarpetaDestino;
         string carpetaSeleccionada;
+
+        List<Jerarquia> jerarquias = new List<Jerarquia>() { new Jerarquia("AYUDANTE","OF. AYTE."),
+                                                             new Jerarquia("PRINCIPAL","OF. PPAL."),
+                                                             new Jerarquia("MAYOR","OF. MY."),
+                                                             new Jerarquia("JEFE","OF. JEFE."),
+                                                             new Jerarquia("SUBINSPECTOR","SUBINSPECTOR"),
+                                                             new Jerarquia("INSPECTOR","INSPECTOR"),
+                                                             new Jerarquia("COMISIONADO MAYOR","COM. MY."),
+                                                             new Jerarquia("COMISIONADO GENERAL","COM. GRAL."),
+                                                              };
+
         public Hash()
         {
             InitializeComponent();
+            comboBox3.DataSource = jerarquias;
+            comboBox2.DataSource = jerarquias;
+
         }
 
 
@@ -71,6 +85,7 @@ namespace Transcripcion
 
             DgvElementos.DataSource = null;
             DgvElementos.DataSource = formulario.ListaArchivos;
+            DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
 
         private void buttonEliminar_Click(object sender, EventArgs e)
@@ -138,29 +153,7 @@ namespace Transcripcion
             }
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != "")
-            {
 
-                //if (radioButtonA.Checked)
-                //{
-                //    //listBoxConversacion.Items.Add("A:" + textBox1.Text);
-                //    //radioButtonB.Checked = true;
-                //    textBox1.Text = "";
-                //}
-                //else
-                //{
-                //    //listBoxConversacion.Items.Add("B:" + textBox1.Text);
-                //    //radioButtonA.Checked = true;
-                //    textBox1.Text = "";
-                //}
-            }
-            else
-            {
-                MessageBox.Show("No hay nada para agregar", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
-        }
 
 
 
@@ -194,10 +187,112 @@ namespace Transcripcion
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private bool VerificarObjetoCompleto(object objeto)
+        {
+            // Si el objeto es nulo, devuelve false
+            if (objeto == null)
+            {
+                return false;
+            }
+
+            // Recorre todas las propiedades del objeto
+            foreach (var propiedad in objeto.GetType().GetProperties())
+            {
+                var valor = propiedad.GetValue(objeto, null);
+
+                // Si la propiedad es nula o vacía, devuelve false
+                if (valor == null || (valor is string && string.IsNullOrEmpty((string)valor)))
+                {
+                    return false;
+                }
+
+                // Si la propiedad es otro objeto, llama recursivamente a este método
+             
+            }
+
+            // Si todas las propiedades del objeto y sus sub-objetos tienen datos, devuelve true
+            return true;
+        }
+
+
+        private void buttonImprimir_Click(object sender, EventArgs e)
         {
 
+            try
+            {
+                CargarFormulario();
+                if (VerificarObjetoCompleto(formulario))
+                {
+                    Form_Impresion form_Impresion = new Form_Impresion(formulario);
+                    form_Impresion.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Falta informacion para realizar la informacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CargarFormulario()
+        {
+
+            try
+            {
+                formulario.Nro_Hash = (int)numericUpDownHash.Value;
+                formulario.Tipo = rbtnVuelo.Checked == true ? "VUELO" : "PROCEDIMIENTO";
+                formulario.Procedimiento = textBoxProcedimiento.Text;
+                formulario.OfEntrega = new Oficial(Convert.ToInt32(textBoxControlOfEntrega.Text), textBoxNomEntrega.Text);
+                formulario.OfEntrega.Jerarquia = (Jerarquia)comboBox2.SelectedItem;
+                formulario.OfRecibe = new Oficial(Convert.ToInt32(textBoxConOfRecibe.Text), textBoxNomOfRecibe.Text);
+                formulario.OfRecibe.Jerarquia = (Jerarquia)comboBox3.SelectedItem;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
 
+public class Oficial
+{
+
+    public int Legajo { get; set; }
+    public string NombreCompleto { get; set; }
+    public Jerarquia Jerarquia { get; set; }
+
+   
+    public Oficial(int legaj ,string nombrecompleto )
+    {
+        this.Legajo = legaj;
+        this.NombreCompleto = nombrecompleto;
+    }
+
+    public override string ToString()
+    {
+        return Jerarquia.Abreviatura +" " + NombreCompleto;
+    }
+}
+
+public class Jerarquia
+{
+    public string Abreviatura { get; set; }
+    public string jerarquia { get; set; }
+
+
+    public Jerarquia(string jerar, string Abre)
+    {
+        jerarquia = jerar;
+        Abreviatura = Abre;
+    }
+    public override string ToString()
+    {
+        return jerarquia;
+    }
+}
