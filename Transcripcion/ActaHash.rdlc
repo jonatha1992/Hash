@@ -1384,7 +1384,7 @@ Legajo: </Value>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>6.07554in</Height>
+        <Height>5.18387in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1396,6 +1396,7 @@ Legajo: </Value>
       <Page>
         <PageHeader>
           <Height>3.42604cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
           <ReportItems>
             <Image Name="Image5">
               <Source>Embedded</Source>
@@ -1466,7 +1467,7 @@ Legajo: </Value>
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.89986cm</Height>
+          <Height>0.67056cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>

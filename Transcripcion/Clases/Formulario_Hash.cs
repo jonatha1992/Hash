@@ -14,13 +14,13 @@ namespace Hash
         public string Tipo{ get; set; }
         public string Procedimiento { get; set; }
         //public string Nota { get; set; }
-        public Oficial OfEntrega { get; set; }
-        public Oficial OfRecibe { get; set; }
-        public List<Archivo> ListaArchivos { get; set; }
+        public BEOficial OfEntrega { get; set; }
+        public BEOficial OfRecibe { get; set; }
+        public List<BEArchivo> ListaArchivos { get; set; }
 
         public Formulario_Hash()
         {
-            ListaArchivos = new List<Archivo>();
+            ListaArchivos = new List<BEArchivo>();
         }
         public void Contar()
         {

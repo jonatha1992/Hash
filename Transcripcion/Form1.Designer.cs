@@ -66,15 +66,16 @@
             this.rbtnVuelo = new System.Windows.Forms.RadioButton();
             this.textBoxProcedimiento = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBoxRecibe = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxEntrega = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBoxNomEntrega = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
+            this.buttonImpCustodia = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgvElementos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHash)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -91,7 +92,7 @@
             this.buttonAgregar.TabIndex = 2;
             this.buttonAgregar.Text = "Carpeta Origen";
             this.buttonAgregar.UseVisualStyleBackColor = false;
-            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonCarpetaSeleccionada_Click);
             // 
             // listBoxArchivos
             // 
@@ -214,7 +215,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvElementos.Location = new System.Drawing.Point(578, 70);
+            this.DgvElementos.Location = new System.Drawing.Point(591, 70);
             this.DgvElementos.Margin = new System.Windows.Forms.Padding(2);
             this.DgvElementos.MultiSelect = false;
             this.DgvElementos.Name = "DgvElementos";
@@ -237,7 +238,7 @@
             this.DgvElementos.RowTemplate.Height = 60;
             this.DgvElementos.RowTemplate.ReadOnly = true;
             this.DgvElementos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.DgvElementos.Size = new System.Drawing.Size(659, 402);
+            this.DgvElementos.Size = new System.Drawing.Size(754, 402);
             this.DgvElementos.TabIndex = 62;
             // 
             // Sel
@@ -431,7 +432,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.Control;
-            this.label5.Location = new System.Drawing.Point(854, 43);
+            this.label5.Location = new System.Drawing.Point(927, 42);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(107, 18);
             this.label5.TabIndex = 79;
@@ -442,7 +443,7 @@
             this.buttonImprimirHash.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonImprimirHash.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonImprimirHash.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonImprimirHash.Location = new System.Drawing.Point(1001, 563);
+            this.buttonImprimirHash.Location = new System.Drawing.Point(1181, 554);
             this.buttonImprimirHash.Name = "buttonImprimirHash";
             this.buttonImprimirHash.Size = new System.Drawing.Size(78, 44);
             this.buttonImprimirHash.TabIndex = 80;
@@ -455,7 +456,7 @@
             this.rdbtnProcedimiento.AutoSize = true;
             this.rdbtnProcedimiento.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbtnProcedimiento.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.rdbtnProcedimiento.Location = new System.Drawing.Point(162, 81);
+            this.rdbtnProcedimiento.Location = new System.Drawing.Point(118, 81);
             this.rdbtnProcedimiento.Name = "rdbtnProcedimiento";
             this.rdbtnProcedimiento.Size = new System.Drawing.Size(118, 19);
             this.rdbtnProcedimiento.TabIndex = 84;
@@ -489,11 +490,11 @@
             // 
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.label16);
-            this.groupBox1.Controls.Add(this.comboBox3);
+            this.groupBox1.Controls.Add(this.comboBoxRecibe);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.comboBox2);
+            this.groupBox1.Controls.Add(this.comboBoxEntrega);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.numericUpDownHash);
             this.groupBox1.Controls.Add(this.textBoxProcedimiento);
@@ -517,6 +518,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos";
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.SystemColors.Control;
+            this.label17.Location = new System.Drawing.Point(19, 117);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(74, 13);
+            this.label17.TabIndex = 93;
+            this.label17.Text = "Descripción";
+            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -528,14 +540,15 @@
             this.label16.TabIndex = 92;
             this.label16.Text = "Jerarquia";
             // 
-            // comboBox3
+            // comboBoxRecibe
             // 
-            this.comboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(17, 405);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(134, 23);
-            this.comboBox3.TabIndex = 91;
+            this.comboBoxRecibe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxRecibe.FormattingEnabled = true;
+            this.comboBoxRecibe.Location = new System.Drawing.Point(17, 405);
+            this.comboBoxRecibe.Name = "comboBoxRecibe";
+            this.comboBoxRecibe.Size = new System.Drawing.Size(134, 23);
+            this.comboBoxRecibe.TabIndex = 91;
             // 
             // label15
             // 
@@ -564,20 +577,21 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.SystemColors.Control;
-            this.label12.Location = new System.Drawing.Point(22, 224);
+            this.label12.Location = new System.Drawing.Point(22, 221);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(59, 13);
             this.label12.TabIndex = 88;
             this.label12.Text = "Jerarquia";
             // 
-            // comboBox2
+            // comboBoxEntrega
             // 
-            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(22, 240);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(134, 23);
-            this.comboBox2.TabIndex = 87;
+            this.comboBoxEntrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxEntrega.FormattingEnabled = true;
+            this.comboBoxEntrega.Location = new System.Drawing.Point(22, 237);
+            this.comboBoxEntrega.Name = "comboBoxEntrega";
+            this.comboBoxEntrega.Size = new System.Drawing.Size(134, 23);
+            this.comboBoxEntrega.TabIndex = 87;
             // 
             // comboBox1
             // 
@@ -595,23 +609,26 @@
             this.textBoxNomEntrega.Size = new System.Drawing.Size(264, 21);
             this.textBoxNomEntrega.TabIndex = 16;
             // 
-            // label17
+            // buttonImpCustodia
             // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.SystemColors.Control;
-            this.label17.Location = new System.Drawing.Point(19, 117);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(74, 13);
-            this.label17.TabIndex = 93;
-            this.label17.Text = "Descripción";
+            this.buttonImpCustodia.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonImpCustodia.Enabled = false;
+            this.buttonImpCustodia.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonImpCustodia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonImpCustodia.Location = new System.Drawing.Point(1285, 554);
+            this.buttonImpCustodia.Name = "buttonImpCustodia";
+            this.buttonImpCustodia.Size = new System.Drawing.Size(78, 44);
+            this.buttonImpCustodia.TabIndex = 88;
+            this.buttonImpCustodia.Text = "Imprimir Custodia";
+            this.buttonImpCustodia.UseVisualStyleBackColor = false;
             // 
             // Hash
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1248, 610);
+            this.ClientSize = new System.Drawing.Size(1374, 610);
+            this.Controls.Add(this.buttonImpCustodia);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonImprimirHash);
             this.Controls.Add(this.label5);
@@ -637,6 +654,7 @@
             this.Name = "Hash";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hash Copy";
+            this.Load += new System.EventHandler(this.Hash_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgvElementos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHash)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -682,13 +700,14 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBoxRecibe;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBoxEntrega;
         private System.Windows.Forms.TextBox textBoxNomEntrega;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button buttonImpCustodia;
     }
 }
 

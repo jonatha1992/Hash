@@ -12,29 +12,26 @@ namespace Transcripcion
         List<string> NombreArchivos = new List<string>();
         List<string> RutaArchivos = new List<string>();
         Formulario_Hash formulario = new Formulario_Hash();
+        List<BEOficial> listaOficiales = new List<BEOficial>();
+        List<BEJerarquia> listaJerarquias = BEJerarquia.ObtenerJerarquias();
+
         string CarpetaDestino;
         string carpetaSeleccionada;
 
-        List<Jerarquia> jerarquias = new List<Jerarquia>() { new Jerarquia("AYUDANTE","OF. AYTE."),
-                                                             new Jerarquia("PRINCIPAL","OF. PPAL."),
-                                                             new Jerarquia("MAYOR","OF. MY."),
-                                                             new Jerarquia("JEFE","OF. JEFE."),
-                                                             new Jerarquia("SUBINSPECTOR","SUBINSPECTOR"),
-                                                             new Jerarquia("INSPECTOR","INSPECTOR"),
-                                                             new Jerarquia("COMISIONADO MAYOR","COM. MY."),
-                                                             new Jerarquia("COMISIONADO GENERAL","COM. GRAL."),
-                                                              };
+
+
 
         public Hash()
         {
             InitializeComponent();
-            comboBox3.DataSource = jerarquias;
-            comboBox2.DataSource = jerarquias;
+            comboBoxRecibe.DataSource = listaJerarquias;
+            comboBoxEntrega.DataSource = listaJerarquias.ConvertAll(item => (BEJerarquia)item.Clone());
+            listaOficiales = BEOficial.ObtenerOficiales();
 
         }
 
 
-        private void buttonAgregar_Click(object sender, EventArgs e)
+        private void buttonCarpetaSeleccionada_Click(object sender, EventArgs e)
         {
             try
             {
@@ -55,7 +52,7 @@ namespace Transcripcion
                     // Mostrar los nombres de los archivos en la consola
                     foreach (string archivo in RutaArchivos)
                     {
-                        Archivo archivo1 = new Archivo(archivo);
+                        BEArchivo archivo1 = new BEArchivo(archivo);
                         archivo1.Nro_Orden = formulario.ListaArchivos.Count + 1;
                         formulario.ListaArchivos.Add(archivo1);
                         NombreArchivos.Add(archivo1.Nombre);
@@ -89,7 +86,7 @@ namespace Transcripcion
             DgvElementos.Columns["SI"].HeaderText = "Reprodu- cible";
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
             DgvElementos.Columns["Nro_Orden"].Width = 30;
-            DgvElementos.Columns["Extension"].Width= 25;
+            DgvElementos.Columns["Extension"].Width = 25;
             DgvElementos.Columns["Si"].Width = 25;
             DgvElementos.Columns["Peso"].Width = 60;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
@@ -223,7 +220,7 @@ namespace Transcripcion
                 }
 
                 // Si la propiedad es otro objeto, llama recursivamente a este método
-             
+
             }
 
             // Si todas las propiedades del objeto y sus sub-objetos tienen datos, devuelve true
@@ -263,10 +260,14 @@ namespace Transcripcion
                 formulario.Nro_Hash = (int)numericUpDownHash.Value;
                 formulario.Tipo = rbtnVuelo.Checked == true ? "VUELO" : "PROCEDIMIENTO";
                 formulario.Procedimiento = textBoxProcedimiento.Text;
-                formulario.OfEntrega = new Oficial(Convert.ToInt32(textBoxControlOfEntrega.Text), textBoxNomEntrega.Text);
-                formulario.OfEntrega.Jerarquia = (Jerarquia)comboBox2.SelectedItem;
-                formulario.OfRecibe = new Oficial(Convert.ToInt32(textBoxConOfRecibe.Text), textBoxNomOfRecibe.Text);
-                formulario.OfRecibe.Jerarquia = (Jerarquia)comboBox3.SelectedItem;
+                formulario.OfEntrega = new BEOficial(Convert.ToInt32(textBoxControlOfEntrega.Text), textBoxNomEntrega.Text);
+                formulario.OfEntrega.jerarquia = (BEJerarquia)comboBoxEntrega.SelectedItem;
+                formulario.OfRecibe = new BEOficial(Convert.ToInt32(textBoxConOfRecibe.Text), textBoxNomOfRecibe.Text);
+                formulario.OfRecibe.jerarquia = (BEJerarquia)comboBoxRecibe.SelectedItem;
+
+                BEOficial.AgregarOficial(formulario.OfEntrega);
+                BEOficial.AgregarOficial(formulario.OfRecibe);
+
             }
             catch (Exception ex)
             {
@@ -282,8 +283,20 @@ namespace Transcripcion
             }
             if (e.KeyChar == (char)Keys.Enter)
             {
+
                 e.Handled = true;
-                MessageBox.Show("Se iria a buscar en la base de datos", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                var oficial = BuscarOficial(Convert.ToInt32(textBoxControlOfEntrega.Text));
+                if (oficial != null)
+                {
+                    textBoxNomEntrega.Text = oficial.NombreCompleto;
+                    comboBoxEntrega.Text = oficial.jerarquia.jerarquia;
+                }
+                else
+                {
+                    MessageBox.Show("El Oficial no se encuentra registrado cuando se imprima el Hash se guarda los datos del Ofical para el futuros Hash", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
             }
         }
 
@@ -296,8 +309,25 @@ namespace Transcripcion
             if (e.KeyChar == (char)Keys.Enter)
             {
                 e.Handled = true;
-                MessageBox.Show("Se iria a buscar en la base de datos", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                var oficial = BuscarOficial(Convert.ToInt32(textBoxConOfRecibe.Text));
+                if (oficial != null)
+                {
+                    textBoxNomOfRecibe.Text = oficial.NombreCompleto;
+                    comboBoxRecibe.Text = oficial.jerarquia.jerarquia;
+                }
             }
+        }
+
+        public BEOficial BuscarOficial(int legajo)
+        {
+            return listaOficiales.Find(o => o.Legajo == legajo);
+
+        }
+
+        private void Hash_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

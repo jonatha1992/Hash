@@ -63,9 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clases\Archivo.cs" />
-    <Compile Include="Clases\Jerarquia.cs" />
-    <Compile Include="Clases\Oficial.cs" />
+    <Compile Include="Clases\BEArchivo.cs" />
+    <Compile Include="Clases\BEJerarquia.cs" />
+    <Compile Include="Clases\BEOficial.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
