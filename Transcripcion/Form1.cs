@@ -1,7 +1,11 @@
-﻿using Hash;
+﻿using CircularProgressBar;
+using Hash;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -30,6 +34,32 @@ namespace Transcripcion
 
         }
 
+        
+        private string calcularHash(string rutaArchivo)
+        {
+            string hash = "";
+            long fileSize = new FileInfo(rutaArchivo).Length;
+            long totalBytesRead = 0;
+            using (var stream = new FileStream(rutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 1048576, FileOptions.SequentialScan))
+            {
+                using (var sha = SHA256.Create())
+                {
+                    byte[] buffer = new byte[1048576];
+                    int bytesRead;
+                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) != 0)
+                    {
+                        sha.TransformBlock(buffer, 0, bytesRead, buffer, 0);
+
+                        totalBytesRead += bytesRead;
+                    }
+                    sha.TransformFinalBlock(buffer, 0, 0);
+                    byte[] hashBytes = sha.Hash;
+                    hash = BitConverter.ToString(hashBytes).Replace("-", "");
+                }
+            }
+            return hash;
+        }
+
 
         private void buttonCarpetaSeleccionada_Click(object sender, EventArgs e)
         {
@@ -44,20 +74,33 @@ namespace Transcripcion
                 {
                     // La carpeta seleccionada por el usuario
                     carpetaSeleccionada = dialogoSeleccionCarpeta.SelectedPath;
+                    
+                    MostrarSpriner();
 
-                    // Obtener todos los archivos dentro de la carpeta seleccionada y sus subcarpetas
-                    //string[] archivos = Directory.GetFiles(carpetaSeleccionada, "*", SearchOption.AllDirectories);
+
                     RutaArchivos.AddRange(Directory.GetFiles(carpetaSeleccionada, "*", SearchOption.AllDirectories));
+
+                    int totalArchivos = RutaArchivos.Count;
+                    circularProgressBar1.Maximum = totalArchivos;
+                    int archivosProcesados = 0;
 
                     // Mostrar los nombres de los archivos en la consola
                     foreach (string archivo in RutaArchivos)
                     {
                         BEArchivo archivo1 = new BEArchivo(archivo);
+                        archivo1.Hash = calcularHash(archivo);
+
                         archivo1.Nro_Orden = formulario.ListaArchivos.Count + 1;
                         formulario.ListaArchivos.Add(archivo1);
                         NombreArchivos.Add(archivo1.Nombre);
-                    }
 
+                        archivosProcesados++;
+                        circularProgressBar1.Value = archivosProcesados;
+                        circularProgressBar1.Text = $"{(int)((archivosProcesados / (double)totalArchivos) * 100)}%";
+
+
+                    }
+                    OcultarSpriner();
                     Actualizar();
                 }
             }
@@ -66,6 +109,21 @@ namespace Transcripcion
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        public void MostrarSpriner()
+        {
+            
+            circularProgressBar1.Value = 0;
+            circularProgressBar1.Minimum = 0;
+            circularProgressBar1.Visible = true;
+
+        }
+
+        public void OcultarSpriner()
+        {
+            circularProgressBar1.Visible = false;
+          
         }
 
         private void Actualizar()
@@ -83,12 +141,11 @@ namespace Transcripcion
             DgvElementos.DataSource = null;
             DgvElementos.DataSource = formulario.ListaArchivos;
             DgvElementos.Columns["Nro_Orden"].HeaderText = "Nro Orden";
-            DgvElementos.Columns["SI"].HeaderText = "Reprodu- cible";
+            DgvElementos.Columns["SI"].Visible =false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
             DgvElementos.Columns["Nro_Orden"].Width = 30;
-            DgvElementos.Columns["Extension"].Width = 25;
-            DgvElementos.Columns["Si"].Width = 25;
-            DgvElementos.Columns["Peso"].Width = 60;
+            DgvElementos.Columns["Extension"].Width = 30;
+            DgvElementos.Columns["Peso"].Width = 65;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
         }
@@ -174,7 +231,8 @@ namespace Transcripcion
                 {
                     CarpetaDestino = dialogoSeleccionCarpeta.SelectedPath;
                     // La carpeta seleccionada por el usuario
-
+                    MostrarSpriner();
+                    circularProgressBar1.Maximum = RutaArchivos.Count;
                     foreach (var ruta in RutaArchivos)
                     {
                         string rutaArchivoOrigen = ruta;
@@ -188,9 +246,12 @@ namespace Transcripcion
 
                             // Establece la variable carpetaAbierta en true para indicar que ya se ha abierto la carpeta
                             carpetaAbierta = true;
-                        }
-                    }
 
+                        }
+                        circularProgressBar1.Value++;
+                        circularProgressBar1.Text = $"{(circularProgressBar1.Value * 100) / circularProgressBar1.Maximum}%";
+                    }
+                    OcultarSpriner();
                     MessageBox.Show("Archivos copiados exitosamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -324,11 +385,53 @@ namespace Transcripcion
             return listaOficiales.Find(o => o.Legajo == legajo);
 
         }
-
-        private void Hash_Load(object sender, EventArgs e)
+        private void listBoxArchivos_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listBoxArchivos.SelectedIndex >= 0) // Si hay algún elemento seleccionado
+            {
+                buttonEliminar.Visible = true; // Mostrar el botón de eliminar
+            }
+            else // Si no hay ningún elemento seleccionado
+            {
+                buttonEliminar.Visible = false; // Ocultar el botón de eliminar
+            }
 
         }
+
+        private void buttonReset_Click(object sender, EventArgs e)
+        {
+             NombreArchivos = new List<string>();
+            RutaArchivos = new List<string>();
+            formulario = new Formulario_Hash();
+            listaOficiales = new List<BEOficial>();
+
+             CarpetaDestino ="";
+             carpetaSeleccionada="";
+            listBoxArchivos.DataSource= null;
+            DgvElementos.DataSource= null;
+            LimpiarControles(this);
+           
+        }
+
+        private void LimpiarControles(Control control)
+        {
+            foreach (Control c in control.Controls)
+            {
+                if (c is TextBox)
+                {
+                    ((TextBox)c).Text = string.Empty;
+                }
+                else if (c is NumericUpDown)
+                {
+                    ((NumericUpDown)c).Value = 0;
+                }
+                else if (c.HasChildren)
+                {
+                    LimpiarControles(c);
+                }
+            }
+        }
+
     }
 }
 

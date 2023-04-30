@@ -31,6 +31,18 @@ namespace Hash
             Varios = ListaArchivos.Count(a => a.Extension != ".txt" && a.Extension != ".doc" && a.Extension != ".docx" && a.Extension != ".pdf"
             && a.Extension != ".png" && a.Extension != ".jpg" && a.Extension != ".jpeg" && a.Extension != ".gif" && a.Extension != ".bmp"
             && a.Extension != ".mp4" && a.Extension != ".avi" && a.Extension != ".wmv" && a.Extension != ".mov");
+
+            //int contador = 1;
+            //foreach (var x in ListaArchivos)
+            //{
+            //    x.Nro_Orden = contador;
+            //    contador++;
+            //}
+
+            for (int i = 0; i < ListaArchivos.Count; i++)
+            {
+                ListaArchivos[i].Nro_Orden = i + 1;
+            }
         }
 
     }

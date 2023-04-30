@@ -62,7 +62,7 @@
                   <TextRun>
                     <Value>Nota: para resguardo de la informacion la camara se entrega formateada</Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -73,7 +73,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>8.61367cm</Top>
+            <Top>7.52888cm</Top>
             <Left>0.82423cm</Left>
             <Height>0.90862cm</Height>
             <Width>17.17963cm</Width>
@@ -285,7 +285,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Hash SHA1</Value>
+                                  <Value>Hash SHA256</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -587,7 +587,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSetElemento</DataSetName>
-            <Top>5.93555cm</Top>
+            <Top>5.41992cm</Top>
             <Left>0.22628cm</Left>
             <Height>1.59157cm</Height>
             <Width>18.18504cm</Width>
@@ -605,16 +605,9 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Firma: </Value>
+                    <Value>Firma: . . . . . . . . . . . . . . . . . . . . .</Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value>. . . . . . . . . . . . . . . . . . . . .</Value>
-                    <Style>
-                      <FontSize>11pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -628,13 +621,13 @@
                     <Value>
 Apellido y Nombre:  </Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value>=Parameters!NombreEntrega.Value</Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -648,19 +641,19 @@ Apellido y Nombre:  </Value>
                     <Value>
 Legajo: </Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value>=Parameters!ControlEntrega.Value</Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value xml:space="preserve"> </Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -670,9 +663,9 @@ Legajo: </Value>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>9.87534cm</Top>
+            <Top>9.3109cm</Top>
             <Left>0.82423cm</Left>
-            <Height>2.77841cm</Height>
+            <Height>2.32862cm</Height>
             <Width>8.3582cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
@@ -692,16 +685,9 @@ Legajo: </Value>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Firma: </Value>
+                    <Value>Firma: . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..</Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value>. . . . . . . . . . . . . . . . . . . . . . . . . . . . ..</Value>
-                    <Style>
-                      <FontSize>11pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -715,13 +701,13 @@ Legajo: </Value>
                     <Value>
 Apellido y Nombre: </Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value>=Parameters!NombreRecibe.Value</Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -735,13 +721,13 @@ Apellido y Nombre: </Value>
                     <Value>
 Legajo: </Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value>=Parameters!ControlRecibe.Value</Value>
                     <Style>
-                      <FontSize>11pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -751,9 +737,9 @@ Legajo: </Value>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>9.8577cm</Top>
+            <Top>9.29326cm</Top>
             <Left>9.65118cm</Left>
-            <Height>2.79605cm</Height>
+            <Height>2.34626cm</Height>
             <Width>8.35268cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -813,7 +799,7 @@ Legajo: </Value>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>0.17639cm</Top>
-            <Left>1.24816cm</Left>
+            <Left>1.50215cm</Left>
             <Height>0.77542cm</Height>
             <Width>16.15775cm</Width>
             <ZIndex>4</ZIndex>
@@ -842,6 +828,7 @@ Legajo: </Value>
                               <TextRun>
                                 <Value>FECHA:</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -888,6 +875,7 @@ Legajo: </Value>
                                 <TextRun>
                                   <Value>=Parameters!NombreEntrega.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -925,6 +913,7 @@ Legajo: </Value>
                                 <TextRun>
                                   <Value>=Parameters!ControlEntrega.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -962,6 +951,7 @@ Legajo: </Value>
                                 <TextRun>
                                   <Value>=Parameters!Imagenes.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -999,6 +989,7 @@ Legajo: </Value>
                                 <TextRun>
                                   <Value>=Parameters!Clips.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1036,6 +1027,7 @@ Legajo: </Value>
                                 <TextRun>
                                   <Value>=Parameters!Audio.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1073,6 +1065,7 @@ Legajo: </Value>
                                 <TextRun>
                                   <Value>=Parameters!Procedimiento.Value</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -1118,6 +1111,7 @@ Legajo: </Value>
                               <TextRun>
                                 <Value>=Globals!ExecutionTime.ToShortDateString</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1162,6 +1156,7 @@ Legajo: </Value>
                               <TextRun>
                                 <Value>NOMBRE Y APELLIDO:</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1198,6 +1193,7 @@ Legajo: </Value>
                               <TextRun>
                                 <Value>NRO CONTROL:</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1235,6 +1231,7 @@ Legajo: </Value>
                               <TextRun>
                                 <Value>CANTIDAD DE IMAGENES:</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1272,6 +1269,7 @@ Legajo: </Value>
                               <TextRun>
                                 <Value>CANTIDAD DE CLIPS:</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1309,6 +1307,7 @@ Legajo: </Value>
                               <TextRun>
                                 <Value>CANTIDAD DE AUDIO:</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1346,6 +1345,7 @@ Legajo: </Value>
                               <TextRun>
                                 <Value>=Parameters!Tipo_procedimiento.Value</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -1372,7 +1372,7 @@ Legajo: </Value>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <Top>1.48769cm</Top>
+            <Top>1.09292cm</Top>
             <Left>0.82423cm</Left>
             <Height>4.11533cm</Height>
             <Width>17.17963cm</Width>
