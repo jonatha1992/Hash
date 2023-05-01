@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Hash
 {
-    public class BEJerarquia:ICloneable
+    public class BEJerarquia : ICloneable
     {
         public string jerarquia { get; set; }
         public string Abreviatura { get; set; }
@@ -19,7 +17,7 @@ namespace Hash
             Abreviatura = Abre;
         }
 
-       public static List<BEJerarquia> ObtenerJerarquias()
+        public static List<BEJerarquia> ObtenerJerarquias()
         {
             XDocument doc = XDocument.Load("datos.xml");
 
@@ -29,8 +27,8 @@ namespace Hash
                                  jerarquia = jerar.Element("jerarquia").Value,
                                  Abreviatura = jerar.Element("Abreviatura").Value
                              };
-            return  jerarquias.ToList();
-        } 
+            return jerarquias.ToList();
+        }
         public override string ToString()
         {
             return jerarquia;

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using System.Windows.Forms;
 namespace Hash
 {
     public class BEOficial
@@ -44,21 +41,21 @@ namespace Hash
 
             XDocument doc = XDocument.Load("datos.xml");
 
-           
+
 
             bool existeLegajo = doc.Descendants("Oficial").Any(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
 
             if (!existeLegajo)
             {
 
-            XElement nuevoOficial = new XElement("Oficial",
-            new XElement("Legajo", poficial.Legajo),
-            new XElement("Nombre", poficial.NombreCompleto),
-            new XElement("jerarquia", poficial.jerarquia.jerarquia));
+                XElement nuevoOficial = new XElement("Oficial",
+                new XElement("Legajo", poficial.Legajo),
+                new XElement("Nombre", poficial.NombreCompleto),
+                new XElement("jerarquia", poficial.jerarquia.jerarquia));
 
                 doc.Root.Element("Oficiales").Add(nuevoOficial);
                 doc.Save("datos.xml");
-               
+
             }
             else
             {
@@ -68,7 +65,7 @@ namespace Hash
                     oficialExistente.Element("jerarquia").Value = poficial.jerarquia.jerarquia;
                     doc.Save("datos.xml");
                 }
-                
+
             }
         }
         public override string ToString()

@@ -11,7 +11,7 @@ namespace Hash
         public int Audio { get; set; }
         public int Texto { get; set; }
         public int Varios { get; set; }
-        public string Tipo{ get; set; }
+        public string Tipo { get; set; }
         public string Procedimiento { get; set; }
         //public string Nota { get; set; }
         public BEOficial OfEntrega { get; set; }
@@ -24,7 +24,7 @@ namespace Hash
         }
         public void Contar()
         {
-            Imagenes = ListaArchivos.Count(x => x.Extension == ".jpg" || x.Extension == ".png" || x.Extension == ".bmp");
+            Imagenes = ListaArchivos.Count(x => x.Extension == ".jpg" || x.Extension == ".png" || x.Extension == ".jpeg" || x.Extension == ".bmp");
             Clips = ListaArchivos.Count(a => a.Extension == ".mp4" || a.Extension == ".avi" || a.Extension == ".mov");
             Audio = ListaArchivos.Count(a => a.Extension == ".mp3" || a.Extension == ".wav" || a.Extension == ".flac");
             Texto = ListaArchivos.Count(a => a.Extension == ".pdf" || a.Extension == ".txt" || a.Extension == ".docx" || a.Extension == ".doc");

@@ -104,7 +104,7 @@
             this.listBoxArchivos.FormattingEnabled = true;
             this.listBoxArchivos.HorizontalScrollbar = true;
             this.listBoxArchivos.ItemHeight = 16;
-            this.listBoxArchivos.Location = new System.Drawing.Point(268, 70);
+            this.listBoxArchivos.Location = new System.Drawing.Point(268, 50);
             this.listBoxArchivos.Name = "listBoxArchivos";
             this.listBoxArchivos.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxArchivos.Size = new System.Drawing.Size(245, 402);
@@ -118,7 +118,7 @@
             this.buttonEliminar.BackColor = System.Drawing.Color.Red;
             this.buttonEliminar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEliminar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonEliminar.Location = new System.Drawing.Point(439, 478);
+            this.buttonEliminar.Location = new System.Drawing.Point(439, 456);
             this.buttonEliminar.Name = "buttonEliminar";
             this.buttonEliminar.Size = new System.Drawing.Size(74, 46);
             this.buttonEliminar.TabIndex = 8;
@@ -132,7 +132,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(16, 30);
+            this.label1.Location = new System.Drawing.Point(19, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 15;
@@ -143,7 +143,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.Control;
-            this.label2.Location = new System.Drawing.Point(101, 183);
+            this.label2.Location = new System.Drawing.Point(78, 190);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 13);
             this.label2.TabIndex = 17;
@@ -154,7 +154,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.Control;
-            this.label3.Location = new System.Drawing.Point(101, 351);
+            this.label3.Location = new System.Drawing.Point(78, 358);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(87, 13);
             this.label3.TabIndex = 19;
@@ -163,10 +163,11 @@
             // textBoxNomOfRecibe
             // 
             this.textBoxNomOfRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxNomOfRecibe.Location = new System.Drawing.Point(16, 427);
+            this.textBoxNomOfRecibe.Location = new System.Drawing.Point(19, 427);
             this.textBoxNomOfRecibe.Name = "textBoxNomOfRecibe";
             this.textBoxNomOfRecibe.Size = new System.Drawing.Size(225, 21);
             this.textBoxNomOfRecibe.TabIndex = 18;
+            this.textBoxNomOfRecibe.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNomOfRecibe_KeyPress);
             // 
             // btnCopiar
             // 
@@ -210,8 +211,8 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvElementos.Location = new System.Drawing.Point(532, 66);
-            this.DgvElementos.Margin = new System.Windows.Forms.Padding(2);
+            this.DgvElementos.Location = new System.Drawing.Point(532, 50);
+            this.DgvElementos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.DgvElementos.MultiSelect = false;
             this.DgvElementos.Name = "DgvElementos";
             this.DgvElementos.ReadOnly = true;
@@ -253,7 +254,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.Control;
-            this.label4.Location = new System.Drawing.Point(22, 285);
+            this.label4.Location = new System.Drawing.Point(19, 285);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 13);
             this.label4.TabIndex = 64;
@@ -262,7 +263,7 @@
             // textBoxControlOfEntrega
             // 
             this.textBoxControlOfEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxControlOfEntrega.Location = new System.Drawing.Point(22, 302);
+            this.textBoxControlOfEntrega.Location = new System.Drawing.Point(19, 302);
             this.textBoxControlOfEntrega.Name = "textBoxControlOfEntrega";
             this.textBoxControlOfEntrega.Size = new System.Drawing.Size(111, 21);
             this.textBoxControlOfEntrega.TabIndex = 63;
@@ -284,7 +285,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(340, 46);
+            this.label7.Location = new System.Drawing.Point(331, 29);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(133, 18);
             this.label7.TabIndex = 67;
@@ -295,7 +296,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.Control;
-            this.label8.Location = new System.Drawing.Point(15, 450);
+            this.label8.Location = new System.Drawing.Point(19, 450);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(75, 13);
             this.label8.TabIndex = 69;
@@ -304,7 +305,7 @@
             // textBoxConOfRecibe
             // 
             this.textBoxConOfRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxConOfRecibe.Location = new System.Drawing.Point(16, 466);
+            this.textBoxConOfRecibe.Location = new System.Drawing.Point(19, 466);
             this.textBoxConOfRecibe.Name = "textBoxConOfRecibe";
             this.textBoxConOfRecibe.Size = new System.Drawing.Size(126, 21);
             this.textBoxConOfRecibe.TabIndex = 68;
@@ -412,7 +413,7 @@
             // numericUpDownHash
             // 
             this.numericUpDownHash.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownHash.Location = new System.Drawing.Point(16, 46);
+            this.numericUpDownHash.Location = new System.Drawing.Point(19, 46);
             this.numericUpDownHash.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -427,7 +428,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.Control;
-            this.label5.Location = new System.Drawing.Point(811, 46);
+            this.label5.Location = new System.Drawing.Point(811, 31);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(107, 18);
             this.label5.TabIndex = 79;
@@ -438,7 +439,7 @@
             this.buttonImprimirHash.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonImprimirHash.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonImprimirHash.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonImprimirHash.Location = new System.Drawing.Point(1055, 554);
+            this.buttonImprimirHash.Location = new System.Drawing.Point(1178, 554);
             this.buttonImprimirHash.Name = "buttonImprimirHash";
             this.buttonImprimirHash.Size = new System.Drawing.Size(78, 44);
             this.buttonImprimirHash.TabIndex = 80;
@@ -464,7 +465,7 @@
             this.rbtnVuelo.Checked = true;
             this.rbtnVuelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbtnVuelo.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.rbtnVuelo.Location = new System.Drawing.Point(14, 81);
+            this.rbtnVuelo.Location = new System.Drawing.Point(19, 81);
             this.rbtnVuelo.Name = "rbtnVuelo";
             this.rbtnVuelo.Size = new System.Drawing.Size(61, 19);
             this.rbtnVuelo.TabIndex = 85;
@@ -480,6 +481,7 @@
             this.textBoxProcedimiento.Name = "textBoxProcedimiento";
             this.textBoxProcedimiento.Size = new System.Drawing.Size(217, 32);
             this.textBoxProcedimiento.TabIndex = 86;
+            this.textBoxProcedimiento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxProcedimiento_KeyPress);
             // 
             // groupBox1
             // 
@@ -504,7 +506,7 @@
             this.groupBox1.Controls.Add(this.textBoxConOfRecibe);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox1.Location = new System.Drawing.Point(12, 21);
+            this.groupBox1.Location = new System.Drawing.Point(12, 40);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(250, 500);
             this.groupBox1.TabIndex = 87;
@@ -527,7 +529,7 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.SystemColors.Control;
-            this.label16.Location = new System.Drawing.Point(17, 371);
+            this.label16.Location = new System.Drawing.Point(19, 371);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(59, 13);
             this.label16.TabIndex = 92;
@@ -538,7 +540,7 @@
             this.comboBoxRecibe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxRecibe.FormattingEnabled = true;
-            this.comboBoxRecibe.Location = new System.Drawing.Point(17, 387);
+            this.comboBoxRecibe.Location = new System.Drawing.Point(19, 387);
             this.comboBoxRecibe.Name = "comboBoxRecibe";
             this.comboBoxRecibe.Size = new System.Drawing.Size(134, 23);
             this.comboBoxRecibe.TabIndex = 91;
@@ -559,7 +561,7 @@
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.SystemColors.Control;
-            this.label14.Location = new System.Drawing.Point(22, 243);
+            this.label14.Location = new System.Drawing.Point(19, 243);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(105, 13);
             this.label14.TabIndex = 89;
@@ -570,7 +572,7 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.SystemColors.Control;
-            this.label12.Location = new System.Drawing.Point(22, 203);
+            this.label12.Location = new System.Drawing.Point(19, 203);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(59, 13);
             this.label12.TabIndex = 88;
@@ -581,7 +583,7 @@
             this.comboBoxEntrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxEntrega.FormattingEnabled = true;
-            this.comboBoxEntrega.Location = new System.Drawing.Point(22, 217);
+            this.comboBoxEntrega.Location = new System.Drawing.Point(19, 217);
             this.comboBoxEntrega.Name = "comboBoxEntrega";
             this.comboBoxEntrega.Size = new System.Drawing.Size(134, 23);
             this.comboBoxEntrega.TabIndex = 87;
@@ -589,10 +591,11 @@
             // textBoxNomEntrega
             // 
             this.textBoxNomEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxNomEntrega.Location = new System.Drawing.Point(22, 259);
+            this.textBoxNomEntrega.Location = new System.Drawing.Point(19, 259);
             this.textBoxNomEntrega.Name = "textBoxNomEntrega";
             this.textBoxNomEntrega.Size = new System.Drawing.Size(219, 21);
             this.textBoxNomEntrega.TabIndex = 16;
+            this.textBoxNomEntrega.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNomEntrega_KeyPress);
             // 
             // buttonImpCustodia
             // 
@@ -600,7 +603,7 @@
             this.buttonImpCustodia.Enabled = false;
             this.buttonImpCustodia.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonImpCustodia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonImpCustodia.Location = new System.Drawing.Point(1143, 554);
+            this.buttonImpCustodia.Location = new System.Drawing.Point(1077, 554);
             this.buttonImpCustodia.Name = "buttonImpCustodia";
             this.buttonImpCustodia.Size = new System.Drawing.Size(83, 44);
             this.buttonImpCustodia.TabIndex = 88;
@@ -614,7 +617,7 @@
             this.circularProgressBar1.AnimationSpeed = 500;
             this.circularProgressBar1.BackColor = System.Drawing.Color.Black;
             this.circularProgressBar1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.circularProgressBar1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.circularProgressBar1.InnerColor = System.Drawing.SystemColors.InactiveCaption;
             this.circularProgressBar1.InnerMargin = 2;
             this.circularProgressBar1.InnerWidth = -1;
@@ -624,7 +627,7 @@
             this.circularProgressBar1.OuterColor = System.Drawing.Color.White;
             this.circularProgressBar1.OuterMargin = -25;
             this.circularProgressBar1.OuterWidth = 26;
-            this.circularProgressBar1.ProgressColor = System.Drawing.Color.RoyalBlue;
+            this.circularProgressBar1.ProgressColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.circularProgressBar1.ProgressWidth = 15;
             this.circularProgressBar1.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
             this.circularProgressBar1.Size = new System.Drawing.Size(75, 72);
@@ -633,7 +636,7 @@
             this.circularProgressBar1.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
             this.circularProgressBar1.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
             this.circularProgressBar1.SubscriptText = "";
-            this.circularProgressBar1.SuperscriptColor = System.Drawing.SystemColors.Highlight;
+            this.circularProgressBar1.SuperscriptColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.circularProgressBar1.SuperscriptMargin = new System.Windows.Forms.Padding(0);
             this.circularProgressBar1.SuperscriptText = "";
             this.circularProgressBar1.TabIndex = 91;
@@ -647,7 +650,7 @@
             this.buttonReset.BackColor = System.Drawing.Color.Red;
             this.buttonReset.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonReset.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonReset.Location = new System.Drawing.Point(1177, 12);
+            this.buttonReset.Location = new System.Drawing.Point(1188, 12);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(67, 27);
             this.buttonReset.TabIndex = 92;
@@ -660,7 +663,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1256, 610);
+            this.ClientSize = new System.Drawing.Size(1265, 610);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.circularProgressBar1);
             this.Controls.Add(this.buttonImpCustodia);

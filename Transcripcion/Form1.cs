@@ -1,11 +1,8 @@
-﻿using CircularProgressBar;
-using Hash;
+﻿using Hash;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -32,9 +29,11 @@ namespace Transcripcion
             comboBoxEntrega.DataSource = listaJerarquias.ConvertAll(item => (BEJerarquia)item.Clone());
             listaOficiales = BEOficial.ObtenerOficiales();
 
+            
         }
 
         
+
         private string calcularHash(string rutaArchivo)
         {
             string hash = "";
@@ -74,7 +73,7 @@ namespace Transcripcion
                 {
                     // La carpeta seleccionada por el usuario
                     carpetaSeleccionada = dialogoSeleccionCarpeta.SelectedPath;
-                    
+
                     MostrarSpriner();
 
 
@@ -113,7 +112,7 @@ namespace Transcripcion
 
         public void MostrarSpriner()
         {
-            
+
             circularProgressBar1.Value = 0;
             circularProgressBar1.Minimum = 0;
             circularProgressBar1.Visible = true;
@@ -123,7 +122,7 @@ namespace Transcripcion
         public void OcultarSpriner()
         {
             circularProgressBar1.Visible = false;
-          
+
         }
 
         private void Actualizar()
@@ -141,7 +140,7 @@ namespace Transcripcion
             DgvElementos.DataSource = null;
             DgvElementos.DataSource = formulario.ListaArchivos;
             DgvElementos.Columns["Nro_Orden"].HeaderText = "Nro Orden";
-            DgvElementos.Columns["SI"].Visible =false;
+            DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
             DgvElementos.Columns["Nro_Orden"].Width = 30;
             DgvElementos.Columns["Extension"].Width = 30;
@@ -230,6 +229,20 @@ namespace Transcripcion
                 if (resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(dialogoSeleccionCarpeta.SelectedPath))
                 {
                     CarpetaDestino = dialogoSeleccionCarpeta.SelectedPath;
+                    string carpetaRecord = "Record";
+                    int contador = 1;
+
+                    // Verificar si la carpeta "Record" ya existe en la carpeta destino
+                    while (Directory.Exists(Path.Combine(CarpetaDestino, carpetaRecord)))
+                    {
+                        carpetaRecord = $"Record{contador}";
+                        contador++;
+                    }
+
+                    // Crear la carpeta "Record" dentro de la carpeta destino
+                    string rutaCarpetaRecord = Path.Combine(CarpetaDestino, carpetaRecord);
+                    Directory.CreateDirectory(rutaCarpetaRecord);
+
                     // La carpeta seleccionada por el usuario
                     MostrarSpriner();
                     circularProgressBar1.Maximum = RutaArchivos.Count;
@@ -237,12 +250,12 @@ namespace Transcripcion
                     {
                         string rutaArchivoOrigen = ruta;
                         string nombreArchivoDestino = Path.GetFileName(rutaArchivoOrigen);
-                        string rutaArchivoDestino = Path.Combine(CarpetaDestino, nombreArchivoDestino);
+                        string rutaArchivoDestino = Path.Combine(rutaCarpetaRecord, nombreArchivoDestino);
                         File.Copy(rutaArchivoOrigen, rutaArchivoDestino, true);
                         if (!carpetaAbierta)
                         {
                             // Abre el explorador de archivos y navega a la carpeta deseada
-                            System.Diagnostics.Process.Start(CarpetaDestino);
+                            System.Diagnostics.Process.Start(rutaCarpetaRecord);
 
                             // Establece la variable carpetaAbierta en true para indicar que ya se ha abierto la carpeta
                             carpetaAbierta = true;
@@ -252,13 +265,52 @@ namespace Transcripcion
                         circularProgressBar1.Text = $"{(circularProgressBar1.Value * 100) / circularProgressBar1.Maximum}%";
                     }
                     OcultarSpriner();
-                    MessageBox.Show("Archivos copiados exitosamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Archivos copiados exitosamente en la carpeta\n\n{rutaCarpetaRecord} ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
+            //try
+            //{
+            //    FolderBrowserDialog dialogoSeleccionCarpeta = new FolderBrowserDialog();
+            //    DialogResult resultado = dialogoSeleccionCarpeta.ShowDialog();
+            //    bool carpetaAbierta = false;
+            //    // Verificar si el usuario seleccionó una carpeta
+            //    if (resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(dialogoSeleccionCarpeta.SelectedPath))
+            //    {
+            //        CarpetaDestino = dialogoSeleccionCarpeta.SelectedPath;
+            //        // La carpeta seleccionada por el usuario
+            //        MostrarSpriner();
+            //        circularProgressBar1.Maximum = RutaArchivos.Count;
+            //        foreach (var ruta in RutaArchivos)
+            //        {
+            //            string rutaArchivoOrigen = ruta;
+            //            string nombreArchivoDestino = Path.GetFileName(rutaArchivoOrigen);
+            //            string rutaArchivoDestino = Path.Combine(CarpetaDestino, nombreArchivoDestino);
+            //            File.Copy(rutaArchivoOrigen, rutaArchivoDestino, true);
+            //            if (!carpetaAbierta)
+            //            {
+            //                // Abre el explorador de archivos y navega a la carpeta deseada
+            //                System.Diagnostics.Process.Start(CarpetaDestino);
+
+            //                // Establece la variable carpetaAbierta en true para indicar que ya se ha abierto la carpeta
+            //                carpetaAbierta = true;
+
+            //            }
+            //            circularProgressBar1.Value++;
+            //            circularProgressBar1.Text = $"{(circularProgressBar1.Value * 100) / circularProgressBar1.Maximum}%";
+            //        }
+            //        OcultarSpriner();
+            //        MessageBox.Show("Archivos copiados exitosamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private bool VerificarObjetoCompleto(object objeto)
@@ -400,17 +452,17 @@ namespace Transcripcion
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
-             NombreArchivos = new List<string>();
+            NombreArchivos = new List<string>();
             RutaArchivos = new List<string>();
             formulario = new Formulario_Hash();
             listaOficiales = new List<BEOficial>();
 
-             CarpetaDestino ="";
-             carpetaSeleccionada="";
-            listBoxArchivos.DataSource= null;
-            DgvElementos.DataSource= null;
+            CarpetaDestino = "";
+            carpetaSeleccionada = "";
+            listBoxArchivos.DataSource = null;
+            DgvElementos.DataSource = null;
             LimpiarControles(this);
-           
+
         }
 
         private void LimpiarControles(Control control)
@@ -432,6 +484,22 @@ namespace Transcripcion
             }
         }
 
+        private void textBoxNomEntrega_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.KeyChar = Char.ToUpper(e.KeyChar);
+        }
+
+        private void textBoxNomOfRecibe_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.KeyChar = Char.ToUpper(e.KeyChar);
+
+        }
+
+        private void textBoxProcedimiento_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.KeyChar = Char.ToUpper(e.KeyChar);
+
+        }
     }
 }
 
