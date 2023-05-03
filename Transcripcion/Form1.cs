@@ -456,6 +456,11 @@ namespace Transcripcion
             RutaArchivos = new List<string>();
             formulario = new Formulario_Hash();
             listaOficiales = new List<BEOficial>();
+            lblAudio.Text = "0";
+            lblClip.Text = "0";
+            lblImg.Text = "0";
+            lblTxt.Text = "0";
+            lblVarios.Text = "0";
 
             CarpetaDestino = "";
             carpetaSeleccionada = "";
