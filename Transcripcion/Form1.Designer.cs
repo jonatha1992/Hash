@@ -1,4 +1,6 @@
-﻿namespace Transcripcion
+﻿using System;
+
+namespace Transcripcion
 {
     partial class Hash
     {
@@ -65,6 +67,7 @@
             this.rbtnVuelo = new System.Windows.Forms.RadioButton();
             this.textBoxProcedimiento = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.comboBoxRecibe = new System.Windows.Forms.ComboBox();
@@ -76,6 +79,7 @@
             this.buttonImpCustodia = new System.Windows.Forms.Button();
             this.circularProgressBar1 = new CircularProgressBar.CircularProgressBar();
             this.buttonReset = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DgvElementos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHash)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -167,6 +171,7 @@
             this.textBoxNomOfRecibe.Name = "textBoxNomOfRecibe";
             this.textBoxNomOfRecibe.Size = new System.Drawing.Size(225, 21);
             this.textBoxNomOfRecibe.TabIndex = 18;
+            this.textBoxNomOfRecibe.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxNomOfRecibe_KeyDown);
             this.textBoxNomOfRecibe.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNomOfRecibe_KeyPress);
             // 
             // btnCopiar
@@ -180,6 +185,7 @@
             this.btnCopiar.TabIndex = 22;
             this.btnCopiar.Text = "Copiar";
             this.btnCopiar.UseVisualStyleBackColor = false;
+            this.btnCopiar.Visible = false;
             this.btnCopiar.Click += new System.EventHandler(this.btnCopiar_Click);
             // 
             // DgvElementos
@@ -212,7 +218,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvElementos.Location = new System.Drawing.Point(532, 50);
-            this.DgvElementos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DgvElementos.Margin = new System.Windows.Forms.Padding(2);
             this.DgvElementos.MultiSelect = false;
             this.DgvElementos.Name = "DgvElementos";
             this.DgvElementos.ReadOnly = true;
@@ -458,6 +464,7 @@
             this.rdbtnProcedimiento.TabIndex = 84;
             this.rdbtnProcedimiento.Text = "Procedimiento";
             this.rdbtnProcedimiento.UseVisualStyleBackColor = true;
+            this.rdbtnProcedimiento.CheckedChanged += new System.EventHandler(this.rdbtnProcedimiento_CheckedChanged);
             // 
             // rbtnVuelo
             // 
@@ -472,19 +479,21 @@
             this.rbtnVuelo.TabStop = true;
             this.rbtnVuelo.Text = "Vuelo";
             this.rbtnVuelo.UseVisualStyleBackColor = true;
+            this.rbtnVuelo.CheckedChanged += new System.EventHandler(this.rbtnVuelo_CheckedChanged);
             // 
             // textBoxProcedimiento
             // 
             this.textBoxProcedimiento.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxProcedimiento.Location = new System.Drawing.Point(19, 135);
-            this.textBoxProcedimiento.Multiline = true;
             this.textBoxProcedimiento.Name = "textBoxProcedimiento";
-            this.textBoxProcedimiento.Size = new System.Drawing.Size(217, 32);
+            this.textBoxProcedimiento.Size = new System.Drawing.Size(217, 21);
             this.textBoxProcedimiento.TabIndex = 86;
             this.textBoxProcedimiento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxProcedimiento_KeyPress);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label18);
+            this.groupBox1.Controls.Add(this.dateTimePicker1);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.comboBoxRecibe);
@@ -512,6 +521,17 @@
             this.groupBox1.TabIndex = 87;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.CustomFormat = "HH:mm";
+            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.Location = new System.Drawing.Point(148, 46);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(67, 21);
+            this.dateTimePicker1.TabIndex = 94;
+            this.dateTimePicker1.Value = new System.DateTime(2023, 5, 12, 15, 42, 58, 795);
             // 
             // label17
             // 
@@ -595,12 +615,12 @@
             this.textBoxNomEntrega.Name = "textBoxNomEntrega";
             this.textBoxNomEntrega.Size = new System.Drawing.Size(219, 21);
             this.textBoxNomEntrega.TabIndex = 16;
+            this.textBoxNomEntrega.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxNomEntrega_KeyDown);
             this.textBoxNomEntrega.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNomEntrega_KeyPress);
             // 
             // buttonImpCustodia
             // 
             this.buttonImpCustodia.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonImpCustodia.Enabled = false;
             this.buttonImpCustodia.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonImpCustodia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.buttonImpCustodia.Location = new System.Drawing.Point(1077, 554);
@@ -609,7 +629,7 @@
             this.buttonImpCustodia.TabIndex = 88;
             this.buttonImpCustodia.Text = "Imprimir Custodia";
             this.buttonImpCustodia.UseVisualStyleBackColor = false;
-            this.buttonImpCustodia.Visible = false;
+            this.buttonImpCustodia.Click += new System.EventHandler(this.buttonImpCustodia_Click);
             // 
             // circularProgressBar1
             // 
@@ -657,6 +677,17 @@
             this.buttonReset.Text = "Reset";
             this.buttonReset.UseVisualStyleBackColor = false;
             this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.SystemColors.Control;
+            this.label18.Location = new System.Drawing.Point(145, 30);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(82, 13);
+            this.label18.TabIndex = 93;
+            this.label18.Text = "Hora Entrega";
             // 
             // Hash
             // 
@@ -745,6 +776,8 @@
         private System.Windows.Forms.Button buttonImpCustodia;
         private CircularProgressBar.CircularProgressBar circularProgressBar1;
         private System.Windows.Forms.Button buttonReset;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label18;
     }
 }
 

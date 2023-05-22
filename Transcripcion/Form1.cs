@@ -15,11 +15,16 @@ namespace Transcripcion
         Formulario_Hash formulario = new Formulario_Hash();
         List<BEOficial> listaOficiales = new List<BEOficial>();
         List<BEJerarquia> listaJerarquias = BEJerarquia.ObtenerJerarquias();
-
+        Formulario_Custodia formulario_Custodia = new Formulario_Custodia();
         string CarpetaDestino;
         string carpetaSeleccionada;
 
-
+        List<string> sugerencias = new List<string>()
+        {
+    "KLM 702",
+    "MP 6912",
+    "ODT",
+        };
 
 
         public Hash()
@@ -29,10 +34,33 @@ namespace Transcripcion
             comboBoxEntrega.DataSource = listaJerarquias.ConvertAll(item => (BEJerarquia)item.Clone());
             listaOficiales = BEOficial.ObtenerOficiales();
 
+
+
+            AutoCompleteStringCollection source = new AutoCompleteStringCollection();
+            foreach (BEOficial oficial in listaOficiales)
+            {
+                source.Add(oficial.NombreCompleto);
+            }
+            textBoxNomEntrega.AutoCompleteCustomSource = source;
+            textBoxNomEntrega.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            textBoxNomEntrega.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            textBoxNomOfRecibe.AutoCompleteCustomSource =source;
+            textBoxNomOfRecibe.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            textBoxNomOfRecibe.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+
+
+            AutoCompleteStringCollection source2 = new AutoCompleteStringCollection();
+            source2.AddRange(sugerencias.ToArray());
+            textBoxProcedimiento.AutoCompleteCustomSource = source2;
+            textBoxProcedimiento.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            textBoxProcedimiento.AutoCompleteSource = AutoCompleteSource.CustomSource;
             
+
         }
 
-        
+
 
         private string calcularHash(string rutaArchivo)
         {
@@ -66,6 +94,8 @@ namespace Transcripcion
             {
 
                 FolderBrowserDialog dialogoSeleccionCarpeta = new FolderBrowserDialog();
+                dialogoSeleccionCarpeta.RootFolder = Environment.SpecialFolder.MyComputer;
+
                 DialogResult resultado = dialogoSeleccionCarpeta.ShowDialog();
 
                 // Verificar si el usuario seleccionó una carpeta
@@ -112,7 +142,7 @@ namespace Transcripcion
 
         public void MostrarSpriner()
         {
-
+            circularProgressBar1.Text = "0%";
             circularProgressBar1.Value = 0;
             circularProgressBar1.Minimum = 0;
             circularProgressBar1.Visible = true;
@@ -143,7 +173,8 @@ namespace Transcripcion
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
             DgvElementos.Columns["Nro_Orden"].Width = 30;
-            DgvElementos.Columns["Extension"].Width = 30;
+            DgvElementos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            DgvElementos.Columns["Extension"].Width = 35;
             DgvElementos.Columns["Peso"].Width = 65;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
@@ -273,44 +304,6 @@ namespace Transcripcion
                 MessageBox.Show(ex.Message);
             }
 
-            //try
-            //{
-            //    FolderBrowserDialog dialogoSeleccionCarpeta = new FolderBrowserDialog();
-            //    DialogResult resultado = dialogoSeleccionCarpeta.ShowDialog();
-            //    bool carpetaAbierta = false;
-            //    // Verificar si el usuario seleccionó una carpeta
-            //    if (resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(dialogoSeleccionCarpeta.SelectedPath))
-            //    {
-            //        CarpetaDestino = dialogoSeleccionCarpeta.SelectedPath;
-            //        // La carpeta seleccionada por el usuario
-            //        MostrarSpriner();
-            //        circularProgressBar1.Maximum = RutaArchivos.Count;
-            //        foreach (var ruta in RutaArchivos)
-            //        {
-            //            string rutaArchivoOrigen = ruta;
-            //            string nombreArchivoDestino = Path.GetFileName(rutaArchivoOrigen);
-            //            string rutaArchivoDestino = Path.Combine(CarpetaDestino, nombreArchivoDestino);
-            //            File.Copy(rutaArchivoOrigen, rutaArchivoDestino, true);
-            //            if (!carpetaAbierta)
-            //            {
-            //                // Abre el explorador de archivos y navega a la carpeta deseada
-            //                System.Diagnostics.Process.Start(CarpetaDestino);
-
-            //                // Establece la variable carpetaAbierta en true para indicar que ya se ha abierto la carpeta
-            //                carpetaAbierta = true;
-
-            //            }
-            //            circularProgressBar1.Value++;
-            //            circularProgressBar1.Text = $"{(circularProgressBar1.Value * 100) / circularProgressBar1.Maximum}%";
-            //        }
-            //        OcultarSpriner();
-            //        MessageBox.Show("Archivos copiados exitosamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
         }
 
         private bool VerificarObjetoCompleto(object objeto)
@@ -367,7 +360,6 @@ namespace Transcripcion
 
         private void CargarFormulario()
         {
-
             try
             {
                 formulario.Nro_Hash = (int)numericUpDownHash.Value;
@@ -387,6 +379,53 @@ namespace Transcripcion
                 MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void buttonImpCustodia_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CargarCustodia();
+                if (VerificarObjetoCompleto(formulario_Custodia))
+                {
+                    Form_Impresion form_Impresion = new Form_Impresion(formulario_Custodia);
+                    form_Impresion.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Falta informacion para realizar la informacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void CargarCustodia()
+        {
+            try
+            {
+                formulario_Custodia.Nro_Hash = (int)numericUpDownHash.Value;
+                formulario_Custodia.Hora = dateTimePicker1.Value;
+                formulario_Custodia.Tipo = rbtnVuelo.Checked == true ? "VUELO" : "PROCEDIMIENTO";
+                formulario_Custodia.Procedimiento = textBoxProcedimiento.Text;
+                formulario_Custodia.OfEntrega = new BEOficial(Convert.ToInt32(textBoxControlOfEntrega.Text), textBoxNomEntrega.Text);
+                formulario_Custodia.OfEntrega.jerarquia = (BEJerarquia)comboBoxEntrega.SelectedItem;
+                formulario_Custodia.OfRecibe = new BEOficial(Convert.ToInt32(textBoxConOfRecibe.Text), textBoxNomOfRecibe.Text);
+                formulario_Custodia.OfRecibe.jerarquia = (BEJerarquia)comboBoxRecibe.SelectedItem;
+                //formulario_Custodia.ListaArchivos = formulario.ListaArchivos;
+                BEOficial.AgregarOficial(formulario_Custodia.OfEntrega);
+                BEOficial.AgregarOficial(formulario_Custodia.OfRecibe);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
 
         private void textBoxControlOfEntrega_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -452,22 +491,7 @@ namespace Transcripcion
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            NombreArchivos = new List<string>();
-            RutaArchivos = new List<string>();
-            formulario = new Formulario_Hash();
-            listaOficiales = new List<BEOficial>();
-            lblAudio.Text = "0";
-            lblClip.Text = "0";
-            lblImg.Text = "0";
-            lblTxt.Text = "0";
-            lblVarios.Text = "0";
-
-            CarpetaDestino = "";
-            carpetaSeleccionada = "";
-            listBoxArchivos.DataSource = null;
-            DgvElementos.DataSource = null;
-            LimpiarControles(this);
-
+            Application.Restart();
         }
 
         private void LimpiarControles(Control control)
@@ -497,13 +521,61 @@ namespace Transcripcion
         private void textBoxNomOfRecibe_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.KeyChar = Char.ToUpper(e.KeyChar);
-
+           
         }
 
         private void textBoxProcedimiento_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.KeyChar = Char.ToUpper(e.KeyChar);
 
+        }
+
+      
+        public BEOficial BuscarOficial(int? legajo, string nombre)
+        {
+            return listaOficiales.Find(o => o.NombreCompleto == nombre);
+
+        }
+
+        private void textBoxNomEntrega_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+
+                var oficial = BuscarOficial(null, textBoxNomEntrega.Text);
+                if (oficial != null)
+                {
+                    textBoxControlOfEntrega.Text = oficial.Legajo.ToString();
+                    comboBoxEntrega.Text = oficial.jerarquia.jerarquia;
+                }
+            }
+        }
+
+        private void textBoxNomOfRecibe_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+
+                var oficial = BuscarOficial(null, textBoxNomOfRecibe.Text);
+                if (oficial != null)
+                {
+                    textBoxConOfRecibe.Text = oficial.Legajo.ToString();
+                    comboBoxRecibe.Text = oficial.jerarquia.jerarquia;
+                }
+
+            }
+        }
+
+        private void rdbtnProcedimiento_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonImpCustodia.Visible = false;
+        }
+
+        private void rbtnVuelo_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonImpCustodia.Visible = true;
         }
     }
 }
