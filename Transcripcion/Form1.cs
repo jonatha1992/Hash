@@ -16,6 +16,7 @@ namespace Transcripcion
         List<BEOficial> listaOficiales = new List<BEOficial>();
         List<BEJerarquia> listaJerarquias = BEJerarquia.ObtenerJerarquias();
         Formulario_Custodia formulario_Custodia = new Formulario_Custodia();
+
         string CarpetaDestino;
         string carpetaSeleccionada;
 
@@ -30,34 +31,44 @@ namespace Transcripcion
         public Hash()
         {
             InitializeComponent();
-            comboBoxRecibe.DataSource = listaJerarquias;
-            comboBoxEntrega.DataSource = listaJerarquias.ConvertAll(item => (BEJerarquia)item.Clone());
-            listaOficiales = BEOficial.ObtenerOficiales();
 
-
-
-            AutoCompleteStringCollection source = new AutoCompleteStringCollection();
-            foreach (BEOficial oficial in listaOficiales)
+            try
             {
-                source.Add(oficial.NombreCompleto);
+
+
+                comboBoxRecibe.DataSource = listaJerarquias;
+                comboBoxEntrega.DataSource = listaJerarquias?.ConvertAll(item => (BEJerarquia)item.Clone());
+                listaOficiales = BEOficial.ObtenerOficiales();
+
+
+
+                AutoCompleteStringCollection source = new AutoCompleteStringCollection();
+                foreach (BEOficial oficial in listaOficiales)
+                {
+                    source.Add(oficial.NombreCompleto);
+                }
+                textBoxNomEntrega.AutoCompleteCustomSource = source;
+                textBoxNomEntrega.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                textBoxNomEntrega.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+                textBoxNomOfRecibe.AutoCompleteCustomSource = source;
+                textBoxNomOfRecibe.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                textBoxNomOfRecibe.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+
+
+                AutoCompleteStringCollection source2 = new AutoCompleteStringCollection();
+                source2.AddRange(sugerencias.ToArray());
+                textBoxProcedimiento.AutoCompleteCustomSource = source2;
+                textBoxProcedimiento.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                textBoxProcedimiento.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+                labelPesoTotal.Text = "0";
             }
-            textBoxNomEntrega.AutoCompleteCustomSource = source;
-            textBoxNomEntrega.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            textBoxNomEntrega.AutoCompleteSource = AutoCompleteSource.CustomSource;
-
-            textBoxNomOfRecibe.AutoCompleteCustomSource =source;
-            textBoxNomOfRecibe.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            textBoxNomOfRecibe.AutoCompleteSource = AutoCompleteSource.CustomSource;
-
-
-
-            AutoCompleteStringCollection source2 = new AutoCompleteStringCollection();
-            source2.AddRange(sugerencias.ToArray());
-            textBoxProcedimiento.AutoCompleteCustomSource = source2;
-            textBoxProcedimiento.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            textBoxProcedimiento.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message} ", "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
         }
 
 
@@ -126,11 +137,10 @@ namespace Transcripcion
                         archivosProcesados++;
                         circularProgressBar1.Value = archivosProcesados;
                         circularProgressBar1.Text = $"{(int)((archivosProcesados / (double)totalArchivos) * 100)}%";
-
-
                     }
                     OcultarSpriner();
                     Actualizar();
+
                 }
             }
             catch (Exception ex)
@@ -170,13 +180,16 @@ namespace Transcripcion
             DgvElementos.DataSource = null;
             DgvElementos.DataSource = formulario.ListaArchivos;
             DgvElementos.Columns["Nro_Orden"].HeaderText = "Nro Orden";
+            DgvElementos.Columns["PesoArchivo"].HeaderText = "Peso";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
             DgvElementos.Columns["Nro_Orden"].Width = 30;
             DgvElementos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             DgvElementos.Columns["Extension"].Width = 35;
-            DgvElementos.Columns["Peso"].Width = 65;
+            DgvElementos.Columns["PesoArchivo"].Width = 65;
+            DgvElementos.Columns["Peso"].Visible= false;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            labelPesoTotal.Text = formulario.pesototal;
 
         }
 
@@ -521,7 +534,7 @@ namespace Transcripcion
         private void textBoxNomOfRecibe_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.KeyChar = Char.ToUpper(e.KeyChar);
-           
+
         }
 
         private void textBoxProcedimiento_KeyPress(object sender, KeyPressEventArgs e)
@@ -530,7 +543,7 @@ namespace Transcripcion
 
         }
 
-      
+
         public BEOficial BuscarOficial(int? legajo, string nombre)
         {
             return listaOficiales.Find(o => o.NombreCompleto == nombre);
@@ -577,6 +590,8 @@ namespace Transcripcion
         {
             buttonImpCustodia.Visible = true;
         }
+
+
     }
 }
 

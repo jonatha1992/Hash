@@ -19,15 +19,25 @@ namespace Hash
 
         public static List<BEJerarquia> ObtenerJerarquias()
         {
-            XDocument doc = XDocument.Load("datos.xml");
+            try
+            {
 
-            var jerarquias = from jerar in doc.Descendants("Jerarquia")
-                             select new BEJerarquia
-                             {
-                                 jerarquia = jerar.Element("jerarquia").Value,
-                                 Abreviatura = jerar.Element("Abreviatura").Value
-                             };
-            return jerarquias.ToList();
+
+                XDocument doc = XDocument.Load("datos.xml");
+
+                var jerarquias = from jerar in doc.Descendants("Jerarquia")
+                                 select new BEJerarquia
+                                 {
+                                     jerarquia = jerar.Element("jerarquia").Value,
+                                     Abreviatura = jerar.Element("Abreviatura").Value
+                                 };
+                return jerarquias.ToList();
+            }
+            catch (Exception )
+            {
+
+                throw new Exception("Error al obtener la base");
+            }
         }
         public override string ToString()
         {

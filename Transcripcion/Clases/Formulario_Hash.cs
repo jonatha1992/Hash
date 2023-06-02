@@ -18,6 +18,10 @@ namespace Hash
         public BEOficial OfRecibe { get; set; }
         public List<BEArchivo> ListaArchivos { get; set; }
 
+
+        public string pesototal = "";
+        public double PesoTotal = 0;
+
         public Formulario_Hash()
         {
             ListaArchivos = new List<BEArchivo>();
@@ -43,6 +47,40 @@ namespace Hash
             {
                 ListaArchivos[i].Nro_Orden = i + 1;
             }
+
+            VerificarPeso();
+
+
+
+        }
+        public void VerificarPeso()
+        {
+
+            PesoTotal = ListaArchivos.Sum(x => x.Peso);
+
+            double kilobytes = PesoTotal / 1024.0;
+
+            if (kilobytes <= 1024)
+            {
+                PesoTotal = kilobytes;
+                pesototal = $"{PesoTotal:F2} KB";
+            }
+            else
+            {
+                double megabytes = kilobytes / 1024.0;
+                if (megabytes <= 1024)
+                {
+                    PesoTotal = megabytes;
+                    pesototal = $"{PesoTotal:F2} MB";
+                }
+                else
+                {
+                    double gigabytes = megabytes / 1024.0;
+                    PesoTotal = gigabytes;
+                    pesototal = $"{PesoTotal:F2} GB";
+                }
+            }
+
         }
 
     }

@@ -67,6 +67,7 @@ namespace Transcripcion
             this.rbtnVuelo = new System.Windows.Forms.RadioButton();
             this.textBoxProcedimiento = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -79,7 +80,8 @@ namespace Transcripcion
             this.buttonImpCustodia = new System.Windows.Forms.Button();
             this.circularProgressBar1 = new CircularProgressBar.CircularProgressBar();
             this.buttonReset = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
+            this.labelTotal = new System.Windows.Forms.Label();
+            this.labelPesoTotal = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DgvElementos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHash)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -522,6 +524,17 @@ namespace Transcripcion
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos";
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.SystemColors.Control;
+            this.label18.Location = new System.Drawing.Point(145, 30);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(82, 13);
+            this.label18.TabIndex = 93;
+            this.label18.Text = "Hora Entrega";
+            // 
             // dateTimePicker1
             // 
             this.dateTimePicker1.CustomFormat = "HH:mm";
@@ -678,16 +691,27 @@ namespace Transcripcion
             this.buttonReset.UseVisualStyleBackColor = false;
             this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
-            // label18
+            // labelTotal
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.SystemColors.Control;
-            this.label18.Location = new System.Drawing.Point(145, 30);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(82, 13);
-            this.label18.TabIndex = 93;
-            this.label18.Text = "Hora Entrega";
+            this.labelTotal.AutoSize = true;
+            this.labelTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTotal.ForeColor = System.Drawing.SystemColors.Control;
+            this.labelTotal.Location = new System.Drawing.Point(357, 584);
+            this.labelTotal.Name = "labelTotal";
+            this.labelTotal.Size = new System.Drawing.Size(86, 17);
+            this.labelTotal.TabIndex = 93;
+            this.labelTotal.Text = "Peso total:";
+            // 
+            // labelPesoTotal
+            // 
+            this.labelPesoTotal.AutoSize = true;
+            this.labelPesoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPesoTotal.ForeColor = System.Drawing.SystemColors.Control;
+            this.labelPesoTotal.Location = new System.Drawing.Point(449, 584);
+            this.labelPesoTotal.Name = "labelPesoTotal";
+            this.labelPesoTotal.Size = new System.Drawing.Size(17, 17);
+            this.labelPesoTotal.TabIndex = 94;
+            this.labelPesoTotal.Text = "0";
             // 
             // Hash
             // 
@@ -695,6 +719,8 @@ namespace Transcripcion
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1265, 610);
+            this.Controls.Add(this.labelPesoTotal);
+            this.Controls.Add(this.labelTotal);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.circularProgressBar1);
             this.Controls.Add(this.buttonImpCustodia);
@@ -778,6 +804,8 @@ namespace Transcripcion
         private System.Windows.Forms.Button buttonReset;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label labelTotal;
+        private System.Windows.Forms.Label labelPesoTotal;
     }
 }
 
