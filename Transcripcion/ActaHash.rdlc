@@ -791,7 +791,7 @@ Legajo: </Value>
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value> - ASUNTO 4004 DROPA/2022</Value>
+                    <Value xml:space="preserve"> </Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -803,9 +803,9 @@ Legajo: </Value>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>3.82539cm</Top>
-            <Left>1.3817cm</Left>
+            <Left>5.1917cm</Left>
             <Height>0.77542cm</Height>
-            <Width>16.15775cm</Width>
+            <Width>10.10408cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1446,7 +1446,6 @@ Legajo: </Value>
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <KeepWithGroup>Before</KeepWithGroup>

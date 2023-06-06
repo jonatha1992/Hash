@@ -544,7 +544,7 @@ namespace Transcripcion
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(67, 21);
             this.dateTimePicker1.TabIndex = 94;
-            this.dateTimePicker1.Value = new System.DateTime(2023, 5, 12, 15, 42, 58, 795);
+            this.dateTimePicker1.Value = DateTime.Now;
             // 
             // label17
             // 
