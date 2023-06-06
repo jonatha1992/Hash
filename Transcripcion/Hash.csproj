@@ -120,6 +120,7 @@
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Archivo.datasource" />
+    <None Include="Properties\DataSources\BEArchivo.datasource" />
     <None Include="Properties\DataSources\Formulario_Custodia.datasource" />
     <None Include="Properties\DataSources\Hash.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\Hash.Properties.Settings.datasource" />

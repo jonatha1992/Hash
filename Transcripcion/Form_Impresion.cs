@@ -25,13 +25,13 @@ namespace Hash
         }
 
         private void FormImpresion_Load(object sender, EventArgs e)
-        {
+        { 
             try
             {
 
                 this.reportViewer1.LocalReport.DataSources.Clear();
 
-                if(Formulario_Custodia == null)
+                if(Formulario_Custodia == null)// si es hash
                 {
                     this.reportViewer1.LocalReport.ReportEmbeddedResource = "Hash.ActaHash.rdlc";
 
@@ -47,7 +47,8 @@ namespace Hash
                                                                                     new ReportParameter("Clips",Formulario_Hash.Clips.ToString()),
                                                                                     new ReportParameter("Audio",Formulario_Hash.Audio.ToString()),
                                                                                     new ReportParameter("Tipo_procedimiento",Formulario_Hash.Tipo.ToUpper()),
-                                                                                    new ReportParameter("Procedimiento",Formulario_Hash.Procedimiento.ToUpper())
+                                                                                    new ReportParameter("Procedimiento",Formulario_Hash.Procedimiento.ToUpper()),
+                                                                                    new ReportParameter("PesoTotal",Formulario_Hash.pesototal.ToUpper())
                                                                                    };
 
 
@@ -58,7 +59,7 @@ namespace Hash
                 else
                 {
 
-                    this.reportViewer1.LocalReport.ReportEmbeddedResource = "Hash.ActaCustodia.rdlc";
+                    this.reportViewer1.LocalReport.ReportEmbeddedResource = "Hash.ActaCustodia.rdlc"; // si es cusotodia
 
                     // Crear el DataTable y las columnas
                     DataTable dataTable = new DataTable();
