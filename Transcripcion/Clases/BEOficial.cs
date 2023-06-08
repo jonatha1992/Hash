@@ -18,6 +18,8 @@ namespace Hash
         }
 
         public BEOficial() { }
+
+
         static public List<BEOficial> ObtenerOficiales()
         {
 
