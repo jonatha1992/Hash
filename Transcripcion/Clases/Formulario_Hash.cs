@@ -13,7 +13,6 @@ namespace Hash
         public int Varios { get; set; }
         public string Tipo { get; set; }
         public string Procedimiento { get; set; }
-        //public string Nota { get; set; }
         public BEOficial OfEntrega { get; set; }
         public BEOficial OfRecibe { get; set; }
         public List<BEArchivo> ListaArchivos { get; set; }
@@ -36,12 +35,7 @@ namespace Hash
             && a.Extension != ".png" && a.Extension != ".jpg" && a.Extension != ".jpeg" && a.Extension != ".gif" && a.Extension != ".bmp"
             && a.Extension != ".mp4" && a.Extension != ".avi" && a.Extension != ".wmv" && a.Extension != ".mov");
 
-            //int contador = 1;
-            //foreach (var x in ListaArchivos)
-            //{
-            //    x.Nro_Orden = contador;
-            //    contador++;
-            //}
+      
 
             for (int i = 0; i < ListaArchivos.Count; i++)
             {

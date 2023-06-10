@@ -802,10 +802,10 @@ Legajo: </Value>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>3.82539cm</Top>
+            <Top>3.79011cm</Top>
             <Left>5.1917cm</Left>
             <Height>0.77542cm</Height>
-            <Width>10.10408cm</Width>
+            <Width>11.26825cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1635,10 +1635,14 @@ Legajo: </Value>
     </ReportParameter>
     <ReportParameter Name="NombreRecibe">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="ControlRecibe">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="PesoTotal">

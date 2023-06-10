@@ -9,6 +9,7 @@ namespace Hash
         public int Legajo { get; set; }
         public string NombreCompleto { get; set; }
         public BEJerarquia jerarquia { get; set; }
+        public string Dependencia { get; set; }
 
 
         public BEOficial(int legaj, string nombrecompleto)

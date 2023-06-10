@@ -53,4 +53,34 @@
       <jerarquia>Principal</jerarquia>
     </Oficial>
   </Oficiales>
+  <Aeropuertos>
+    <Aeropuerto>
+      <Unidad>EZE</Unidad>
+      <Nombre>AEROPUERTO INTERNACIONAL MINISTRO PISTARINI</Nombre>
+    </Aeropuerto>
+    <Aeropuerto>
+      <Unidad>AER</Unidad>
+      <Nombre>AEROPUERTO INTERNACIONAL JORGE NEWBERY</Nombre>
+    </Aeropuerto>
+    <Aeropuerto>
+      <Unidad>MDP</Unidad>
+      <Nombre>AEROPUERTO INTERNACIONAL ASTOR PIAZZOLA</Nombre>
+    </Aeropuerto>
+    <Aeropuerto>
+      <Unidad>SFO</Unidad>
+      <Nombre>AEROPUERTO INTERNACIONAL SAN FERNANDO</Nombre>
+    </Aeropuerto>
+    <Aeropuerto>
+      <Unidad>BHI</Unidad>
+      <Nombre>COMANDANTE ESPORA</Nombre>
+    </Aeropuerto>
+  </Aeropuertos>
+  <Dependencias>
+    <Dependencia>CREV I DEL ESTE</Dependencia>
+    <Dependencia>DRICA I DEL ESTE</Dependencia>
+    <Dependencia>DROPA I DE ESTE</Dependencia>
+    <Dependencia>SUMARIOS EZEIZA</Dependencia>
+    <Dependencia>SUMARIOS AEROPARQUE</Dependencia>
+    <Dependencia>DROPA-ODT </Dependencia>
+  </Dependencias>
 </Base>

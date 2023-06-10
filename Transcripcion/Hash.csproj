@@ -81,9 +81,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clases\BEDependecia.cs" />
     <Compile Include="Clases\BEArchivo.cs" />
     <Compile Include="Clases\BEJerarquia.cs" />
     <Compile Include="Clases\BEOficial.cs" />
+    <Compile Include="Clases\BEAeropuerto.cs" />
+    <Compile Include="Clases\BEProcedientos.cs" />
     <Compile Include="Clases\Formulario_Custodia.cs" />
     <Compile Include="Clases\Formulario_Hash.cs" />
     <Compile Include="Form1.cs">
