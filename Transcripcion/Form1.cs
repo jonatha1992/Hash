@@ -298,7 +298,7 @@ namespace Transcripcion
                 formularioHash.OfEntrega = new BEOficial(Convert.ToInt32(textBoxControlOfEntrega.Text), textBoxNomEntrega.Text);
                 formularioHash.OfEntrega.jerarquia = (BEJerarquia)comboBoxJerarquiaEntrega.SelectedItem;
                 formularioHash.OfEntrega.Dependencia = comboBoxDependeciaEntrega.Text;
-                BEOficial.AgregarOficial(formulario_Custodia.OfEntrega);
+                BEOficial.AgregarOficial(formularioHash.OfEntrega);
 
                 if (checkBoxOficialRecibe.Checked)
                 {
@@ -611,6 +611,8 @@ namespace Transcripcion
             comboBoxTipo.KeyPress += ConvertirMayusculas;
             comboBoxDependeciaRecibe.KeyPress += ConvertirMayusculas;
             comboBoxDependeciaRecibe.KeyPress += ConvertirMayusculas;
+
+            dateTimePicker1.Value = DateTime.Now;
         }
     }
 }

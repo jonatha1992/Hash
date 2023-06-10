@@ -3075,7 +3075,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Globals!ExecutionTime.ToShortDateString</Value>
+                                  <Value>=IIf(Parameters!DependenciaRecibe.Value Is Nothing, "", Globals!ExecutionTime.ToShortDateString())</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -3164,7 +3164,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Format(Globals!ExecutionTime, "HH:mm")</Value>
+                                  <Value>=IIf(Parameters!DependenciaRecibe.Value Is Nothing, "",Format(Globals!ExecutionTime, "HH:mm"))</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>

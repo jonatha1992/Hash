@@ -11,7 +11,7 @@ namespace Hash
 
         public string Nombre { get; set; }
        
-
+   
         static public List<BEProcedimiento> ObtenerProcedimientos()
         {
 
@@ -26,20 +26,20 @@ namespace Hash
             return procedimientos;
         }
 
-        static public void AgregarProcedimiento(BEProcedimiento procedimiento)
+        static public void AgregarProcedimiento(string  Nprocedimiento)
         {
 
             XDocument doc = XDocument.Load("datos.xml");
 
 
-            bool existeProcedimiento = doc.Descendants("Procedimientos").Any(o => (string)o.Element("Procedimiento").Value == procedimiento.Nombre);
+            bool existeProcedimiento = doc.Descendants("Procedimientos").Any(o => (string)o.Element("Procedimiento").Value == Nprocedimiento);
 
             if (!existeProcedimiento)
             {
 
-                XElement nuevoProcedimiento = new XElement("Procedimiento", procedimiento.Nombre);
+                XElement nuevoProcedimiento = new XElement("Procedimiento", Nprocedimiento);
 
-                doc.Root.Element("Procedmientos").Add(nuevoProcedimiento);
+                doc.Root.Element("Procedimientos").Add(nuevoProcedimiento);
                 doc.Save("datos.xml");
 
             }

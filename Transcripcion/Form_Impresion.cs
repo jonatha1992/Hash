@@ -25,13 +25,13 @@ namespace Hash
         }
 
         private void FormImpresion_Load(object sender, EventArgs e)
-        { 
+        {
             try
             {
 
                 this.reportViewer1.LocalReport.DataSources.Clear();
 
-                if(Formulario_Custodia == null)// si es hash
+                if (Formulario_Custodia == null)// si es hash
                 {
                     this.reportViewer1.LocalReport.ReportEmbeddedResource = "Hash.ActaHash.rdlc";
 
@@ -41,26 +41,30 @@ namespace Hash
                     ReportParameterCollection Parametros = new ReportParameterCollection(){ new ReportParameter("NroActa",Formulario_Hash.Nro_Hash.ToString()),
                                                                                     new ReportParameter("NombreEntrega",Formulario_Hash.OfEntrega.ToString().ToUpper()),
                                                                                     new ReportParameter("ControlEntrega", Formulario_Hash.OfEntrega.Legajo.ToString()),
-                                                                                    new ReportParameter("NombreRecibe",Formulario_Hash.OfRecibe.ToString().ToUpper()),
+                                                                                    new ReportParameter("NombreRecibe",Formulario_Hash.OfRecibe.ToString()),
                                                                                     new ReportParameter("ControlRecibe", Formulario_Hash.OfRecibe.Legajo.ToString()),
                                                                                     new ReportParameter("Imagenes", Formulario_Hash.Imagenes.ToString()),
                                                                                     new ReportParameter("Clips",Formulario_Hash.Clips.ToString()),
                                                                                     new ReportParameter("Audio",Formulario_Hash.Audio.ToString()),
-                                                                                    new ReportParameter("Tipo_procedimiento",Formulario_Hash.Tipo.ToUpper()),
-                                                                                    new ReportParameter("Procedimiento",Formulario_Hash.Procedimiento.ToUpper()),
-                                                                                    new ReportParameter("PesoTotal",Formulario_Hash.pesototal.ToUpper())
+                                                                                    new ReportParameter("Tipo_procedimiento",Formulario_Hash.Tipo.ToString()),
+                                                                                    new ReportParameter("Procedimiento",Formulario_Hash.Procedimiento.ToString()),
+                                                                                    new ReportParameter("PesoTotal",Formulario_Hash.pesototal.ToString())
                                                                                    };
 
                     if (Formulario_Hash.OfRecibe != null)
                     {
-                        Parametros.Add(new ReportParameter("NombreRecibe", Formulario_Custodia.OfRecibe.ToString()));
-                        Parametros.Add(new ReportParameter("ControlRecibe", "LUP" + Formulario_Custodia.OfRecibe.Legajo.ToString()));
-                        Parametros.Add(new ReportParameter("DependenciaRecibe", Formulario_Custodia.OfRecibe.ToString()));
+                        Parametros.Add(new ReportParameter("NombreRecibe", Formulario_Hash.OfRecibe.ToString()));
+                        Parametros.Add(new ReportParameter("ControlRecibe", "LUP " + Formulario_Hash.OfRecibe.Legajo.ToString()));
+                        Parametros.Add(new ReportParameter("DependenciaRecibe", Formulario_Hash.OfRecibe.ToString()));
+                        BEDependencia.AgregarDependencia(Formulario_Hash.OfRecibe.Dependencia);
                     }
 
                     this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
                     this.reportViewer1.LocalReport.SetParameters(Parametros);
                     this.reportViewer1.RefreshReport();
+
+                    BEProcedimiento.AgregarProcedimiento(Formulario_Hash.Procedimiento);
+                    BEDependencia.AgregarDependencia(Formulario_Hash.OfEntrega.Dependencia);
                 }
                 else
                 {
@@ -101,23 +105,26 @@ namespace Hash
                                                                                     new ReportParameter("Identificacion",Formulario_Custodia.Identificacion.ToString()),
                                                                                     new ReportParameter("Descripcion",Formulario_Custodia.Descripcion.ToString()),
                                                                                     new ReportParameter("NombreEntrega",Formulario_Custodia.OfEntrega.ToString()),
-                                                                                    new ReportParameter("ControlEntrega","LUP" + Formulario_Custodia.OfEntrega.Legajo.ToString()),
-                                                                                    new ReportParameter("DependenciaEntrega",Formulario_Custodia.OfEntrega.Dependencia),
+                                                                                    new ReportParameter("ControlEntrega","LUP " + Formulario_Custodia.OfEntrega.Legajo.ToString()),
+                                                                                    new ReportParameter("DependenciaEntrega",Formulario_Custodia.OfEntrega.Dependencia.ToString()),
                                                                                    };
-                    
+
                     if (Formulario_Custodia.OfRecibe != null)
                     {
                         Parametros.Add(new ReportParameter("NombreRecibe", Formulario_Custodia.OfRecibe.ToString()));
-                        Parametros.Add(new ReportParameter("ControlRecibe", "LUP" + Formulario_Custodia.OfRecibe.Legajo.ToString()));
-                        Parametros.Add(new ReportParameter("DependenciaRecibe", Formulario_Custodia.OfRecibe.ToString()));
+                        Parametros.Add(new ReportParameter("ControlRecibe", "LUP " + Formulario_Custodia.OfRecibe.Legajo.ToString()));
+                        Parametros.Add(new ReportParameter("DependenciaRecibe", Formulario_Custodia.OfRecibe.Dependencia.ToString()));
+                        BEDependencia.AgregarDependencia(Formulario_Custodia.OfRecibe.Dependencia);
                     }
 
                     this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
                     this.reportViewer1.LocalReport.SetParameters(Parametros);
                     this.reportViewer1.RefreshReport();
+
+                    BEProcedimiento.AgregarProcedimiento(Formulario_Custodia.Cartula);
+                    BEDependencia.AgregarDependencia(Formulario_Custodia.OfEntrega.Dependencia);
                 }
 
-            
             }
             catch (Exception ex)
             {

@@ -30,7 +30,23 @@ namespace Hash
                             }).ToList();
             return dependencias;
         }
+        static public void AgregarDependencia(string NDependencia)
+        {
 
+            XDocument doc = XDocument.Load("datos.xml");
+
+
+            bool existeDependencia = doc.Descendants("Dependencias").Any(o => (string)o.Element("Dependencia").Value == NDependencia);
+
+            if (!existeDependencia)
+            {
+
+                XElement nuevoDependencia = new XElement("Dependencia", NDependencia);
+
+                doc.Root.Element("Dependencias").Add(nuevoDependencia);
+                doc.Save("datos.xml");
+            }
+        }
         public override string ToString()
         {
             return Nombre;

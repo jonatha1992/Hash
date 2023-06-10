@@ -7,50 +7,50 @@
   <Jerarquias>
     <Jerarquia>
       <Id>1</Id>
-      <jerarquia>Ayudante</jerarquia>
-      <Abreviatura>Of. Ayte.</Abreviatura>
+      <jerarquia>AYUDANTE</jerarquia>
+      <Abreviatura>OF. AYTE.</Abreviatura>
     </Jerarquia>
     <Jerarquia>
       <Id>2</Id>
-      <jerarquia>Principal</jerarquia>
-      <Abreviatura>Of. Ppal.</Abreviatura>
+      <jerarquia>PRINCIPAL</jerarquia>
+      <Abreviatura>OF. PPAL.</Abreviatura>
     </Jerarquia>
     <Jerarquia>
       <Id>3</Id>
-      <jerarquia>Mayor</jerarquia>
-      <Abreviatura>Of. My.</Abreviatura>
+      <jerarquia>MAYOR</jerarquia>
+      <Abreviatura>OF. MY.</Abreviatura>
     </Jerarquia>
     <Jerarquia>
       <Id>4</Id>
-      <jerarquia>Jefe</jerarquia>
-      <Abreviatura>Of. Jefe</Abreviatura>
+      <jerarquia>JEFE</jerarquia>
+      <Abreviatura>OF. JEFE</Abreviatura>
     </Jerarquia>
     <Jerarquia>
       <Id>5</Id>
-      <jerarquia>Subinspector</jerarquia>
-      <Abreviatura>Subinspector</Abreviatura>
+      <jerarquia>SUBINSPECTOR</jerarquia>
+      <Abreviatura>SUBINSPECTOR</Abreviatura>
     </Jerarquia>
     <Jerarquia>
       <Id>6</Id>
-      <jerarquia>Inspector</jerarquia>
-      <Abreviatura>Inspector</Abreviatura>
+      <jerarquia>INSPECTOR</jerarquia>
+      <Abreviatura>INSPECTOR</Abreviatura>
     </Jerarquia>
     <Jerarquia>
       <Id>7</Id>
-      <jerarquia>Comisionado Mayor</jerarquia>
-      <Abreviatura>Com. My.</Abreviatura>
+      <jerarquia>COMISIONADO MAYOR</jerarquia>
+      <Abreviatura>COM. MY.</Abreviatura>
     </Jerarquia>
     <Jerarquia>
       <Id>8</Id>
-      <jerarquia>Comisionado General</jerarquia>
-      <Abreviatura>Com. Gral.</Abreviatura>
+      <jerarquia>COMISIONADO GENERAL</jerarquia>
+      <Abreviatura>COM. GRAL.</Abreviatura>
     </Jerarquia>
   </Jerarquias>
   <Oficiales>
     <Oficial>
       <Legajo>506896</Legajo>
-      <Nombre>Jonathan Correa</Nombre>
-      <jerarquia>Principal</jerarquia>
+      <Nombre>CORREA JONATHAN</Nombre>
+      <jerarquia>PRINCIPAL</jerarquia>
     </Oficial>
   </Oficiales>
   <Aeropuertos>
@@ -72,15 +72,20 @@
     </Aeropuerto>
     <Aeropuerto>
       <Unidad>BHI</Unidad>
-      <Nombre>COMANDANTE ESPORA</Nombre>
+      <Nombre>AEROPUERTO COMANDANTE ESPORA</Nombre>
     </Aeropuerto>
   </Aeropuertos>
   <Dependencias>
+    <Dependencia>UOSP EZEIZA</Dependencia>
+    <Dependencia>UOSP MAR DEL PLATA</Dependencia>
+    <Dependencia>UOSP BAHIA BLANCA</Dependencia>
+    <Dependencia>UOSP SAN FERNANDO</Dependencia>
+    <Dependencia>UOSP METROPOLITANA</Dependencia>
     <Dependencia>CREV I DEL ESTE</Dependencia>
-    <Dependencia>DRICA I DEL ESTE</Dependencia>
     <Dependencia>DROPA I DE ESTE</Dependencia>
+    <Dependencia>DRICA I DEL ESTE</Dependencia>
     <Dependencia>SUMARIOS EZEIZA</Dependencia>
-    <Dependencia>SUMARIOS AEROPARQUE</Dependencia>
-    <Dependencia>DROPA-ODT </Dependencia>
+    <Dependencia>SUMARIOS METROPOLITANA</Dependencia>
+    <Dependencia>DROPA-ODT</Dependencia>
   </Dependencias>
 </Base>
