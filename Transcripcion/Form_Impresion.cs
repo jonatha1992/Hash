@@ -41,8 +41,6 @@ namespace Hash
                     ReportParameterCollection Parametros = new ReportParameterCollection(){ new ReportParameter("NroActa",Formulario_Hash.Nro_Hash.ToString()),
                                                                                     new ReportParameter("NombreEntrega",Formulario_Hash.OfEntrega.ToString().ToUpper()),
                                                                                     new ReportParameter("ControlEntrega", Formulario_Hash.OfEntrega.Legajo.ToString()),
-                                                                                    new ReportParameter("NombreRecibe",Formulario_Hash.OfRecibe.ToString()),
-                                                                                    new ReportParameter("ControlRecibe", Formulario_Hash.OfRecibe.Legajo.ToString()),
                                                                                     new ReportParameter("Imagenes", Formulario_Hash.Imagenes.ToString()),
                                                                                     new ReportParameter("Clips",Formulario_Hash.Clips.ToString()),
                                                                                     new ReportParameter("Audio",Formulario_Hash.Audio.ToString()),
@@ -55,7 +53,6 @@ namespace Hash
                     {
                         Parametros.Add(new ReportParameter("NombreRecibe", Formulario_Hash.OfRecibe.ToString()));
                         Parametros.Add(new ReportParameter("ControlRecibe", "LUP " + Formulario_Hash.OfRecibe.Legajo.ToString()));
-                        Parametros.Add(new ReportParameter("DependenciaRecibe", Formulario_Hash.OfRecibe.ToString()));
                         BEDependencia.AgregarDependencia(Formulario_Hash.OfRecibe.Dependencia);
                     }
 

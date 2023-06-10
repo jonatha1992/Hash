@@ -226,11 +226,14 @@ namespace Transcripcion
             DgvElementos.Columns["PesoArchivo"].HeaderText = "Peso";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
-            DgvElementos.Columns["Nro_Orden"].Width = 30;
+            DgvElementos.Columns["Nro_Orden"].Width = 40;
+            DgvElementos.Columns["Nro_Orden"].Width = 40;
             DgvElementos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             DgvElementos.Columns["Extension"].Width = 35;
             DgvElementos.Columns["PesoArchivo"].Width = 65;
             DgvElementos.Columns["Peso"].Visible = false;
+            DgvElementos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            DgvElementos.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             labelPesoTotal.Text = formularioHash.pesototal;
 
@@ -267,10 +270,9 @@ namespace Transcripcion
 
         private void buttonImprimir_Click(object sender, EventArgs e)
         {
-
             try
             {
-                if (CargarFormularioHash())
+                if (CargarFormularioHash() && DgvElementos.DataSource != null || DgvElementos.Rows?.Count > 0)
                 {
                     Form_Impresion form_Impresion = new Form_Impresion(formularioHash);
                     form_Impresion.ShowDialog();
@@ -613,6 +615,11 @@ namespace Transcripcion
             comboBoxDependeciaRecibe.KeyPress += ConvertirMayusculas;
 
             dateTimePicker1.Value = DateTime.Now;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

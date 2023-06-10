@@ -112,7 +112,7 @@ namespace Transcripcion
             this.buttonAgregar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonAgregar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonAgregar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonAgregar.Location = new System.Drawing.Point(346, 640);
+            this.buttonAgregar.Location = new System.Drawing.Point(346, 506);
             this.buttonAgregar.Name = "buttonAgregar";
             this.buttonAgregar.Size = new System.Drawing.Size(82, 46);
             this.buttonAgregar.TabIndex = 2;
@@ -142,9 +142,9 @@ namespace Transcripcion
             this.buttonEliminar.BackColor = System.Drawing.Color.Red;
             this.buttonEliminar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEliminar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonEliminar.Location = new System.Drawing.Point(544, 519);
+            this.buttonEliminar.Location = new System.Drawing.Point(544, 507);
             this.buttonEliminar.Name = "buttonEliminar";
-            this.buttonEliminar.Size = new System.Drawing.Size(74, 38);
+            this.buttonEliminar.Size = new System.Drawing.Size(74, 45);
             this.buttonEliminar.TabIndex = 8;
             this.buttonEliminar.Text = "Eliminar";
             this.buttonEliminar.UseVisualStyleBackColor = false;
@@ -156,11 +156,11 @@ namespace Transcripcion
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(16, 17);
+            this.label1.Location = new System.Drawing.Point(6, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.Size = new System.Drawing.Size(121, 13);
             this.label1.TabIndex = 15;
-            this.label1.Text = "N° Hash";
+            this.label1.Text = "N° Hash / Custodia ";
             // 
             // label2
             // 
@@ -212,7 +212,7 @@ namespace Transcripcion
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle2;
             this.DgvElementos.Location = new System.Drawing.Point(624, 35);
-            this.DgvElementos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DgvElementos.Margin = new System.Windows.Forms.Padding(2);
             this.DgvElementos.MultiSelect = false;
             this.DgvElementos.Name = "DgvElementos";
             this.DgvElementos.ReadOnly = true;
@@ -274,7 +274,7 @@ namespace Transcripcion
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.Control;
-            this.label6.Location = new System.Drawing.Point(842, 518);
+            this.label6.Location = new System.Drawing.Point(955, 515);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(82, 17);
             this.label6.TabIndex = 66;
@@ -316,7 +316,7 @@ namespace Transcripcion
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.Control;
-            this.label9.Location = new System.Drawing.Point(738, 516);
+            this.label9.Location = new System.Drawing.Point(854, 515);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(54, 17);
             this.label9.TabIndex = 70;
@@ -327,7 +327,7 @@ namespace Transcripcion
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.Control;
-            this.label11.Location = new System.Drawing.Point(972, 518);
+            this.label11.Location = new System.Drawing.Point(1074, 515);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(48, 17);
             this.label11.TabIndex = 70;
@@ -338,7 +338,7 @@ namespace Transcripcion
             this.lblImg.AutoSize = true;
             this.lblImg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblImg.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblImg.Location = new System.Drawing.Point(919, 518);
+            this.lblImg.Location = new System.Drawing.Point(1032, 515);
             this.lblImg.Name = "lblImg";
             this.lblImg.Size = new System.Drawing.Size(17, 17);
             this.lblImg.TabIndex = 71;
@@ -349,7 +349,7 @@ namespace Transcripcion
             this.lblAudio.AutoSize = true;
             this.lblAudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAudio.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblAudio.Location = new System.Drawing.Point(789, 518);
+            this.lblAudio.Location = new System.Drawing.Point(903, 515);
             this.lblAudio.Name = "lblAudio";
             this.lblAudio.Size = new System.Drawing.Size(17, 17);
             this.lblAudio.TabIndex = 72;
@@ -360,7 +360,7 @@ namespace Transcripcion
             this.lblClip.AutoSize = true;
             this.lblClip.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClip.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblClip.Location = new System.Drawing.Point(1015, 518);
+            this.lblClip.Location = new System.Drawing.Point(1117, 515);
             this.lblClip.Name = "lblClip";
             this.lblClip.Size = new System.Drawing.Size(17, 17);
             this.lblClip.TabIndex = 73;
@@ -371,7 +371,7 @@ namespace Transcripcion
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.SystemColors.Control;
-            this.label13.Location = new System.Drawing.Point(1075, 518);
+            this.label13.Location = new System.Drawing.Point(1155, 515);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(53, 17);
             this.label13.TabIndex = 74;
@@ -382,7 +382,7 @@ namespace Transcripcion
             this.lblTxt.AutoSize = true;
             this.lblTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTxt.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTxt.Location = new System.Drawing.Point(1120, 518);
+            this.lblTxt.Location = new System.Drawing.Point(1200, 515);
             this.lblTxt.Name = "lblTxt";
             this.lblTxt.Size = new System.Drawing.Size(17, 17);
             this.lblTxt.TabIndex = 75;
@@ -393,7 +393,7 @@ namespace Transcripcion
             this.lblVarios.AutoSize = true;
             this.lblVarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVarios.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblVarios.Location = new System.Drawing.Point(1238, 518);
+            this.lblVarios.Location = new System.Drawing.Point(1296, 515);
             this.lblVarios.Name = "lblVarios";
             this.lblVarios.Size = new System.Drawing.Size(17, 17);
             this.lblVarios.TabIndex = 77;
@@ -404,7 +404,7 @@ namespace Transcripcion
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.Control;
-            this.label10.Location = new System.Drawing.Point(1180, 518);
+            this.label10.Location = new System.Drawing.Point(1238, 515);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(59, 17);
             this.label10.TabIndex = 76;
@@ -420,7 +420,7 @@ namespace Transcripcion
             0,
             0});
             this.numericUpDownHash.Name = "numericUpDownHash";
-            this.numericUpDownHash.Size = new System.Drawing.Size(77, 20);
+            this.numericUpDownHash.Size = new System.Drawing.Size(100, 20);
             this.numericUpDownHash.TabIndex = 78;
             this.numericUpDownHash.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDownHash.ValueChanged += new System.EventHandler(this.numericUpDownHash_ValueChanged);
@@ -441,7 +441,7 @@ namespace Transcripcion
             this.buttonImprimirHash.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonImprimirHash.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonImprimirHash.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonImprimirHash.Location = new System.Drawing.Point(1241, 640);
+            this.buttonImprimirHash.Location = new System.Drawing.Point(448, 642);
             this.buttonImprimirHash.Name = "buttonImprimirHash";
             this.buttonImprimirHash.Size = new System.Drawing.Size(78, 44);
             this.buttonImprimirHash.TabIndex = 80;
@@ -661,7 +661,7 @@ namespace Transcripcion
             this.checkBoxOficialRecibe.AutoSize = true;
             this.checkBoxOficialRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxOficialRecibe.Location = new System.Drawing.Point(108, 542);
-            this.checkBoxOficialRecibe.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxOficialRecibe.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxOficialRecibe.Name = "checkBoxOficialRecibe";
             this.checkBoxOficialRecibe.Size = new System.Drawing.Size(106, 17);
             this.checkBoxOficialRecibe.TabIndex = 95;
@@ -785,7 +785,7 @@ namespace Transcripcion
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.SystemColors.Control;
-            this.label18.Location = new System.Drawing.Point(148, 19);
+            this.label18.Location = new System.Drawing.Point(174, 17);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(129, 13);
             this.label18.TabIndex = 93;
@@ -796,9 +796,9 @@ namespace Transcripcion
             this.dateTimePicker1.CustomFormat = "dd/MM/yyyy      HH:mm";
             this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(129, 35);
+            this.dateTimePicker1.Location = new System.Drawing.Point(162, 35);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(178, 20);
+            this.dateTimePicker1.Size = new System.Drawing.Size(145, 20);
             this.dateTimePicker1.TabIndex = 94;
             this.dateTimePicker1.Value = new System.DateTime(2023, 6, 9, 11, 10, 26, 842);
             // 
@@ -893,7 +893,7 @@ namespace Transcripcion
             this.buttonImpCustodia.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonImpCustodia.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonImpCustodia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonImpCustodia.Location = new System.Drawing.Point(1140, 640);
+            this.buttonImpCustodia.Location = new System.Drawing.Point(346, 642);
             this.buttonImpCustodia.Name = "buttonImpCustodia";
             this.buttonImpCustodia.Size = new System.Drawing.Size(83, 44);
             this.buttonImpCustodia.TabIndex = 88;
@@ -911,7 +911,7 @@ namespace Transcripcion
             this.circularProgressBar1.InnerColor = System.Drawing.SystemColors.InactiveCaption;
             this.circularProgressBar1.InnerMargin = 2;
             this.circularProgressBar1.InnerWidth = -1;
-            this.circularProgressBar1.Location = new System.Drawing.Point(929, 580);
+            this.circularProgressBar1.Location = new System.Drawing.Point(944, 564);
             this.circularProgressBar1.MarqueeAnimationSpeed = 2000;
             this.circularProgressBar1.Maximum = 1000;
             this.circularProgressBar1.Name = "circularProgressBar1";
@@ -941,7 +941,7 @@ namespace Transcripcion
             this.buttonReset.BackColor = System.Drawing.Color.Red;
             this.buttonReset.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonReset.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonReset.Location = new System.Drawing.Point(346, 515);
+            this.buttonReset.Location = new System.Drawing.Point(1252, 644);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(67, 42);
             this.buttonReset.TabIndex = 92;
@@ -952,22 +952,22 @@ namespace Transcripcion
             // labelTotal
             // 
             this.labelTotal.AutoSize = true;
-            this.labelTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTotal.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelTotal.Location = new System.Drawing.Point(653, 584);
+            this.labelTotal.Location = new System.Drawing.Point(637, 513);
             this.labelTotal.Name = "labelTotal";
-            this.labelTotal.Size = new System.Drawing.Size(95, 20);
+            this.labelTotal.Size = new System.Drawing.Size(90, 18);
             this.labelTotal.TabIndex = 93;
             this.labelTotal.Text = "Peso total:";
             // 
             // labelPesoTotal
             // 
             this.labelPesoTotal.AutoSize = true;
-            this.labelPesoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPesoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPesoTotal.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelPesoTotal.Location = new System.Drawing.Point(754, 584);
+            this.labelPesoTotal.Location = new System.Drawing.Point(738, 513);
             this.labelPesoTotal.Name = "labelPesoTotal";
-            this.labelPesoTotal.Size = new System.Drawing.Size(19, 20);
+            this.labelPesoTotal.Size = new System.Drawing.Size(17, 18);
             this.labelPesoTotal.TabIndex = 94;
             this.labelPesoTotal.Text = "0";
             // 
