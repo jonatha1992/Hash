@@ -531,9 +531,10 @@ namespace Transcripcion
             this.comboBoxTipo.Items.AddRange(new object[] {
             "CONTROL VUELO",
             "CONTROL VEHICULAR",
+            "CONTROL POBLACIONAL",
             "ALLANAMIENTO",
             "PROCEDIMIENTO",
-            "REQUIZA"});
+            "REQUISA"});
             this.comboBoxTipo.Location = new System.Drawing.Point(16, 74);
             this.comboBoxTipo.Name = "comboBoxTipo";
             this.comboBoxTipo.Size = new System.Drawing.Size(173, 20);

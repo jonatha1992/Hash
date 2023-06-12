@@ -41,35 +41,34 @@ namespace Hash
 
         static public void AgregarOficial(BEOficial poficial)
         {
-
             XDocument doc = XDocument.Load("datos.xml");
 
-
-
-            bool existeLegajo = doc.Descendants("Oficial").Any(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
-
-            if (!existeLegajo)
+            if (poficial.NombreCompleto != "" && poficial.Legajo > 0)
             {
 
-                XElement nuevoOficial = new XElement("Oficial",
-                new XElement("Legajo", poficial.Legajo),
-                new XElement("Nombre", poficial.NombreCompleto),
-                new XElement("jerarquia", poficial.jerarquia.jerarquia));
+                bool existeLegajo = doc.Descendants("Oficial").Any(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
 
-                doc.Root.Element("Oficiales").Add(nuevoOficial);
-                doc.Save("datos.xml");
-
-            }
-            else
-            {
-                XElement oficialExistente = doc.Descendants("Oficial").FirstOrDefault(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
-                if (oficialExistente != null)
+                if (!existeLegajo)
                 {
-                    oficialExistente.Element("jerarquia").Value = poficial.jerarquia.jerarquia;
+                    XElement nuevoOficial = new XElement("Oficial",
+                    new XElement("Legajo", poficial.Legajo),
+                    new XElement("Nombre", poficial.NombreCompleto),
+                    new XElement("jerarquia", poficial.jerarquia.jerarquia));
+
+                    doc.Root.Element("Oficiales").Add(nuevoOficial);
                     doc.Save("datos.xml");
                 }
-
+                else
+                {
+                    XElement oficialExistente = doc.Descendants("Oficial").FirstOrDefault(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
+                    if (oficialExistente != null)
+                    {
+                        oficialExistente.Element("jerarquia").Value = poficial.jerarquia.jerarquia;
+                        doc.Save("datos.xml");
+                    }
+                }
             }
+
         }
         public override string ToString()
         {

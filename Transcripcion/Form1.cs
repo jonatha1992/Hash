@@ -167,7 +167,7 @@ namespace Transcripcion
             long totalBytesRead = 0;
             using (var stream = new FileStream(rutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 1048576, FileOptions.SequentialScan))
             {
-                using (var sha = SHA256.Create())
+                using (var sha = SHA1.Create())
                 {
                     byte[] buffer = new byte[1048576];
                     int bytesRead;
@@ -272,7 +272,7 @@ namespace Transcripcion
         {
             try
             {
-                if (CargarFormularioHash() && DgvElementos.DataSource != null || DgvElementos.Rows?.Count > 0)
+                if (CargarFormularioHash() && DgvElementos.DataSource != null && DgvElementos.Rows?.Count > 0)
                 {
                     Form_Impresion form_Impresion = new Form_Impresion(formularioHash);
                     form_Impresion.ShowDialog();
@@ -280,7 +280,6 @@ namespace Transcripcion
                 else
                 {
                     MessageBox.Show("Falta informacion para realizar el Hash", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                 }
 
             }
@@ -316,9 +315,8 @@ namespace Transcripcion
                 return true;
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
