@@ -44,7 +44,6 @@ namespace Hash
                                                                                     new ReportParameter("Imagenes", Formulario_Hash.Imagenes.ToString()),
                                                                                     new ReportParameter("Clips",Formulario_Hash.Clips.ToString()),
                                                                                     new ReportParameter("Audio",Formulario_Hash.Audio.ToString()),
-                                                                                    new ReportParameter("Tipo_procedimiento",Formulario_Hash.Tipo.ToString()),
                                                                                     new ReportParameter("Procedimiento",Formulario_Hash.Procedimiento.ToString()),
                                                                                     new ReportParameter("PesoTotal",Formulario_Hash.pesototal.ToString())
                                                                                    };

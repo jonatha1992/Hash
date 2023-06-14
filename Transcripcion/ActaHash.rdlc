@@ -1385,7 +1385,7 @@ Legajo: </Value>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Parameters!Tipo_procedimiento.Value</Value>
+                                <Value>PROCEDIMIENTO:</Value>
                                 <Style>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
@@ -1609,10 +1609,6 @@ Legajo: </Value>
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="Tipo_procedimiento">
-      <DataType>String</DataType>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
     <ReportParameter Name="NombreEntrega">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
@@ -1664,11 +1660,6 @@ Legajo: </Value>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>4</RowIndex>
           <ParameterName>Procedimiento</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>4</RowIndex>
-          <ParameterName>Tipo_procedimiento</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
