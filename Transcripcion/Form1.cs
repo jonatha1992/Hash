@@ -217,8 +217,8 @@ namespace Transcripcion
             lblImg.Text = formularioHash.Imagenes.ToString();
             lblVarios.Text = formularioHash.Varios.ToString();
 
-            listBoxArchivos.DataSource = null;
-            listBoxArchivos.DataSource = NombreArchivos;
+            //listBoxArchivos.DataSource = null;
+            //listBoxArchivos.DataSource = NombreArchivos;
 
             DgvElementos.DataSource = null;
             DgvElementos.DataSource = formularioHash.ListaArchivos;
@@ -244,27 +244,32 @@ namespace Transcripcion
 
             try
             {
-                if (listBoxArchivos.SelectedItem != null)
+                if (DgvElementos.SelectedRows.Count > 0)
                 {
-                    foreach (string archivo in listBoxArchivos.SelectedItems)
+                    foreach (DataGridViewRow fila in DgvElementos.SelectedRows)
                     {
-                        NombreArchivos.Remove(NombreArchivos.Find(x => x.Contains(archivo.ToString())));
-                        formularioHash.ListaArchivos.Remove(formularioHash.ListaArchivos.Find(x => x.Nombre.Contains(archivo.ToString())));
+                        // Obtener el nombre del archivo de la columna deseada (ajusta el índice si es necesario)
+                        string nombreArchivo = fila.Cells["Nombre"].Value.ToString();
+
+                        // Remover el archivo de la lista o colección en la que esté almacenado
+                        formularioHash.ListaArchivos.Remove(formularioHash.ListaArchivos.Find(x => x.Nombre.Contains(nombreArchivo)));
+
+                        
                     }
 
+                    // Actualizar cualquier otra lógica necesaria
                     Actualizar();
-
                 }
                 else
                 {
-                    MessageBox.Show("Seleccione el Arhivo a eliminar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Seleccione el archivo a eliminar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
         }
 
 
@@ -437,19 +442,7 @@ namespace Transcripcion
             return listaOficiales.Find(o => o.Legajo == legajo);
 
         }
-        private void listBoxArchivos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listBoxArchivos.SelectedIndex >= 0) // Si hay algún elemento seleccionado
-            {
-                buttonEliminar.Visible = true; // Mostrar el botón de eliminar
-            }
-            else // Si no hay ningún elemento seleccionado
-            {
-                buttonEliminar.Visible = false; // Ocultar el botón de eliminar
-            }
-
-        }
-
+  
         private void buttonReset_Click(object sender, EventArgs e)
         {
             Application.Restart();
@@ -616,8 +609,17 @@ namespace Transcripcion
         }
 
 
-        private void comboBoxTipo_TextChanged(object sender, EventArgs e)
+      
+        private void DgvElementos_SelectionChanged(object sender, EventArgs e)
         {
+            if (DgvElementos.SelectedRows.Count > 0) // Si hay alguna fila seleccionada
+            {
+                buttonEliminar.Visible = true; // Mostrar el botón de eliminar
+            }
+            else // Si no hay ninguna fila seleccionada
+            {
+                buttonEliminar.Visible = false; // Ocultar el botón de eliminar
+            }
 
         }
     }
