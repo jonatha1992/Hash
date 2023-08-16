@@ -248,15 +248,19 @@ namespace Transcripcion
                 {
                     foreach (DataGridViewRow fila in DgvElementos.SelectedRows)
                     {
-                        // Obtener el nombre del archivo de la columna deseada (ajusta el índice si es necesario)
-                        string nombreArchivo = fila.Cells["Nombre"].Value.ToString();
+                        if (fila.Cells["Nombre"]?.Value != null)
+                        {
 
-                        // Remover el archivo de la lista o colección en la que esté almacenado
-                        formularioHash.ListaArchivos.Remove(formularioHash.ListaArchivos.Find(x => x.Nombre.Contains(nombreArchivo)));
+                            // Obtener el nombre del archivo de la columna deseada (ajusta el índice si es necesario)
+                            string nombreArchivo = fila.Cells["Nombre"].Value.ToString();
 
-                        
+                            // Remover el archivo de la lista o colección en la que esté almacenado
+                            formularioHash.ListaArchivos.RemoveAll(x => x.Nombre.Contains(nombreArchivo));
+                            NombreArchivos.RemoveAll(x => x == nombreArchivo);
+                            RutaArchivos.RemoveAll(ruta => Path.GetFileName(ruta) == nombreArchivo);
+                        }
+
                     }
-
                     // Actualizar cualquier otra lógica necesaria
                     Actualizar();
                 }
@@ -320,7 +324,7 @@ namespace Transcripcion
                 return true;
 
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return false;
             }
@@ -442,7 +446,7 @@ namespace Transcripcion
             return listaOficiales.Find(o => o.Legajo == legajo);
 
         }
-  
+
         private void buttonReset_Click(object sender, EventArgs e)
         {
             Application.Restart();
@@ -467,7 +471,7 @@ namespace Transcripcion
             }
         }
 
-        
+
         private void ConvertirMayusculas(object sender, KeyPressEventArgs e)
         {
             e.KeyChar = char.ToUpper(e.KeyChar);
@@ -609,7 +613,7 @@ namespace Transcripcion
         }
 
 
-      
+
         private void DgvElementos_SelectionChanged(object sender, EventArgs e)
         {
             if (DgvElementos.SelectedRows.Count > 0) // Si hay alguna fila seleccionada
