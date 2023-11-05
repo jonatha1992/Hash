@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hash;
+using System;
 using System.Windows.Forms;
 
 namespace Transcripcion
@@ -13,7 +14,7 @@ namespace Transcripcion
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Hash());
+            Application.Run(new Form_Hash());
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Transcripcion
+namespace Hash
 {
-    partial class Hash
+    partial class Form_Hash
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -34,7 +34,7 @@ namespace Transcripcion
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Hash));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Hash));
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.listBoxArchivos = new System.Windows.Forms.ListBox();
             this.buttonEliminar = new System.Windows.Forms.Button();

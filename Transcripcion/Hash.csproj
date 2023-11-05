@@ -86,11 +86,17 @@
     <Compile Include="Clases\BEOficial.cs" />
     <Compile Include="Clases\Formulario_Custodia.cs" />
     <Compile Include="Clases\Formulario_Hash.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Form_Custodia.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Form_Custodia.designer.cs">
+      <DependentUpon>Form_Custodia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form._Hash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form._Hash.designer.cs">
+      <DependentUpon>Form._Hash.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_Impresion.cs">
       <SubType>Form</SubType>
@@ -102,8 +108,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ActaCustodia.rdlc" />
     <EmbeddedResource Include="ActaHash.rdlc" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Custodia.resx">
+      <DependentUpon>Form_Custodia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form._Hash.resx">
+      <DependentUpon>Form._Hash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Impresion.resx">
       <DependentUpon>Form_Impresion.cs</DependentUpon>

@@ -6,9 +6,9 @@ using System.Security.Cryptography;
 using System.Windows.Forms;
 
 
-namespace Transcripcion
+namespace Hash
 {
-    public partial class Hash : Form
+    public partial class Form_Custodia : Form
     {
         List<string> NombreArchivos = new List<string>();
         List<string> RutaArchivos = new List<string>();
@@ -28,7 +28,7 @@ namespace Transcripcion
         };
 
 
-        public Hash()
+        public Form_Custodia()
         {
             InitializeComponent();
 
