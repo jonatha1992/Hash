@@ -9,6 +9,7 @@ namespace Hash
         public int Legajo { get; set; }
         public string NombreCompleto { get; set; }
         public BEJerarquia jerarquia { get; set; }
+        public BEDestino destino { get; set; }
 
 
         public BEOficial(int legaj, string nombrecompleto)
@@ -32,7 +33,7 @@ namespace Hash
                             {
                                 Legajo = Convert.ToInt32(oficial.Element("Legajo").Value),
                                 NombreCompleto = oficial.Element("Nombre").Value,
-                                jerarquia = JerarquiaList.Find(x => x.jerarquia == oficial.Element("jerarquia").Value)
+                                jerarquia = JerarquiaList.Find(x => x.Nombre == oficial.Element("Nombre").Value)
                             };
             OficialList = oficiales.ToList();
             return OficialList;
@@ -53,7 +54,7 @@ namespace Hash
                 XElement nuevoOficial = new XElement("Oficial",
                 new XElement("Legajo", poficial.Legajo),
                 new XElement("Nombre", poficial.NombreCompleto),
-                new XElement("jerarquia", poficial.jerarquia.jerarquia));
+                new XElement("Nombre", poficial.jerarquia.Nombre));
 
                 doc.Root.Element("Oficiales").Add(nuevoOficial);
                 doc.Save("datos.xml");
@@ -64,7 +65,7 @@ namespace Hash
                 XElement oficialExistente = doc.Descendants("Oficial").FirstOrDefault(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
                 if (oficialExistente != null)
                 {
-                    oficialExistente.Element("jerarquia").Value = poficial.jerarquia.jerarquia;
+                    oficialExistente.Element("Nombre").Value = poficial.jerarquia.Nombre;
                     doc.Save("datos.xml");
                 }
 

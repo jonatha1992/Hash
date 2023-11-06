@@ -36,7 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>hablar-_2_.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CircularProgressBar, Version=2.8.0.16, Culture=neutral, PublicKeyToken=310fd07b25df79b3, processorArchitecture=MSIL">
@@ -168,7 +169,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hablar-_2_.ico" />
     <None Include="Resources\mute.png" />
     <None Include="Resources\boton-de-pausa.png" />
     <None Include="Resources\pausa.png" />

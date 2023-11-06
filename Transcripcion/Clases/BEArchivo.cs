@@ -7,8 +7,13 @@ namespace Hash
 
         public int Nro_Orden { get; set; }
         public string Nombre { get; set; }
-        public string Extension { get; set; }
-        public  long Peso { get; set; }
+        public string Extension
+        {
+            get { return Extension; }
+            set { Extension = value.ToLower().Replace(".", ""); }
+
+        }
+        public long Peso { get; set; }
         public string PesoArchivo { get; set; }
         public string Hash { get; set; }
         public string Si { get => "SI"; }

@@ -7,13 +7,13 @@ namespace Hash
 {
     public class BEJerarquia : ICloneable
     {
-        public string jerarquia { get; set; }
+        public string Nombre { get; set; }
         public string Abreviatura { get; set; }
 
         public BEJerarquia() { }
         public BEJerarquia(string jerar, string Abre)
         {
-            jerarquia = jerar;
+            Nombre = jerar;
             Abreviatura = Abre;
         }
 
@@ -28,7 +28,7 @@ namespace Hash
                 var jerarquias = from jerar in doc.Descendants("Jerarquia")
                                  select new BEJerarquia
                                  {
-                                     jerarquia = jerar.Element("jerarquia").Value,
+                                     Nombre = jerar.Element("Nombre").Value,
                                      Abreviatura = jerar.Element("Abreviatura").Value
                                  };
                 return jerarquias.ToList();
@@ -41,14 +41,14 @@ namespace Hash
         }
         public override string ToString()
         {
-            return jerarquia;
+            return Nombre;
         }
 
         public object Clone()
         {
             return new BEJerarquia
             {
-                jerarquia = this.jerarquia,
+                Nombre = this.Nombre,
                 Abreviatura = this.Abreviatura
             };
         }
