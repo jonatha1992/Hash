@@ -14,7 +14,7 @@ namespace Transcripcion
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form_Hash());
+            Application.Run(new Form_Contenedor());
         }
     }
 }

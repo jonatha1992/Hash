@@ -84,9 +84,16 @@
   <ItemGroup>
     <Compile Include="Clases\BEArchivo.cs" />
     <Compile Include="Clases\BEJerarquia.cs" />
+    <Compile Include="Clases\BEDestino.cs" />
     <Compile Include="Clases\BEOficial.cs" />
     <Compile Include="Clases\Formulario_Custodia.cs" />
     <Compile Include="Clases\Formulario_Hash.cs" />
+    <Compile Include="Form_Contendor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Contendor.designer.cs">
+      <DependentUpon>Form_Contendor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_Custodia.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +116,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ActaCustodia.rdlc" />
     <EmbeddedResource Include="ActaHash.rdlc" />
+    <EmbeddedResource Include="Form_Contendor.resx">
+      <DependentUpon>Form_Contendor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_Custodia.resx">
       <DependentUpon>Form_Custodia.cs</DependentUpon>
     </EmbeddedResource>

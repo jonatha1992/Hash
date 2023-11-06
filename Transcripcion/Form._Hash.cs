@@ -14,8 +14,7 @@ namespace Hash
         List<string> RutaArchivos = new List<string>();
         Formulario_Hash formulario = new Formulario_Hash();
         List<BEOficial> listaOficiales = new List<BEOficial>();
-        List<BEJerarquia> listaJerarquias = BEJerarquia.ObtenerJerarquias();
-        Formulario_Custodia formulario_Custodia = new Formulario_Custodia();
+        List<BEJerarquia> listaJerarquias = BEJerarquia.ListarJeraquias();
 
         string carpetaSeleccionada;
 
@@ -94,7 +93,6 @@ namespace Hash
         {
             try
             {
-
                 FolderBrowserDialog dialogoSeleccionCarpeta = new FolderBrowserDialog();
                 dialogoSeleccionCarpeta.RootFolder = Environment.SpecialFolder.MyComputer;
 
@@ -196,10 +194,53 @@ namespace Hash
             }
         }
 
+        private void DgvElementos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
 
 
-        
+        private void textBoxNomEntrega_TextChanged(object sender, EventArgs e)
+        {
 
+
+
+        }
+
+        private void textBoxConOfRecibe_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+
+                var oficial = listaOficiales.Find(X => X.NombreCompleto == textBoxNomOfRecibe.Text);       
+                
+                if (oficial != null)
+                {
+                    textBoxNomOfRecibe.Text = oficial.NombreCompleto;
+                    comboBoxRecibe.Text = oficial.Jerarquia.Nombre;
+                }
+            }
+        }
+        private void textBoxNomEntrega_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+
+                var oficial = listaOficiales.Find(X => X.NombreCompleto == textBoxNomOfRecibe.Text);
+
+                if (oficial != null)
+                {
+                    textBoxControlOfEntrega.Text = oficial.Legajo.ToString();
+                    comboBoxEntrega.Text = oficial.jerarquia.jerarquia;
+                }
+            }
+        }
 
 
     }

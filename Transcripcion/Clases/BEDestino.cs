@@ -18,12 +18,17 @@ namespace Hash
 
             XDocument doc = XDocument.Load("datos.xml");
 
-            var oficiales = from oficial in doc.Descendants("Destinos")
+            var Destinos = from oficial in doc.Descendants("Destino")
                             select new BEDestino()
                             {
                                 Nombre = oficial.Element("Nombre").Value,
                             };
-            return oficiales.ToList();
+            if (Destinos == null)
+            {
+                return null;
+            }
+
+            return Destinos.ToList();
         }
 
         //Todo: Agregar detino a xml
@@ -32,30 +37,27 @@ namespace Hash
 
             XDocument doc = XDocument.Load("datos.xml");
 
-            //bool existeLegajo = doc.Descendants("Oficial").Any(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
+            bool existeDestino = doc.Descendants("Destino").Any(o => (string)o.Element("Destino") == Destino.Nombre.ToString());
 
-            //if (!existeLegajo)
-            //{
+            if (!existeDestino)
+            {
 
-            //    XElement nuevoOficial = new XElement("Oficial",
-            //    new XElement("Legajo", poficial.Legajo),
-            //    new XElement("Nombre", poficial.NombreCompleto),
-            //    new XElement("Nombre", poficial.Nombre.Nombre));
+                XElement nuevoDestino = new XElement("Destino",
+                new XElement("Nombre", Destino.Nombre));
+                doc.Root.Element("Destinos").Add(nuevoDestino);
+                doc.Save("datos.xml");
 
-            //    doc.Root.Element("Oficiales").Add(nuevoOficial);
-            //    doc.Save("datos.xml");
+            }
+            else
+            {
+                XElement DestinoExistente = doc.Descendants("Destino").FirstOrDefault(o => (string)o.Element("Destino") == Destino.Nombre.ToString());
+                if (DestinoExistente != null)
+                {
+                    DestinoExistente.Element("Nombre").Value = Destino.Nombre;
+                    doc.Save("datos.xml");
+                }
 
-            //}
-            //else
-            //{
-            //    XElement oficialExistente = doc.Descendants("Oficial").FirstOrDefault(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
-            //    if (oficialExistente != null)
-            //    {
-            //        oficialExistente.Element("Nombre").Value = poficial.Nombre.Nombre;
-            //        doc.Save("datos.xml");
-            //    }
-
-            //}
+            }
         }
         public override string ToString()
         {

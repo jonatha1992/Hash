@@ -20,6 +20,7 @@ namespace Hash
         Form_Custodia form_custodia;
         private void Form_Hash_Click(object sender, EventArgs e)
         {
+            
             form_Hash = new Form_Hash();
             //form_Hash.ShowDialog(); 
             form_Hash.MdiParent =  this;

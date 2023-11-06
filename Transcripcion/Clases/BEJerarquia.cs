@@ -17,12 +17,10 @@ namespace Hash
             Abreviatura = Abre;
         }
 
-        public static List<BEJerarquia> ObtenerJerarquias()
+        public static List<BEJerarquia> ListarJeraquias()
         {
             try
             {
-
-
                 XDocument doc = XDocument.Load("datos.xml");
 
                 var jerarquias = from jerar in doc.Descendants("Jerarquia")
@@ -31,6 +29,11 @@ namespace Hash
                                      Nombre = jerar.Element("Nombre").Value,
                                      Abreviatura = jerar.Element("Abreviatura").Value
                                  };
+
+                if (jerarquias == null)
+                {
+                    return null;
+                }   
                 return jerarquias.ToList();
             }
             catch (Exception )

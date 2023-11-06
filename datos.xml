@@ -1,56 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Base>
   <Procedimientos>
-    <Procedimiento>KLM 702</Procedimiento>
-    <Procedimiento>MP 6912</Procedimiento>
   </Procedimientos>
   <Jerarquias>
     <Jerarquia>
-      <Id>1</Id>
-      <jerarquia>Ayudante</jerarquia>
-      <Abreviatura>Of. Ayte.</Abreviatura>
+      <Nombre>AYUDANTE</Nombre>
+      <Abreviatura>OF. AYTE.</Abreviatura>
     </Jerarquia>
     <Jerarquia>
-      <Id>2</Id>
-      <jerarquia>Principal</jerarquia>
-      <Abreviatura>Of. Ppal.</Abreviatura>
+      <Nombre>PRINCIPAL</Nombre>
+      <Abreviatura>OF. PPAL.</Abreviatura>
     </Jerarquia>
     <Jerarquia>
-      <Id>3</Id>
-      <jerarquia>Mayor</jerarquia>
-      <Abreviatura>Of. My.</Abreviatura>
+      <Nombre>MAYOR</Nombre>
+      <Abreviatura>OF. MY.</Abreviatura>
     </Jerarquia>
     <Jerarquia>
-      <Id>4</Id>
-      <jerarquia>Jefe</jerarquia>
-      <Abreviatura>Of. Jefe</Abreviatura>
+      <Nombre>JEFE</Nombre>
+      <Abreviatura>OF. JEFE</Abreviatura>
     </Jerarquia>
     <Jerarquia>
-      <Id>5</Id>
-      <jerarquia>Subinspector</jerarquia>
-      <Abreviatura>Subinspector</Abreviatura>
+      <Nombre>SUBINSPECTOR</Nombre>
+      <Abreviatura>SUBINSPECTOR</Abreviatura>
     </Jerarquia>
     <Jerarquia>
-      <Id>6</Id>
-      <jerarquia>Inspector</jerarquia>
-      <Abreviatura>Inspector</Abreviatura>
+      <Nombre>INSPECTOR</Nombre>
+      <Abreviatura>INSPECTOR</Abreviatura>
     </Jerarquia>
     <Jerarquia>
-      <Id>7</Id>
-      <jerarquia>Comisionado Mayor</jerarquia>
-      <Abreviatura>Com. My.</Abreviatura>
+      <Nombre>COMISIONADO MAYOR</Nombre>
+      <Abreviatura>COM. MY.</Abreviatura>
     </Jerarquia>
     <Jerarquia>
-      <Id>8</Id>
-      <jerarquia>Comisionado General</jerarquia>
-      <Abreviatura>Com. Gral.</Abreviatura>
+      <Nombre>COMISIONADO GENERAL</Nombre>
+      <Abreviatura>COM. GRAL.</Abreviatura>
     </Jerarquia>
   </Jerarquias>
   <Oficiales>
     <Oficial>
       <Legajo>506896</Legajo>
-      <Nombre>Jonathan Correa</Nombre>
-      <jerarquia>Principal</jerarquia>
+      <Nombre>JONATHAN CORREA</Nombre>
+      <JerarquiaId>PRINCIPAL</JerarquiaId>
+      <DestinoId>CREV I DEL ESTE</DestinoId>
     </Oficial>
   </Oficiales>
+  <Destinos>
+    <Destino>
+     <Nombre>CREV I DEL ESTE</Nombre>
+    </Destino>
+  </Destinos>
 </Base>
+
+
