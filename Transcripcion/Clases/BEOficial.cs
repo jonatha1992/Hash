@@ -48,7 +48,6 @@ namespace Hash
             XDocument doc = XDocument.Load("datos.xml");
 
 
-
             bool existeLegajo = doc.Descendants("Oficial").Any(o => (string)o.Element("Legajo") == poficial.Legajo.ToString());
 
             if (!existeLegajo)

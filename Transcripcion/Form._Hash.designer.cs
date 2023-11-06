@@ -34,6 +34,7 @@ namespace Hash
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Hash));
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.buttonEliminar = new System.Windows.Forms.Button();
@@ -58,28 +59,32 @@ namespace Hash
             this.numericUpDownHash = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonImprimirHash = new System.Windows.Forms.Button();
-            this.textBoxProcedimiento = new System.Windows.Forms.TextBox();
+            this.textBoxDescripcion = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownRecibe = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownEntrega = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.comboBoxRecibe = new System.Windows.Forms.ComboBox();
+            this.comboBoxJerarquiaRecibe = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBoxEntrega = new System.Windows.Forms.ComboBox();
+            this.comboBoxJerarquiaEntrega = new System.Windows.Forms.ComboBox();
             this.textBoxNomEntrega = new System.Windows.Forms.TextBox();
             this.circularProgressBar1 = new CircularProgressBar.CircularProgressBar();
             this.labelTotal = new System.Windows.Forms.Label();
             this.labelPesoTotal = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBoxDestEntrega = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.comboBoxDestRecibe = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgvElementos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHash)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecibe)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEntrega)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonAgregar
@@ -87,10 +92,9 @@ namespace Hash
             this.buttonAgregar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonAgregar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonAgregar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonAgregar.Location = new System.Drawing.Point(16, 587);
-            this.buttonAgregar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonAgregar.Location = new System.Drawing.Point(13, 467);
             this.buttonAgregar.Name = "buttonAgregar";
-            this.buttonAgregar.Size = new System.Drawing.Size(109, 57);
+            this.buttonAgregar.Size = new System.Drawing.Size(87, 46);
             this.buttonAgregar.TabIndex = 2;
             this.buttonAgregar.Text = "Carpeta Origen";
             this.buttonAgregar.UseVisualStyleBackColor = false;
@@ -101,10 +105,9 @@ namespace Hash
             this.buttonEliminar.BackColor = System.Drawing.Color.Red;
             this.buttonEliminar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEliminar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonEliminar.Location = new System.Drawing.Point(365, 480);
-            this.buttonEliminar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonEliminar.Location = new System.Drawing.Point(325, 376);
             this.buttonEliminar.Name = "buttonEliminar";
-            this.buttonEliminar.Size = new System.Drawing.Size(99, 57);
+            this.buttonEliminar.Size = new System.Drawing.Size(79, 46);
             this.buttonEliminar.TabIndex = 8;
             this.buttonEliminar.Text = "Eliminar";
             this.buttonEliminar.UseVisualStyleBackColor = false;
@@ -116,10 +119,9 @@ namespace Hash
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(25, 28);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(20, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 17);
+            this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 15;
             this.label1.Text = "N° Hash";
             // 
@@ -128,90 +130,92 @@ namespace Hash
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.Control;
-            this.label2.Location = new System.Drawing.Point(104, 175);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(119, 147);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(116, 17);
+            this.label2.Size = new System.Drawing.Size(51, 13);
             this.label2.TabIndex = 17;
-            this.label2.Text = "Oficial Entrega";
+            this.label2.Text = "Entrega";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.Control;
-            this.label3.Location = new System.Drawing.Point(104, 372);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(119, 301);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(109, 17);
+            this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 19;
-            this.label3.Text = "Oficial Recibe";
+            this.label3.Text = "Recibe";
             // 
             // textBoxNomOfRecibe
             // 
             this.textBoxNomOfRecibe.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxNomOfRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxNomOfRecibe.Location = new System.Drawing.Point(25, 413);
-            this.textBoxNomOfRecibe.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxNomOfRecibe.Location = new System.Drawing.Point(20, 339);
             this.textBoxNomOfRecibe.Name = "textBoxNomOfRecibe";
-            this.textBoxNomOfRecibe.Size = new System.Drawing.Size(299, 24);
+            this.textBoxNomOfRecibe.Size = new System.Drawing.Size(268, 21);
             this.textBoxNomOfRecibe.TabIndex = 18;
+            this.textBoxNomOfRecibe.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxNomOfRecibe_KeyDown);
             // 
             // DgvElementos
             // 
             this.DgvElementos.AllowUserToAddRows = false;
             this.DgvElementos.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.DgvElementos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvElementos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DgvElementos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DgvElementos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DgvElementos.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.DgvElementos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvElementos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvElementos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DgvElementos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvElementos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Sel});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DgvElementos.Location = new System.Drawing.Point(365, 52);
-            this.DgvElementos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle3;
+            this.DgvElementos.Location = new System.Drawing.Point(324, 36);
+            this.DgvElementos.Margin = new System.Windows.Forms.Padding(2);
             this.DgvElementos.MultiSelect = false;
             this.DgvElementos.Name = "DgvElementos";
             this.DgvElementos.ReadOnly = true;
             this.DgvElementos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DgvElementos.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvElementos.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.DgvElementos.RowHeadersVisible = false;
             this.DgvElementos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            this.DgvElementos.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            this.DgvElementos.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.DgvElementos.RowTemplate.Height = 60;
             this.DgvElementos.RowTemplate.ReadOnly = true;
             this.DgvElementos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.DgvElementos.Size = new System.Drawing.Size(980, 409);
+            this.DgvElementos.Size = new System.Drawing.Size(831, 327);
             this.DgvElementos.TabIndex = 62;
-            this.DgvElementos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvElementos_CellContentClick);
             // 
             // Sel
             // 
@@ -230,10 +234,9 @@ namespace Hash
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.Control;
-            this.label4.Location = new System.Drawing.Point(25, 255);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(20, 200);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(96, 17);
+            this.label4.Size = new System.Drawing.Size(75, 13);
             this.label4.TabIndex = 64;
             this.label4.Text = "Nro, Control";
             // 
@@ -242,10 +245,9 @@ namespace Hash
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.Control;
-            this.label6.Location = new System.Drawing.Point(741, 503);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(621, 387);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(95, 20);
+            this.label6.Size = new System.Drawing.Size(82, 17);
             this.label6.TabIndex = 66;
             this.label6.Text = "Imagenes:";
             // 
@@ -254,10 +256,9 @@ namespace Hash
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.Control;
-            this.label8.Location = new System.Drawing.Point(25, 442);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(20, 363);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(96, 17);
+            this.label8.Size = new System.Drawing.Size(75, 13);
             this.label8.TabIndex = 69;
             this.label8.Text = "Nro, Control";
             // 
@@ -266,10 +267,9 @@ namespace Hash
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.Control;
-            this.label9.Location = new System.Drawing.Point(596, 502);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(505, 387);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(62, 20);
+            this.label9.Size = new System.Drawing.Size(54, 17);
             this.label9.TabIndex = 70;
             this.label9.Text = "Audio:";
             // 
@@ -278,10 +278,9 @@ namespace Hash
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.Control;
-            this.label11.Location = new System.Drawing.Point(928, 503);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(770, 387);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(58, 20);
+            this.label11.Size = new System.Drawing.Size(48, 17);
             this.label11.TabIndex = 70;
             this.label11.Text = "Clips:";
             // 
@@ -290,10 +289,9 @@ namespace Hash
             this.lblImg.AutoSize = true;
             this.lblImg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblImg.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblImg.Location = new System.Drawing.Point(848, 505);
-            this.lblImg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblImg.Location = new System.Drawing.Point(706, 389);
             this.lblImg.Name = "lblImg";
-            this.lblImg.Size = new System.Drawing.Size(19, 20);
+            this.lblImg.Size = new System.Drawing.Size(17, 17);
             this.lblImg.TabIndex = 71;
             this.lblImg.Text = "0";
             // 
@@ -302,10 +300,9 @@ namespace Hash
             this.lblAudio.AutoSize = true;
             this.lblAudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAudio.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblAudio.Location = new System.Drawing.Point(667, 503);
-            this.lblAudio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAudio.Location = new System.Drawing.Point(562, 387);
             this.lblAudio.Name = "lblAudio";
-            this.lblAudio.Size = new System.Drawing.Size(19, 20);
+            this.lblAudio.Size = new System.Drawing.Size(17, 17);
             this.lblAudio.TabIndex = 72;
             this.lblAudio.Text = "0";
             // 
@@ -314,10 +311,9 @@ namespace Hash
             this.lblClip.AutoSize = true;
             this.lblClip.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClip.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblClip.Location = new System.Drawing.Point(993, 505);
-            this.lblClip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblClip.Location = new System.Drawing.Point(822, 389);
             this.lblClip.Name = "lblClip";
-            this.lblClip.Size = new System.Drawing.Size(19, 20);
+            this.lblClip.Size = new System.Drawing.Size(17, 17);
             this.lblClip.TabIndex = 73;
             this.lblClip.Text = "0";
             // 
@@ -326,10 +322,9 @@ namespace Hash
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.SystemColors.Control;
-            this.label13.Location = new System.Drawing.Point(1077, 502);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Location = new System.Drawing.Point(890, 387);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(61, 20);
+            this.label13.Size = new System.Drawing.Size(53, 17);
             this.label13.TabIndex = 74;
             this.label13.Text = "Texto:";
             // 
@@ -338,10 +333,9 @@ namespace Hash
             this.lblTxt.AutoSize = true;
             this.lblTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTxt.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTxt.Location = new System.Drawing.Point(1148, 503);
-            this.lblTxt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTxt.Location = new System.Drawing.Point(946, 387);
             this.lblTxt.Name = "lblTxt";
-            this.lblTxt.Size = new System.Drawing.Size(19, 20);
+            this.lblTxt.Size = new System.Drawing.Size(17, 17);
             this.lblTxt.TabIndex = 75;
             this.lblTxt.Text = "0";
             // 
@@ -350,10 +344,9 @@ namespace Hash
             this.lblVarios.AutoSize = true;
             this.lblVarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVarios.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblVarios.Location = new System.Drawing.Point(1301, 505);
-            this.lblVarios.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVarios.Location = new System.Drawing.Point(1069, 389);
             this.lblVarios.Name = "lblVarios";
-            this.lblVarios.Size = new System.Drawing.Size(19, 20);
+            this.lblVarios.Size = new System.Drawing.Size(17, 17);
             this.lblVarios.TabIndex = 77;
             this.lblVarios.Text = "0";
             // 
@@ -362,25 +355,23 @@ namespace Hash
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.Control;
-            this.label10.Location = new System.Drawing.Point(1225, 505);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(1008, 389);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(69, 20);
+            this.label10.Size = new System.Drawing.Size(59, 17);
             this.label10.TabIndex = 76;
             this.label10.Text = "Varios:";
             // 
             // numericUpDownHash
             // 
             this.numericUpDownHash.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownHash.Location = new System.Drawing.Point(25, 48);
-            this.numericUpDownHash.Margin = new System.Windows.Forms.Padding(4);
+            this.numericUpDownHash.Location = new System.Drawing.Point(20, 38);
             this.numericUpDownHash.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numericUpDownHash.Name = "numericUpDownHash";
-            this.numericUpDownHash.Size = new System.Drawing.Size(103, 24);
+            this.numericUpDownHash.Size = new System.Drawing.Size(82, 21);
             this.numericUpDownHash.TabIndex = 78;
             this.numericUpDownHash.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -389,10 +380,9 @@ namespace Hash
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.Control;
-            this.label5.Location = new System.Drawing.Point(803, 20);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(706, 12);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(91, 24);
+            this.label5.Size = new System.Drawing.Size(73, 18);
             this.label5.TabIndex = 79;
             this.label5.Text = "Archivos";
             // 
@@ -401,39 +391,43 @@ namespace Hash
             this.buttonImprimirHash.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonImprimirHash.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonImprimirHash.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonImprimirHash.Location = new System.Drawing.Point(1217, 583);
-            this.buttonImprimirHash.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonImprimirHash.Location = new System.Drawing.Point(220, 468);
             this.buttonImprimirHash.Name = "buttonImprimirHash";
-            this.buttonImprimirHash.Size = new System.Drawing.Size(104, 54);
+            this.buttonImprimirHash.Size = new System.Drawing.Size(99, 50);
             this.buttonImprimirHash.TabIndex = 80;
             this.buttonImprimirHash.Text = "Imprimir Hash";
             this.buttonImprimirHash.UseVisualStyleBackColor = false;
+            this.buttonImprimirHash.Click += new System.EventHandler(this.buttonImprimirHash_Click);
             // 
-            // textBoxProcedimiento
+            // textBoxDescripcion
             // 
-            this.textBoxProcedimiento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBoxProcedimiento.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxProcedimiento.Location = new System.Drawing.Point(25, 110);
-            this.textBoxProcedimiento.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxProcedimiento.Name = "textBoxProcedimiento";
-            this.textBoxProcedimiento.Size = new System.Drawing.Size(288, 24);
-            this.textBoxProcedimiento.TabIndex = 86;
+            this.textBoxDescripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textBoxDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxDescripcion.Location = new System.Drawing.Point(20, 88);
+            this.textBoxDescripcion.Multiline = true;
+            this.textBoxDescripcion.Name = "textBoxDescripcion";
+            this.textBoxDescripcion.Size = new System.Drawing.Size(262, 46);
+            this.textBoxDescripcion.TabIndex = 86;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.numericUpDown2);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.label19);
+            this.groupBox1.Controls.Add(this.comboBoxDestRecibe);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.comboBoxDestEntrega);
+            this.groupBox1.Controls.Add(this.numericUpDownRecibe);
+            this.groupBox1.Controls.Add(this.numericUpDownEntrega);
             this.groupBox1.Controls.Add(this.label18);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.label16);
-            this.groupBox1.Controls.Add(this.comboBoxRecibe);
+            this.groupBox1.Controls.Add(this.comboBoxJerarquiaRecibe);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.comboBoxEntrega);
+            this.groupBox1.Controls.Add(this.comboBoxJerarquiaEntrega);
             this.groupBox1.Controls.Add(this.numericUpDownHash);
-            this.groupBox1.Controls.Add(this.textBoxProcedimiento);
+            this.groupBox1.Controls.Add(this.textBoxDescripcion);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBoxNomEntrega);
             this.groupBox1.Controls.Add(this.label2);
@@ -442,54 +436,51 @@ namespace Hash
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox1.Location = new System.Drawing.Point(16, 15);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(13, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(333, 564);
+            this.groupBox1.Size = new System.Drawing.Size(306, 451);
             this.groupBox1.TabIndex = 87;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos";
             // 
-            // numericUpDown2
+            // numericUpDownRecibe
             // 
-            this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown2.Location = new System.Drawing.Point(25, 463);
-            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(4);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            10000,
+            this.numericUpDownRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownRecibe.Location = new System.Drawing.Point(20, 377);
+            this.numericUpDownRecibe.Maximum = new decimal(new int[] {
+            10000000,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(103, 24);
-            this.numericUpDown2.TabIndex = 96;
-            this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownRecibe.Name = "numericUpDownRecibe";
+            this.numericUpDownRecibe.Size = new System.Drawing.Size(94, 21);
+            this.numericUpDownRecibe.TabIndex = 96;
+            this.numericUpDownRecibe.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownRecibe.Enter += new System.EventHandler(this.numericUpDownRecibe_Enter);
             // 
-            // numericUpDown1
+            // numericUpDownEntrega
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(25, 276);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            10000,
+            this.numericUpDownEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownEntrega.Location = new System.Drawing.Point(20, 217);
+            this.numericUpDownEntrega.Maximum = new decimal(new int[] {
+            10000000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(103, 24);
-            this.numericUpDown1.TabIndex = 95;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownEntrega.Name = "numericUpDownEntrega";
+            this.numericUpDownEntrega.Size = new System.Drawing.Size(94, 21);
+            this.numericUpDownEntrega.TabIndex = 95;
+            this.numericUpDownEntrega.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownEntrega.Enter += new System.EventHandler(this.numericUpDownEntrega_Enter);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.SystemColors.Control;
-            this.label18.Location = new System.Drawing.Point(193, 28);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Location = new System.Drawing.Point(154, 22);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(110, 17);
+            this.label18.Size = new System.Drawing.Size(87, 13);
             this.label18.TabIndex = 93;
             this.label18.Text = "Fecha y Hora ";
             // 
@@ -498,10 +489,9 @@ namespace Hash
             this.dateTimePicker1.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(153, 48);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
+            this.dateTimePicker1.Location = new System.Drawing.Point(122, 38);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(163, 24);
+            this.dateTimePicker1.Size = new System.Drawing.Size(160, 21);
             this.dateTimePicker1.TabIndex = 94;
             this.dateTimePicker1.Value = new System.DateTime(2023, 11, 5, 20, 1, 22, 810);
             // 
@@ -510,10 +500,9 @@ namespace Hash
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.ForeColor = System.Drawing.SystemColors.Control;
-            this.label17.Location = new System.Drawing.Point(25, 89);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Location = new System.Drawing.Point(20, 71);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(93, 17);
+            this.label17.Size = new System.Drawing.Size(74, 13);
             this.label17.TabIndex = 93;
             this.label17.Text = "Descripción";
             // 
@@ -522,33 +511,30 @@ namespace Hash
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.SystemColors.Control;
-            this.label16.Location = new System.Drawing.Point(25, 488);
-            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Location = new System.Drawing.Point(140, 361);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(77, 17);
+            this.label16.Size = new System.Drawing.Size(59, 13);
             this.label16.TabIndex = 92;
             this.label16.Text = "Jerarquia";
             // 
-            // comboBoxRecibe
+            // comboBoxJerarquiaRecibe
             // 
-            this.comboBoxRecibe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxRecibe.FormattingEnabled = true;
-            this.comboBoxRecibe.Location = new System.Drawing.Point(25, 507);
-            this.comboBoxRecibe.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxRecibe.Name = "comboBoxRecibe";
-            this.comboBoxRecibe.Size = new System.Drawing.Size(177, 26);
-            this.comboBoxRecibe.TabIndex = 91;
+            this.comboBoxJerarquiaRecibe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxJerarquiaRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxJerarquiaRecibe.FormattingEnabled = true;
+            this.comboBoxJerarquiaRecibe.Location = new System.Drawing.Point(140, 377);
+            this.comboBoxJerarquiaRecibe.Name = "comboBoxJerarquiaRecibe";
+            this.comboBoxJerarquiaRecibe.Size = new System.Drawing.Size(142, 23);
+            this.comboBoxJerarquiaRecibe.TabIndex = 91;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.SystemColors.Control;
-            this.label15.Location = new System.Drawing.Point(25, 394);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Location = new System.Drawing.Point(20, 324);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(134, 17);
+            this.label15.Size = new System.Drawing.Size(105, 13);
             this.label15.TabIndex = 90;
             this.label15.Text = "Nombre completo";
             // 
@@ -557,10 +543,9 @@ namespace Hash
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.SystemColors.Control;
-            this.label14.Location = new System.Drawing.Point(25, 203);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Location = new System.Drawing.Point(20, 162);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(134, 17);
+            this.label14.Size = new System.Drawing.Size(105, 13);
             this.label14.TabIndex = 89;
             this.label14.Text = "Nombre completo";
             // 
@@ -569,34 +554,31 @@ namespace Hash
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.SystemColors.Control;
-            this.label12.Location = new System.Drawing.Point(25, 301);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(140, 202);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(77, 17);
+            this.label12.Size = new System.Drawing.Size(59, 13);
             this.label12.TabIndex = 88;
             this.label12.Text = "Jerarquia";
             // 
-            // comboBoxEntrega
+            // comboBoxJerarquiaEntrega
             // 
-            this.comboBoxEntrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxEntrega.FormattingEnabled = true;
-            this.comboBoxEntrega.Location = new System.Drawing.Point(25, 318);
-            this.comboBoxEntrega.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxEntrega.Name = "comboBoxEntrega";
-            this.comboBoxEntrega.Size = new System.Drawing.Size(177, 26);
-            this.comboBoxEntrega.TabIndex = 87;
+            this.comboBoxJerarquiaEntrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxJerarquiaEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxJerarquiaEntrega.FormattingEnabled = true;
+            this.comboBoxJerarquiaEntrega.Location = new System.Drawing.Point(140, 217);
+            this.comboBoxJerarquiaEntrega.Name = "comboBoxJerarquiaEntrega";
+            this.comboBoxJerarquiaEntrega.Size = new System.Drawing.Size(142, 23);
+            this.comboBoxJerarquiaEntrega.TabIndex = 87;
             // 
             // textBoxNomEntrega
             // 
             this.textBoxNomEntrega.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxNomEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxNomEntrega.Location = new System.Drawing.Point(25, 223);
-            this.textBoxNomEntrega.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxNomEntrega.Location = new System.Drawing.Point(20, 178);
             this.textBoxNomEntrega.Name = "textBoxNomEntrega";
-            this.textBoxNomEntrega.Size = new System.Drawing.Size(291, 24);
+            this.textBoxNomEntrega.Size = new System.Drawing.Size(262, 21);
             this.textBoxNomEntrega.TabIndex = 16;
-            this.textBoxNomEntrega.TextChanged += new System.EventHandler(this.textBoxNomEntrega_TextChanged);
+            this.textBoxNomEntrega.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxNomEntrega_KeyDown_1);
             // 
             // circularProgressBar1
             // 
@@ -608,8 +590,7 @@ namespace Hash
             this.circularProgressBar1.InnerColor = System.Drawing.SystemColors.InactiveCaption;
             this.circularProgressBar1.InnerMargin = 2;
             this.circularProgressBar1.InnerWidth = -1;
-            this.circularProgressBar1.Location = new System.Drawing.Point(829, 551);
-            this.circularProgressBar1.Margin = new System.Windows.Forms.Padding(4);
+            this.circularProgressBar1.Location = new System.Drawing.Point(738, 442);
             this.circularProgressBar1.MarqueeAnimationSpeed = 2000;
             this.circularProgressBar1.Name = "circularProgressBar1";
             this.circularProgressBar1.OuterColor = System.Drawing.Color.White;
@@ -618,7 +599,7 @@ namespace Hash
             this.circularProgressBar1.ProgressColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.circularProgressBar1.ProgressWidth = 15;
             this.circularProgressBar1.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
-            this.circularProgressBar1.Size = new System.Drawing.Size(100, 89);
+            this.circularProgressBar1.Size = new System.Drawing.Size(80, 71);
             this.circularProgressBar1.StartAngle = 270;
             this.circularProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.circularProgressBar1.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
@@ -638,10 +619,9 @@ namespace Hash
             this.labelTotal.AutoSize = true;
             this.labelTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTotal.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelTotal.Location = new System.Drawing.Point(476, 624);
-            this.labelTotal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelTotal.Location = new System.Drawing.Point(365, 486);
             this.labelTotal.Name = "labelTotal";
-            this.labelTotal.Size = new System.Drawing.Size(100, 20);
+            this.labelTotal.Size = new System.Drawing.Size(86, 17);
             this.labelTotal.TabIndex = 93;
             this.labelTotal.Text = "Peso total:";
             // 
@@ -650,20 +630,59 @@ namespace Hash
             this.labelPesoTotal.AutoSize = true;
             this.labelPesoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPesoTotal.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelPesoTotal.Location = new System.Drawing.Point(599, 624);
-            this.labelPesoTotal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelPesoTotal.Location = new System.Drawing.Point(463, 486);
             this.labelPesoTotal.Name = "labelPesoTotal";
-            this.labelPesoTotal.Size = new System.Drawing.Size(19, 20);
+            this.labelPesoTotal.Size = new System.Drawing.Size(17, 17);
             this.labelPesoTotal.TabIndex = 94;
             this.labelPesoTotal.Text = "0";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.Control;
+            this.label7.Location = new System.Drawing.Point(20, 247);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(50, 13);
+            this.label7.TabIndex = 98;
+            this.label7.Text = "Destino";
+            // 
+            // comboBoxDestEntrega
+            // 
+            this.comboBoxDestEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxDestEntrega.FormattingEnabled = true;
+            this.comboBoxDestEntrega.Location = new System.Drawing.Point(20, 263);
+            this.comboBoxDestEntrega.Name = "comboBoxDestEntrega";
+            this.comboBoxDestEntrega.Size = new System.Drawing.Size(262, 23);
+            this.comboBoxDestEntrega.TabIndex = 97;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.SystemColors.Control;
+            this.label19.Location = new System.Drawing.Point(20, 406);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(50, 13);
+            this.label19.TabIndex = 100;
+            this.label19.Text = "Destino";
+            // 
+            // comboBoxDestRecibe
+            // 
+            this.comboBoxDestRecibe.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxDestRecibe.FormattingEnabled = true;
+            this.comboBoxDestRecibe.Location = new System.Drawing.Point(20, 422);
+            this.comboBoxDestRecibe.Name = "comboBoxDestRecibe";
+            this.comboBoxDestRecibe.Size = new System.Drawing.Size(262, 23);
+            this.comboBoxDestRecibe.TabIndex = 99;
+            // 
             // Form_Hash
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1357, 656);
+            this.ClientSize = new System.Drawing.Size(1165, 534);
             this.Controls.Add(this.labelPesoTotal);
             this.Controls.Add(this.labelTotal);
             this.Controls.Add(this.circularProgressBar1);
@@ -686,7 +705,6 @@ namespace Hash
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Form_Hash";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -695,8 +713,8 @@ namespace Hash
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHash)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecibe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEntrega)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -726,14 +744,14 @@ namespace Hash
         private System.Windows.Forms.NumericUpDown numericUpDownHash;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonImprimirHash;
-        private System.Windows.Forms.TextBox textBoxProcedimiento;
+        private System.Windows.Forms.TextBox textBoxDescripcion;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ComboBox comboBoxRecibe;
+        private System.Windows.Forms.ComboBox comboBoxJerarquiaRecibe;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox comboBoxEntrega;
+        private System.Windows.Forms.ComboBox comboBoxJerarquiaEntrega;
         private System.Windows.Forms.TextBox textBoxNomEntrega;
         private System.Windows.Forms.Label label17;
         private CircularProgressBar.CircularProgressBar circularProgressBar1;
@@ -741,8 +759,12 @@ namespace Hash
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label labelTotal;
         private System.Windows.Forms.Label labelPesoTotal;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numericUpDownRecibe;
+        private System.Windows.Forms.NumericUpDown numericUpDownEntrega;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBoxDestEntrega;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox comboBoxDestRecibe;
     }
 }
 

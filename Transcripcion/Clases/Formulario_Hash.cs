@@ -11,8 +11,7 @@ namespace Hash
         public int Audio { get; set; }
         public int Texto { get; set; }
         public int Varios { get; set; }
-        public string Tipo { get; set; }
-        public string Procedimiento { get; set; }
+        public string Descripcion { get; set; }
         //public string Nota { get; set; }
         public BEOficial OfEntrega { get; set; }
         public BEOficial OfRecibe { get; set; }

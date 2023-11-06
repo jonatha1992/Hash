@@ -8,10 +8,12 @@ namespace Hash
     {
         public string Nombre { get; set; }
 
-        
-
         public BEDestino() { }
 
+        public BEDestino(string text)
+        {
+            Nombre = text;
+        }
 
         static public List<BEDestino> ListarDestinos()
         {

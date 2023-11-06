@@ -197,12 +197,12 @@ namespace Hash
             this.label5.TabIndex = 79;
             this.label5.Text = "Listado personal";
             // 
-            // textBoxProcedimiento
+            // textBoxDescripcion
             // 
             this.textBoxProcedimiento.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxProcedimiento.Location = new System.Drawing.Point(25, 119);
             this.textBoxProcedimiento.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxProcedimiento.Name = "textBoxProcedimiento";
+            this.textBoxProcedimiento.Name = "textBoxDescripcion";
             this.textBoxProcedimiento.Size = new System.Drawing.Size(288, 24);
             this.textBoxProcedimiento.TabIndex = 86;
             // 
@@ -349,14 +349,14 @@ namespace Hash
             this.label12.TabIndex = 88;
             this.label12.Text = "Jerarquia";
             // 
-            // comboBoxEntrega
+            // comboBoxJerarquiaEntrega
             // 
             this.comboBoxEntrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxEntrega.FormattingEnabled = true;
             this.comboBoxEntrega.Location = new System.Drawing.Point(520, 42);
             this.comboBoxEntrega.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxEntrega.Name = "comboBoxEntrega";
+            this.comboBoxEntrega.Name = "comboBoxJerarquiaEntrega";
             this.comboBoxEntrega.Size = new System.Drawing.Size(177, 26);
             this.comboBoxEntrega.TabIndex = 87;
             // 

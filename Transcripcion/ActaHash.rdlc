@@ -1089,6 +1089,7 @@ Legajo: </Value>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1385,7 +1386,7 @@ Legajo: </Value>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Parameters!Tipo_procedimiento.Value</Value>
+                                <Value>DESCRIPCIÓN;</Value>
                                 <Style>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>

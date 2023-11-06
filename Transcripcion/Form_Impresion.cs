@@ -28,7 +28,6 @@ namespace Hash
         { 
             try
             {
-
                 this.reportViewer1.LocalReport.DataSources.Clear();
 
                 if(Formulario_Custodia == null)// si es hash
@@ -46,8 +45,7 @@ namespace Hash
                                                                                     new ReportParameter("Imagenes", Formulario_Hash.Imagenes.ToString()),
                                                                                     new ReportParameter("Clips",Formulario_Hash.Clips.ToString()),
                                                                                     new ReportParameter("Audio",Formulario_Hash.Audio.ToString()),
-                                                                                    new ReportParameter("Tipo_procedimiento",Formulario_Hash.Tipo.ToUpper()),
-                                                                                    new ReportParameter("Procedimiento",Formulario_Hash.Procedimiento.ToUpper()),
+                                                                                    new ReportParameter("Descripcion",Formulario_Hash.Descripcion.ToUpper()),
                                                                                     new ReportParameter("PesoTotal",Formulario_Hash.pesototal.ToUpper())
                                                                                    };
 
@@ -89,7 +87,7 @@ namespace Hash
                                                                                     new ReportParameter("NombreRecibe",Formulario_Custodia.OfRecibe.ToString().ToUpper()),
                                                                                     new ReportParameter("ControlRecibe", Formulario_Custodia.OfRecibe.Legajo.ToString()),
                                                                                     new ReportParameter("Tipo_procedimiento",Formulario_Custodia.Tipo.ToUpper()),
-                                                                                    new ReportParameter("Procedimiento",Formulario_Custodia.Procedimiento.ToUpper())
+                                                                                    new ReportParameter("Descripcin",Formulario_Custodia.Procedimiento.ToUpper())
                                                                                    };
                     this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
                     this.reportViewer1.LocalReport.SetParameters(Parametros);
@@ -111,7 +109,7 @@ namespace Hash
                 //                                                                    new ReportParameter("Clips",Formulario_Hash.Clips.ToString()),
                 //                                                                    new ReportParameter("Audio",Formulario_Hash.Audio.ToString()),
                 //                                                                    new ReportParameter("Tipo_procedimiento",Formulario_Hash.Tipo.ToUpper()),
-                //                                                                    new ReportParameter("Procedimiento",Formulario_Hash.Procedimiento.ToUpper())
+                //                                                                    new ReportParameter("Descripcin",Formulario_Hash.Descripcin.ToUpper())
                 //                                                                   };
 
 

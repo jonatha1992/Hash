@@ -12,7 +12,7 @@ namespace Hash
     {
         List<string> NombreArchivos = new List<string>();
         List<string> RutaArchivos = new List<string>();
-        Formulario_Hash formulario = new Formulario_Hash();
+        Formulario_Hash formulario_hash = new Formulario_Hash();
         List<BEOficial> listaOficiales = new List<BEOficial>();
         List<BEJerarquia> listaJerarquias = BEJerarquia.ListarJeraquias();
 
@@ -27,8 +27,8 @@ namespace Hash
             try
             {
 
-                comboBoxRecibe.DataSource = listaJerarquias;
-                comboBoxEntrega.DataSource = listaJerarquias?.ConvertAll(item => (BEJerarquia)item.Clone());
+                comboBoxJerarquiaRecibe.DataSource = listaJerarquias;
+                comboBoxJerarquiaEntrega.DataSource = listaJerarquias?.ConvertAll(item => (BEJerarquia)item.Clone());
                 listaOficiales = BEOficial.ObtenerOficiales();
 
 
@@ -49,9 +49,9 @@ namespace Hash
 
 
                 AutoCompleteStringCollection source2 = new AutoCompleteStringCollection();
-                textBoxProcedimiento.AutoCompleteCustomSource = source2;
-                textBoxProcedimiento.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                textBoxProcedimiento.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                textBoxDescripcion.AutoCompleteCustomSource = source2;
+                textBoxDescripcion.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                textBoxDescripcion.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
                 labelPesoTotal.Text = "0";
             }
@@ -119,8 +119,8 @@ namespace Hash
                         BEArchivo archivo1 = new BEArchivo(archivo);
                         archivo1.Hash = calcularHash(archivo);
 
-                        archivo1.Nro_Orden = formulario.ListaArchivos.Count + 1;
-                        formulario.ListaArchivos.Add(archivo1);
+                        archivo1.Nro_Orden = formulario_hash.ListaArchivos.Count + 1;
+                        formulario_hash.ListaArchivos.Add(archivo1);
                         NombreArchivos.Add(archivo1.Nombre);
 
                         archivosProcesados++;
@@ -156,27 +156,29 @@ namespace Hash
 
         private void Actualizar()
         {
-            formulario.Contar();
-            lblAudio.Text = formulario.Texto.ToString();
-            lblClip.Text = formulario.Clips.ToString();
-            lblAudio.Text = formulario.Audio.ToString();
-            lblImg.Text = formulario.Imagenes.ToString();
-            lblVarios.Text = formulario.Varios.ToString();
+            formulario_hash.Contar();
+            lblAudio.Text = formulario_hash.Texto.ToString();
+            lblClip.Text = formulario_hash.Clips.ToString();
+            lblAudio.Text = formulario_hash.Audio.ToString();
+            lblImg.Text = formulario_hash.Imagenes.ToString();
+            lblVarios.Text = formulario_hash.Varios.ToString();
 
 
             DgvElementos.DataSource = null;
-            DgvElementos.DataSource = formulario.ListaArchivos;
+            DgvElementos.DataSource = formulario_hash.ListaArchivos;
             DgvElementos.Columns["Nro_Orden"].HeaderText = "Nro Orden";
             DgvElementos.Columns["PesoArchivo"].HeaderText = "Peso";
+            DgvElementos.Columns["Hash"].HeaderText = "Hash SHA1";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
-            DgvElementos.Columns["Nro_Orden"].Width = 30;
             DgvElementos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            DgvElementos.Columns["Hash"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            DgvElementos.Columns["Nro_Orden"].Width = 40;
             DgvElementos.Columns["Extension"].Width = 35;
             DgvElementos.Columns["PesoArchivo"].Width = 65;
             DgvElementos.Columns["Peso"].Visible= false;
+            labelPesoTotal.Text = formulario_hash.pesototal;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            labelPesoTotal.Text = formulario.pesototal;
 
         }
 
@@ -194,39 +196,12 @@ namespace Hash
             }
         }
 
-        private void DgvElementos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-
-        private void textBoxNomEntrega_TextChanged(object sender, EventArgs e)
-        {
 
 
 
-        }
+       
 
-        private void textBoxConOfRecibe_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                e.Handled = true;
-
-                var oficial = listaOficiales.Find(X => X.NombreCompleto == textBoxNomOfRecibe.Text);       
-                
-                if (oficial != null)
-                {
-                    textBoxNomOfRecibe.Text = oficial.NombreCompleto;
-                    comboBoxRecibe.Text = oficial.Jerarquia.Nombre;
-                }
-            }
-        }
-        private void textBoxNomEntrega_KeyDown(object sender, KeyEventArgs e)
+        private void textBoxNomOfRecibe_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -236,13 +211,112 @@ namespace Hash
 
                 if (oficial != null)
                 {
-                    textBoxControlOfEntrega.Text = oficial.Legajo.ToString();
-                    comboBoxEntrega.Text = oficial.jerarquia.jerarquia;
+                    numericUpDownRecibe.Value = oficial.Legajo;
+                    comboBoxJerarquiaRecibe.Text = oficial.Jerarquia.Nombre;
+                    comboBoxDestRecibe.Text = oficial.Destino.Nombre;
+
                 }
             }
         }
 
+           
 
+
+        private void textBoxNomEntrega_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+
+                var oficial = listaOficiales.Find(X => X.NombreCompleto == textBoxNomEntrega.Text);
+
+                if (oficial != null)
+                {
+                    numericUpDownEntrega.Value = oficial.Legajo;
+                    comboBoxJerarquiaEntrega.Text = oficial.Jerarquia.Nombre;
+                    comboBoxDestEntrega.Text = oficial.Destino.Nombre;
+                }
+            }
+        }
+
+        private void numericUpDownEntrega_Enter(object sender, EventArgs e)
+        {
+
+            var oficial = listaOficiales.Find(X => X.Legajo == numericUpDownEntrega.Value);
+
+            if (oficial != null)
+            {
+                textBoxNomEntrega.Text = oficial.NombreCompleto;
+                comboBoxJerarquiaEntrega.Text = oficial.Jerarquia.Nombre;
+                comboBoxDestEntrega.Text = oficial.Destino.Nombre;
+
+            }
+        }
+
+        private void numericUpDownRecibe_Enter(object sender, EventArgs e)
+        {
+            var oficial = listaOficiales.Find(X => X.Legajo == numericUpDownEntrega.Value);
+
+            if (oficial != null)
+            {
+                textBoxNomOfRecibe.Text = oficial.NombreCompleto;
+                comboBoxJerarquiaRecibe.Text = oficial.Jerarquia.Nombre;
+                comboBoxDestRecibe.Text = oficial.Destino.Nombre;
+            }
+        }
+        private bool CargarFormularioHash()
+        {
+            try
+            {
+                formulario_hash.Nro_Hash = (int)numericUpDownHash.Value;
+                formulario_hash.Descripcion = textBoxDescripcion.Text;
+                formulario_hash.OfEntrega = new BEOficial(Convert.ToInt32(numericUpDownEntrega.Value), textBoxNomEntrega.Text);
+                formulario_hash.OfEntrega.Jerarquia = (BEJerarquia)comboBoxJerarquiaEntrega.SelectedItem;
+                formulario_hash.OfEntrega.Destino = new BEDestino( comboBoxJerarquiaEntrega.Text);
+                BEDestino.AgregaDestino(formulario_hash.OfEntrega.Destino);
+                BEOficial.AgregarOficial(formulario_hash.OfEntrega);
+
+                if (numericUpDownRecibe.Value == 0  || textBoxNomOfRecibe.Text == "" )
+                {
+                    formulario_hash.OfRecibe = new BEOficial(Convert.ToInt32(numericUpDownEntrega.Value), textBoxNomOfRecibe.Text);
+                    formulario_hash.OfRecibe.Jerarquia = (BEJerarquia)comboBoxJerarquiaRecibe.SelectedItem;
+                    formulario_hash.OfRecibe.Destino = new BEDestino(comboBoxJerarquiaRecibe.Text);
+                    BEOficial.AgregarOficial(formulario_hash.OfRecibe);
+                    BEDestino.AgregaDestino(formulario_hash.OfRecibe.Destino);
+                }
+                else
+                {
+                    formulario_hash.OfRecibe = null;
+                }
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private void buttonImprimirHash_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (CargarFormularioHash() && DgvElementos.DataSource != null && DgvElementos.Rows?.Count > 0)
+                {
+                    Form_Impresion form_Impresion = new Form_Impresion(formulario_hash);
+                    form_Impresion.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Falta informacion para realizar el Hash", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
 
