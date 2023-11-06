@@ -18,11 +18,7 @@ namespace Hash
 
         }
 
-        public Form_Impresion(Formulario_Custodia formulario_Custodia)
-        {
-            InitializeComponent();
-            Formulario_Custodia = formulario_Custodia;
-        }
+        
 
         private void FormImpresion_Load(object sender, EventArgs e)
         { 
@@ -40,8 +36,8 @@ namespace Hash
                     ReportParameterCollection Parametros = new ReportParameterCollection(){ new ReportParameter("NroActa",Formulario_Hash.Nro_Hash.ToString()),
                                                                                     new ReportParameter("NombreEntrega",Formulario_Hash.OfEntrega.ToString().ToUpper()),
                                                                                     new ReportParameter("ControlEntrega", Formulario_Hash.OfEntrega.Legajo.ToString()),
-                                                                                    new ReportParameter("NombreRecibe",Formulario_Hash.OfRecibe.ToString().ToUpper()),
-                                                                                    new ReportParameter("ControlRecibe", Formulario_Hash.OfRecibe.Legajo.ToString()),
+                                                                                    new ReportParameter("NombreRecibe",Formulario_Hash.OfRecibe?.ToString().ToUpper()),
+                                                                                    new ReportParameter("ControlRecibe", Formulario_Hash.OfRecibe?.Legajo.ToString()),
                                                                                     new ReportParameter("Imagenes", Formulario_Hash.Imagenes.ToString()),
                                                                                     new ReportParameter("Clips",Formulario_Hash.Clips.ToString()),
                                                                                     new ReportParameter("Audio",Formulario_Hash.Audio.ToString()),

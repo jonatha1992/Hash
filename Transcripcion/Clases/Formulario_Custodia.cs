@@ -13,8 +13,5 @@ namespace Hash
         public BEOficial OfEntrega { get; set; }
         public BEOficial OfRecibe { get; set; }
        
-        //public List<BEArchivo> ListaArchivos { get; set; }
-
-
     }
 }

@@ -100,11 +100,11 @@
     <Compile Include="Form_Custodia.designer.cs">
       <DependentUpon>Form_Custodia.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form._Hash.cs">
+    <Compile Include="Form_Hash.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form._Hash.designer.cs">
-      <DependentUpon>Form._Hash.cs</DependentUpon>
+    <Compile Include="Form_Hash.designer.cs">
+      <DependentUpon>Form_Hash.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_Impresion.cs">
       <SubType>Form</SubType>
@@ -122,8 +122,8 @@
     <EmbeddedResource Include="Form_Custodia.resx">
       <DependentUpon>Form_Custodia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form._Hash.resx">
-      <DependentUpon>Form._Hash.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Hash.resx">
+      <DependentUpon>Form_Hash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Impresion.resx">
       <DependentUpon>Form_Impresion.cs</DependentUpon>
@@ -139,13 +139,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\Archivo.datasource" />
-    <None Include="Properties\DataSources\BEArchivo.datasource" />
-    <None Include="Properties\DataSources\Formulario_Custodia.datasource" />
-    <None Include="Properties\DataSources\Hash.Properties.Resources.datasource" />
-    <None Include="Properties\DataSources\Hash.Properties.Settings.datasource" />
-    <None Include="Properties\DataSources\Transcripcion.Hash.datasource" />
-    <None Include="Properties\DataSources\Transcripcion.Program.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

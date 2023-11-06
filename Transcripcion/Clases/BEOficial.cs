@@ -9,7 +9,7 @@ namespace Hash
         public int Legajo { get; set; }
         public string NombreCompleto { get; set; }
         public BEJerarquia Jerarquia { get; set; }
-        public BEDestino Destino { get; set; }
+        public BEDestino Destino { get; set; } 
 
 
         public BEOficial(int legaj, string nombrecompleto)
@@ -59,7 +59,6 @@ namespace Hash
                 new XElement("JerarquiaId", poficial.Jerarquia.Nombre),
                 new XElement("DestinoId", poficial.Destino.Nombre)
                 );
-
                 doc.Root.Element("Oficiales").Add(nuevoOficial);
                 doc.Save("datos.xml");
 

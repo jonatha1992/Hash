@@ -8,17 +8,18 @@ using System.Windows.Forms;
 
 namespace Hash
 {
-    public partial class Form_Hash: Form
+    public partial class Form_Hash : Form
     {
         List<string> NombreArchivos = new List<string>();
         List<string> RutaArchivos = new List<string>();
         Formulario_Hash formulario_hash = new Formulario_Hash();
         List<BEOficial> listaOficiales = new List<BEOficial>();
         List<BEJerarquia> listaJerarquias = BEJerarquia.ListarJeraquias();
+        List<BEDestino> listaDestinos = BEDestino.ListarDestinos();
 
         string carpetaSeleccionada;
 
-        
+
 
         public Form_Hash()
         {
@@ -29,6 +30,10 @@ namespace Hash
 
                 comboBoxJerarquiaRecibe.DataSource = listaJerarquias;
                 comboBoxJerarquiaEntrega.DataSource = listaJerarquias?.ConvertAll(item => (BEJerarquia)item.Clone());
+
+                comboBoxDestRecibe.DataSource = listaDestinos;
+                comboBoxDestEntrega.DataSource = listaDestinos?.ConvertAll(item => (BEDestino)item.Clone());
+       
                 listaOficiales = BEOficial.ObtenerOficiales();
 
 
@@ -57,7 +62,7 @@ namespace Hash
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message} ", "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message} ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -171,14 +176,11 @@ namespace Hash
             DgvElementos.Columns["Hash"].HeaderText = "Hash SHA1";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
-            DgvElementos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            DgvElementos.Columns["Hash"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             DgvElementos.Columns["Nro_Orden"].Width = 40;
             DgvElementos.Columns["Extension"].Width = 35;
             DgvElementos.Columns["PesoArchivo"].Width = 65;
-            DgvElementos.Columns["Peso"].Visible= false;
+            DgvElementos.Columns["Peso"].Visible = false;
             labelPesoTotal.Text = formulario_hash.pesototal;
-            //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
         }
 
@@ -187,19 +189,18 @@ namespace Hash
 
             try
             {
-                
+                var elementosSeleccioados = DgvElementos.SelectedRows;
 
+                foreach (var item in elementosSeleccioados)
+                {
+                    BEArchivo archivo = item as BEArchivo;  
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-
-
-
-
-       
 
         private void textBoxNomOfRecibe_KeyDown(object sender, KeyEventArgs e)
         {
@@ -219,9 +220,6 @@ namespace Hash
             }
         }
 
-           
-
-
         private void textBoxNomEntrega_KeyDown_1(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -234,53 +232,29 @@ namespace Hash
                 {
                     numericUpDownEntrega.Value = oficial.Legajo;
                     comboBoxJerarquiaEntrega.Text = oficial.Jerarquia.Nombre;
-                    comboBoxDestEntrega.Text = oficial.Destino.Nombre;
+                    comboBoxDestEntrega.Text = oficial.Destino?.Nombre;
                 }
             }
         }
 
-        private void numericUpDownEntrega_Enter(object sender, EventArgs e)
-        {
-
-            var oficial = listaOficiales.Find(X => X.Legajo == numericUpDownEntrega.Value);
-
-            if (oficial != null)
-            {
-                textBoxNomEntrega.Text = oficial.NombreCompleto;
-                comboBoxJerarquiaEntrega.Text = oficial.Jerarquia.Nombre;
-                comboBoxDestEntrega.Text = oficial.Destino.Nombre;
-
-            }
-        }
-
-        private void numericUpDownRecibe_Enter(object sender, EventArgs e)
-        {
-            var oficial = listaOficiales.Find(X => X.Legajo == numericUpDownEntrega.Value);
-
-            if (oficial != null)
-            {
-                textBoxNomOfRecibe.Text = oficial.NombreCompleto;
-                comboBoxJerarquiaRecibe.Text = oficial.Jerarquia.Nombre;
-                comboBoxDestRecibe.Text = oficial.Destino.Nombre;
-            }
-        }
         private bool CargarFormularioHash()
         {
             try
             {
+
                 formulario_hash.Nro_Hash = (int)numericUpDownHash.Value;
                 formulario_hash.Descripcion = textBoxDescripcion.Text;
                 formulario_hash.OfEntrega = new BEOficial(Convert.ToInt32(numericUpDownEntrega.Value), textBoxNomEntrega.Text);
                 formulario_hash.OfEntrega.Jerarquia = (BEJerarquia)comboBoxJerarquiaEntrega.SelectedItem;
-                formulario_hash.OfEntrega.Destino = new BEDestino( comboBoxJerarquiaEntrega.Text);
+                formulario_hash.OfEntrega.Destino = new BEDestino(comboBoxDestEntrega.Text);
                 BEDestino.AgregaDestino(formulario_hash.OfEntrega.Destino);
                 BEOficial.AgregarOficial(formulario_hash.OfEntrega);
 
-                if (numericUpDownRecibe.Value == 0  || textBoxNomOfRecibe.Text == "" )
+                if (checkBoxRecibe.Checked)
                 {
-                    formulario_hash.OfRecibe = new BEOficial(Convert.ToInt32(numericUpDownEntrega.Value), textBoxNomOfRecibe.Text);
+                    formulario_hash.OfRecibe = new BEOficial(Convert.ToInt32(numericUpDownRecibe.Value), textBoxNomOfRecibe.Text);
                     formulario_hash.OfRecibe.Jerarquia = (BEJerarquia)comboBoxJerarquiaRecibe.SelectedItem;
-                    formulario_hash.OfRecibe.Destino = new BEDestino(comboBoxJerarquiaRecibe.Text);
+                    formulario_hash.OfRecibe.Destino = new BEDestino(comboBoxDestRecibe.Text);
                     BEOficial.AgregarOficial(formulario_hash.OfRecibe);
                     BEDestino.AgregaDestino(formulario_hash.OfRecibe.Destino);
                 }
@@ -301,10 +275,15 @@ namespace Hash
         {
             try
             {
-                if (CargarFormularioHash() && DgvElementos.DataSource != null && DgvElementos.Rows?.Count > 0)
+                if (Validar())
                 {
-                    Form_Impresion form_Impresion = new Form_Impresion(formulario_hash);
-                    form_Impresion.ShowDialog();
+                    CargarFormularioHash();
+
+                    if ( DgvElementos.DataSource != null && DgvElementos.Rows?.Count > 0)
+                    {
+                        Form_Impresion form_Impresion = new Form_Impresion(formulario_hash);
+                        form_Impresion.ShowDialog();
+                    }
                 }
                 else
                 {
@@ -316,6 +295,99 @@ namespace Hash
             {
                 MessageBox.Show("Ha surgido un error:" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void numericUpDownEntrega_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+
+                var oficial = listaOficiales.Find(X => X.Legajo == Convert.ToInt32(numericUpDownEntrega.Value));
+
+                if (oficial != null)
+                {
+                    textBoxNomEntrega.Text = oficial.NombreCompleto;
+                    comboBoxJerarquiaEntrega.Text = oficial.Jerarquia.Nombre;
+                    comboBoxDestEntrega.Text = oficial.Destino.Nombre;
+
+                }
+            }
+        }
+
+        private void numericUpDownRecibe_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+
+                var oficial = listaOficiales.Find(X => X.Legajo == Convert.ToInt32(numericUpDownRecibe.Value));
+
+                if (oficial != null)
+                {
+                    textBoxNomOfRecibe.Text = oficial.NombreCompleto;
+                    comboBoxJerarquiaRecibe.Text = oficial.Jerarquia.Nombre;
+                    comboBoxDestRecibe.Text = oficial.Destino.Nombre;
+
+                }
+            }
+        }
+
+
+
+        private bool Validar()
+        {
+            bool camposDiferentes = textBoxNomEntrega.Text != textBoxNomOfRecibe.Text ||
+                                   numericUpDownEntrega.Value != numericUpDownRecibe.Value;
+
+            if (camposDiferentes)
+            {
+                if (checkBoxRecibe.Checked)
+                {
+                    return ValidarEntrega();
+                }
+                else
+                {
+                    return ValidarRecibe();
+                }
+            }
+
+            return false;
+        }
+
+        private bool ValidarEntrega()
+        {
+            return !string.IsNullOrWhiteSpace(textBoxNomEntrega.Text) &&
+                   numericUpDownEntrega.Value != 0 &&
+                   !string.IsNullOrWhiteSpace(comboBoxDestEntrega.Text);
+        }
+
+        private bool ValidarRecibe()
+        {
+            return !string.IsNullOrWhiteSpace(textBoxNomOfRecibe.Text) &&
+                   numericUpDownRecibe.Value != 0 &&
+                   !string.IsNullOrWhiteSpace(comboBoxDestRecibe.Text);
+        }
+
+
+        private void DgvElementos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (DgvElementos.SelectedRows.Count > 0)
+            {
+                buttonEliminar.Visible = true;
+            }
+            else
+            {
+                buttonEliminar.Visible = false;
+            }
+        }
+
+        private void checkBoxRecibe_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxNomOfRecibe.Enabled = checkBoxRecibe.Checked;
+            comboBoxJerarquiaRecibe.Enabled = checkBoxRecibe.Checked;
+            numericUpDownRecibe.Enabled = checkBoxRecibe.Checked;
+            comboBoxDestRecibe.Enabled = checkBoxRecibe.Checked;
         }
     }
 }
