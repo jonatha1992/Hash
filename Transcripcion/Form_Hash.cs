@@ -111,12 +111,13 @@ namespace Hash
 
                     MostrarSpriner();
 
-
+                    RutaArchivos.Clear();   
                     RutaArchivos.AddRange(Directory.GetFiles(carpetaSeleccionada, "*", SearchOption.AllDirectories));
 
                     int totalArchivos = RutaArchivos.Count;
                     circularProgressBar1.Maximum = totalArchivos;
                     int archivosProcesados = 0;
+
 
                     // Mostrar los nombres de los archivos en la consola
                     foreach (string archivo in RutaArchivos)
@@ -125,6 +126,7 @@ namespace Hash
                         archivo1.Hash = calcularHash(archivo);
 
                         archivo1.Nro_Orden = formulario_hash.ListaArchivos.Count + 1;
+                    
                         formulario_hash.ListaArchivos.Add(archivo1);
                         NombreArchivos.Add(archivo1.Nombre);
 
@@ -173,7 +175,7 @@ namespace Hash
             DgvElementos.DataSource = formulario_hash.ListaArchivos;
             DgvElementos.Columns["Nro_Orden"].HeaderText = "Nro Orden";
             DgvElementos.Columns["PesoArchivo"].HeaderText = "Peso";
-            DgvElementos.Columns["Hash"].HeaderText = "Hash SHA1";
+            DgvElementos.Columns["Hash"].HeaderText = "Hash SHA 256";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
             DgvElementos.Columns["Nro_Orden"].Width = 40;
@@ -186,15 +188,17 @@ namespace Hash
 
         private void buttonEliminar_Click(object sender, EventArgs e)
         {
-
             try
             {
-                var elementosSeleccioados = DgvElementos.SelectedRows;
+                var elementosSeleccioados = DgvElementos.SelectedRows  ;
 
-                foreach (var item in elementosSeleccioados)
+                foreach (DataGridViewRow item in elementosSeleccioados)
                 {
-                    BEArchivo archivo = item as BEArchivo;  
+                    BEArchivo archivo = item.DataBoundItem as BEArchivo;  
+                    NombreArchivos.Remove(NombreArchivos.Find(x=>x.Contains(archivo.Nombre)));
+                    formulario_hash.ListaArchivos.Remove(formulario_hash.ListaArchivos.Find(x => x.Nombre.Contains(archivo.Nombre)));
                 }
+                Actualizar();
             }
             catch (Exception ex)
             {
@@ -339,19 +343,17 @@ namespace Hash
         {
             bool camposDiferentes = textBoxNomEntrega.Text != textBoxNomOfRecibe.Text ||
                                    numericUpDownEntrega.Value != numericUpDownRecibe.Value;
-
             if (camposDiferentes)
             {
                 if (checkBoxRecibe.Checked)
                 {
-                    return ValidarEntrega();
+                    return ValidarRecibe();
                 }
                 else
                 {
-                    return ValidarRecibe();
+                    return ValidarEntrega();
                 }
             }
-
             return false;
         }
 
@@ -370,7 +372,16 @@ namespace Hash
         }
 
 
-        private void DgvElementos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+   
+        private void checkBoxRecibe_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxNomOfRecibe.Enabled = checkBoxRecibe.Checked;
+            comboBoxJerarquiaRecibe.Enabled = checkBoxRecibe.Checked;
+            numericUpDownRecibe.Enabled = checkBoxRecibe.Checked;
+            comboBoxDestRecibe.Enabled = checkBoxRecibe.Checked;
+        }
+
+        private void DgvElementos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (DgvElementos.SelectedRows.Count > 0)
             {
@@ -380,14 +391,6 @@ namespace Hash
             {
                 buttonEliminar.Visible = false;
             }
-        }
-
-        private void checkBoxRecibe_CheckedChanged(object sender, EventArgs e)
-        {
-            textBoxNomOfRecibe.Enabled = checkBoxRecibe.Checked;
-            comboBoxJerarquiaRecibe.Enabled = checkBoxRecibe.Checked;
-            numericUpDownRecibe.Enabled = checkBoxRecibe.Checked;
-            comboBoxDestRecibe.Enabled = checkBoxRecibe.Checked;
         }
     }
 }

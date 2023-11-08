@@ -289,7 +289,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Hash SHA256</Value>
+                                  <Value>Hash SHA 256</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -802,8 +802,8 @@ Legajo: </Value>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>3.82539cm</Top>
-            <Left>5.1917cm</Left>
+            <Top>3.19039cm</Top>
+            <Left>4.8742cm</Left>
             <Height>0.77542cm</Height>
             <Width>10.10408cm</Width>
             <ZIndex>4</ZIndex>
@@ -1452,8 +1452,8 @@ Legajo: </Value>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <Top>4.74192cm</Top>
-            <Left>0.65087cm</Left>
+            <Top>4.31153cm</Top>
+            <Left>0.43042cm</Left>
             <Height>4.71533cm</Height>
             <Width>17.17963cm</Width>
             <ZIndex>5</ZIndex>
@@ -1478,53 +1478,6 @@ Legajo: </Value>
               </Border>
             </Style>
           </Image>
-          <Image Name="Image6">
-            <Source>Embedded</Source>
-            <Value>LogoPSA</Value>
-            <Sizing>FitProportional</Sizing>
-            <Top>0.50518cm</Top>
-            <Left>1.4188cm</Left>
-            <Height>2.12576cm</Height>
-            <Width>2.16146cm</Width>
-            <ZIndex>7</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Image>
-          <Textbox Name="Textbox6">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Centro Regional de Video Vigilancia</Value>
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox6</rd:DefaultName>
-            <Top>2.73677cm</Top>
-            <Left>0.77438cm</Left>
-            <Height>1.08862cm</Height>
-            <Width>3.87643cm</Width>
-            <ZIndex>8</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
         </ReportItems>
         <Height>6.07108in</Height>
         <Style>

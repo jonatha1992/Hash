@@ -186,7 +186,6 @@ namespace Hash
             this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle3;
             this.DgvElementos.Location = new System.Drawing.Point(406, 54);
             this.DgvElementos.Margin = new System.Windows.Forms.Padding(2);
-            this.DgvElementos.MultiSelect = false;
             this.DgvElementos.Name = "DgvElementos";
             this.DgvElementos.ReadOnly = true;
             this.DgvElementos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -210,7 +209,7 @@ namespace Hash
             this.DgvElementos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvElementos.Size = new System.Drawing.Size(1084, 409);
             this.DgvElementos.TabIndex = 62;
-            this.DgvElementos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvElementos_CellContentClick);
+            this.DgvElementos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvElementos_CellClick);
             // 
             // Sel
             // 
@@ -703,7 +702,7 @@ namespace Hash
             this.labelTotal.AutoSize = true;
             this.labelTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTotal.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelTotal.Location = new System.Drawing.Point(1349, 604);
+            this.labelTotal.Location = new System.Drawing.Point(1240, 604);
             this.labelTotal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTotal.Name = "labelTotal";
             this.labelTotal.Size = new System.Drawing.Size(100, 20);
@@ -715,7 +714,7 @@ namespace Hash
             this.labelPesoTotal.AutoSize = true;
             this.labelPesoTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPesoTotal.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelPesoTotal.Location = new System.Drawing.Point(1471, 604);
+            this.labelPesoTotal.Location = new System.Drawing.Point(1348, 604);
             this.labelPesoTotal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPesoTotal.Name = "labelPesoTotal";
             this.labelPesoTotal.Size = new System.Drawing.Size(19, 20);
