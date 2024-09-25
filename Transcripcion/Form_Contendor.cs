@@ -22,7 +22,6 @@ namespace Hash
         {
             
             form_Hash = new Form_Hash();
-            //form_Hash.ShowDialog(); 
             form_Hash.MdiParent =  this;
             form_Hash.Show();
         }

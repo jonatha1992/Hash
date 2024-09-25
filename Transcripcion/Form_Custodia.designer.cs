@@ -85,9 +85,10 @@ namespace Hash
             this.buttonEliminar.BackColor = System.Drawing.Color.Red;
             this.buttonEliminar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEliminar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonEliminar.Location = new System.Drawing.Point(508, 173);
+            this.buttonEliminar.Location = new System.Drawing.Point(634, 216);
+            this.buttonEliminar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonEliminar.Name = "buttonEliminar";
-            this.buttonEliminar.Size = new System.Drawing.Size(82, 30);
+            this.buttonEliminar.Size = new System.Drawing.Size(102, 38);
             this.buttonEliminar.TabIndex = 8;
             this.buttonEliminar.Text = "Eliminar";
             this.buttonEliminar.UseVisualStyleBackColor = false;
@@ -98,9 +99,10 @@ namespace Hash
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(19, 24);
+            this.label1.Location = new System.Drawing.Point(24, 30);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 15);
+            this.label1.Size = new System.Drawing.Size(99, 18);
             this.label1.TabIndex = 15;
             this.label1.Text = "N° Custodia";
             // 
@@ -109,23 +111,25 @@ namespace Hash
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.Control;
-            this.label4.Location = new System.Drawing.Point(394, 60);
+            this.label4.Location = new System.Drawing.Point(492, 75);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(84, 15);
+            this.label4.Size = new System.Drawing.Size(102, 18);
             this.label4.TabIndex = 64;
             this.label4.Text = "Nro, Control";
             // 
             // numericUpDownHash
             // 
             this.numericUpDownHash.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownHash.Location = new System.Drawing.Point(19, 40);
+            this.numericUpDownHash.Location = new System.Drawing.Point(24, 50);
+            this.numericUpDownHash.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDownHash.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numericUpDownHash.Name = "numericUpDownHash";
-            this.numericUpDownHash.Size = new System.Drawing.Size(77, 21);
+            this.numericUpDownHash.Size = new System.Drawing.Size(96, 24);
             this.numericUpDownHash.TabIndex = 78;
             this.numericUpDownHash.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -134,18 +138,20 @@ namespace Hash
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.Control;
-            this.label5.Location = new System.Drawing.Point(602, 219);
+            this.label5.Location = new System.Drawing.Point(752, 274);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 18);
+            this.label5.Size = new System.Drawing.Size(92, 24);
             this.label5.TabIndex = 79;
             this.label5.Text = "Personal";
             // 
             // textBoxCaratula
             // 
             this.textBoxCaratula.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxCaratula.Location = new System.Drawing.Point(19, 82);
+            this.textBoxCaratula.Location = new System.Drawing.Point(24, 102);
+            this.textBoxCaratula.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxCaratula.Name = "textBoxCaratula";
-            this.textBoxCaratula.Size = new System.Drawing.Size(330, 21);
+            this.textBoxCaratula.Size = new System.Drawing.Size(412, 24);
             this.textBoxCaratula.TabIndex = 86;
             // 
             // groupBox1
@@ -169,9 +175,11 @@ namespace Hash
             this.groupBox1.Controls.Add(this.textBoxCaratula);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox1.Location = new System.Drawing.Point(12, 4);
+            this.groupBox1.Location = new System.Drawing.Point(15, 5);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(371, 389);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(464, 486);
             this.groupBox1.TabIndex = 87;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos";
@@ -181,18 +189,20 @@ namespace Hash
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.Control;
-            this.label11.Location = new System.Drawing.Point(18, 338);
+            this.label11.Location = new System.Drawing.Point(22, 422);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(121, 15);
+            this.label11.Size = new System.Drawing.Size(143, 18);
             this.label11.TabIndex = 107;
             this.label11.Text = "Breve descripciòn";
             // 
             // textBoxBreveDescripcion
             // 
             this.textBoxBreveDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxBreveDescripcion.Location = new System.Drawing.Point(19, 355);
+            this.textBoxBreveDescripcion.Location = new System.Drawing.Point(24, 444);
+            this.textBoxBreveDescripcion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxBreveDescripcion.Name = "textBoxBreveDescripcion";
-            this.textBoxBreveDescripcion.Size = new System.Drawing.Size(328, 21);
+            this.textBoxBreveDescripcion.Size = new System.Drawing.Size(409, 24);
             this.textBoxBreveDescripcion.TabIndex = 106;
             // 
             // label10
@@ -200,18 +210,20 @@ namespace Hash
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.Control;
-            this.label10.Location = new System.Drawing.Point(20, 292);
+            this.label10.Location = new System.Drawing.Point(25, 365);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(150, 15);
+            this.label10.Size = new System.Drawing.Size(172, 18);
             this.label10.TabIndex = 105;
             this.label10.Text = "Identificaciòn material";
             // 
             // textBoxIdentificacion
             // 
             this.textBoxIdentificacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxIdentificacion.Location = new System.Drawing.Point(20, 309);
+            this.textBoxIdentificacion.Location = new System.Drawing.Point(25, 386);
+            this.textBoxIdentificacion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxIdentificacion.Name = "textBoxIdentificacion";
-            this.textBoxIdentificacion.Size = new System.Drawing.Size(328, 21);
+            this.textBoxIdentificacion.Size = new System.Drawing.Size(409, 24);
             this.textBoxIdentificacion.TabIndex = 104;
             // 
             // label9
@@ -219,18 +231,20 @@ namespace Hash
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.Control;
-            this.label9.Location = new System.Drawing.Point(20, 245);
+            this.label9.Location = new System.Drawing.Point(25, 306);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(114, 15);
+            this.label9.Size = new System.Drawing.Size(135, 18);
             this.label9.TabIndex = 103;
             this.label9.Text = "Otra informaciòn";
             // 
             // textBoxInformacion
             // 
             this.textBoxInformacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxInformacion.Location = new System.Drawing.Point(20, 262);
+            this.textBoxInformacion.Location = new System.Drawing.Point(25, 328);
+            this.textBoxInformacion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxInformacion.Name = "textBoxInformacion";
-            this.textBoxInformacion.Size = new System.Drawing.Size(328, 21);
+            this.textBoxInformacion.Size = new System.Drawing.Size(409, 24);
             this.textBoxInformacion.TabIndex = 102;
             // 
             // label8
@@ -238,18 +252,20 @@ namespace Hash
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.Control;
-            this.label8.Location = new System.Drawing.Point(19, 199);
+            this.label8.Location = new System.Drawing.Point(24, 249);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 15);
+            this.label8.Size = new System.Drawing.Size(85, 18);
             this.label8.TabIndex = 101;
             this.label8.Text = "Secretaria";
             // 
             // textBoxSecretaria
             // 
             this.textBoxSecretaria.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxSecretaria.Location = new System.Drawing.Point(19, 215);
+            this.textBoxSecretaria.Location = new System.Drawing.Point(24, 269);
+            this.textBoxSecretaria.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxSecretaria.Name = "textBoxSecretaria";
-            this.textBoxSecretaria.Size = new System.Drawing.Size(328, 21);
+            this.textBoxSecretaria.Size = new System.Drawing.Size(409, 24);
             this.textBoxSecretaria.TabIndex = 100;
             // 
             // label7
@@ -257,18 +273,20 @@ namespace Hash
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(16, 152);
+            this.label7.Location = new System.Drawing.Point(20, 190);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(123, 15);
+            this.label7.Size = new System.Drawing.Size(145, 18);
             this.label7.TabIndex = 99;
             this.label7.Text = "Juzgado / Fiscalia";
             // 
             // textBoxJuzgado
             // 
             this.textBoxJuzgado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxJuzgado.Location = new System.Drawing.Point(19, 169);
+            this.textBoxJuzgado.Location = new System.Drawing.Point(24, 211);
+            this.textBoxJuzgado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxJuzgado.Name = "textBoxJuzgado";
-            this.textBoxJuzgado.Size = new System.Drawing.Size(328, 21);
+            this.textBoxJuzgado.Size = new System.Drawing.Size(409, 24);
             this.textBoxJuzgado.TabIndex = 98;
             // 
             // label2
@@ -276,18 +294,20 @@ namespace Hash
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.Control;
-            this.label2.Location = new System.Drawing.Point(19, 105);
+            this.label2.Location = new System.Drawing.Point(24, 131);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 15);
+            this.label2.Size = new System.Drawing.Size(71, 18);
             this.label2.TabIndex = 97;
             this.label2.Text = "Sumario";
             // 
             // textBoxSumario
             // 
             this.textBoxSumario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxSumario.Location = new System.Drawing.Point(19, 123);
+            this.textBoxSumario.Location = new System.Drawing.Point(24, 154);
+            this.textBoxSumario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxSumario.Name = "textBoxSumario";
-            this.textBoxSumario.Size = new System.Drawing.Size(330, 21);
+            this.textBoxSumario.Size = new System.Drawing.Size(412, 24);
             this.textBoxSumario.TabIndex = 96;
             // 
             // dateTimePicker1
@@ -295,9 +315,10 @@ namespace Hash
             this.dateTimePicker1.CustomFormat = "dd/MM/yyyy         HH:mm";
             this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(188, 41);
+            this.dateTimePicker1.Location = new System.Drawing.Point(235, 51);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(162, 21);
+            this.dateTimePicker1.Size = new System.Drawing.Size(202, 24);
             this.dateTimePicker1.TabIndex = 95;
             this.dateTimePicker1.Value = new System.DateTime(2023, 11, 5, 20, 1, 22, 810);
             // 
@@ -306,9 +327,10 @@ namespace Hash
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.SystemColors.Control;
-            this.label18.Location = new System.Drawing.Point(211, 24);
+            this.label18.Location = new System.Drawing.Point(264, 30);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(91, 15);
+            this.label18.Size = new System.Drawing.Size(109, 18);
             this.label18.TabIndex = 93;
             this.label18.Text = "Fecha y Hora";
             // 
@@ -317,23 +339,25 @@ namespace Hash
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.ForeColor = System.Drawing.SystemColors.Control;
-            this.label17.Location = new System.Drawing.Point(19, 66);
+            this.label17.Location = new System.Drawing.Point(24, 82);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(53, 15);
+            this.label17.Size = new System.Drawing.Size(62, 18);
             this.label17.TabIndex = 93;
             this.label17.Text = "Cartula";
             // 
             // numericUpDown2
             // 
             this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown2.Location = new System.Drawing.Point(396, 79);
+            this.numericUpDown2.Location = new System.Drawing.Point(495, 99);
+            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(117, 21);
+            this.numericUpDown2.Size = new System.Drawing.Size(146, 24);
             this.numericUpDown2.TabIndex = 100;
             this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -342,23 +366,25 @@ namespace Hash
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.Control;
-            this.label3.Location = new System.Drawing.Point(395, 111);
+            this.label3.Location = new System.Drawing.Point(494, 139);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 15);
+            this.label3.Size = new System.Drawing.Size(78, 18);
             this.label3.TabIndex = 99;
             this.label3.Text = "N° Orden";
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(396, 129);
+            this.numericUpDown1.Location = new System.Drawing.Point(495, 161);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(56, 21);
+            this.numericUpDown1.Size = new System.Drawing.Size(70, 24);
             this.numericUpDown1.TabIndex = 98;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -367,9 +393,10 @@ namespace Hash
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.Control;
-            this.label6.Location = new System.Drawing.Point(680, 66);
+            this.label6.Location = new System.Drawing.Point(850, 82);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 15);
+            this.label6.Size = new System.Drawing.Size(66, 18);
             this.label6.TabIndex = 97;
             this.label6.Text = "Destino";
             // 
@@ -378,9 +405,10 @@ namespace Hash
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(683, 83);
+            this.comboBox1.Location = new System.Drawing.Point(854, 104);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(194, 23);
+            this.comboBox1.Size = new System.Drawing.Size(242, 26);
             this.comboBox1.TabIndex = 96;
             // 
             // label14
@@ -388,9 +416,10 @@ namespace Hash
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.SystemColors.Control;
-            this.label14.Location = new System.Drawing.Point(394, 18);
+            this.label14.Location = new System.Drawing.Point(492, 22);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(121, 15);
+            this.label14.Size = new System.Drawing.Size(143, 18);
             this.label14.TabIndex = 89;
             this.label14.Text = "Nombre completo";
             // 
@@ -399,9 +428,10 @@ namespace Hash
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.SystemColors.Control;
-            this.label12.Location = new System.Drawing.Point(681, 18);
+            this.label12.Location = new System.Drawing.Point(851, 22);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(68, 15);
+            this.label12.Size = new System.Drawing.Size(78, 18);
             this.label12.TabIndex = 88;
             this.label12.Text = "Jerarquia";
             // 
@@ -410,17 +440,19 @@ namespace Hash
             this.comboBoxEntrega.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxEntrega.FormattingEnabled = true;
-            this.comboBoxEntrega.Location = new System.Drawing.Point(683, 34);
+            this.comboBoxEntrega.Location = new System.Drawing.Point(854, 42);
+            this.comboBoxEntrega.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxEntrega.Name = "comboBoxEntrega";
-            this.comboBoxEntrega.Size = new System.Drawing.Size(194, 23);
+            this.comboBoxEntrega.Size = new System.Drawing.Size(242, 26);
             this.comboBoxEntrega.TabIndex = 87;
             // 
             // textBoxNomEntrega
             // 
             this.textBoxNomEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxNomEntrega.Location = new System.Drawing.Point(394, 34);
+            this.textBoxNomEntrega.Location = new System.Drawing.Point(492, 42);
+            this.textBoxNomEntrega.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxNomEntrega.Name = "textBoxNomEntrega";
-            this.textBoxNomEntrega.Size = new System.Drawing.Size(258, 21);
+            this.textBoxNomEntrega.Size = new System.Drawing.Size(322, 24);
             this.textBoxNomEntrega.TabIndex = 16;
             // 
             // buttonImpCustodia
@@ -428,9 +460,10 @@ namespace Hash
             this.buttonImpCustodia.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonImpCustodia.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonImpCustodia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonImpCustodia.Location = new System.Drawing.Point(789, 173);
+            this.buttonImpCustodia.Location = new System.Drawing.Point(986, 216);
+            this.buttonImpCustodia.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonImpCustodia.Name = "buttonImpCustodia";
-            this.buttonImpCustodia.Size = new System.Drawing.Size(82, 30);
+            this.buttonImpCustodia.Size = new System.Drawing.Size(102, 38);
             this.buttonImpCustodia.TabIndex = 88;
             this.buttonImpCustodia.Text = "Imprimir";
             this.buttonImpCustodia.UseVisualStyleBackColor = false;
@@ -440,9 +473,10 @@ namespace Hash
             this.button1.BackColor = System.Drawing.Color.Green;
             this.button1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button1.Location = new System.Drawing.Point(407, 173);
+            this.button1.Location = new System.Drawing.Point(503, 216);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(82, 30);
+            this.button1.Size = new System.Drawing.Size(102, 38);
             this.button1.TabIndex = 89;
             this.button1.Text = "Agregar";
             this.button1.UseVisualStyleBackColor = false;
@@ -453,9 +487,10 @@ namespace Hash
             this.dateTimePicker2.CustomFormat = "dd/MM/yyyy      HH:mm";
             this.dateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(682, 128);
+            this.dateTimePicker2.Location = new System.Drawing.Point(852, 160);
+            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(170, 21);
+            this.dateTimePicker2.Size = new System.Drawing.Size(212, 24);
             this.dateTimePicker2.TabIndex = 102;
             this.dateTimePicker2.Value = new System.DateTime(2023, 11, 5, 20, 1, 22, 810);
             // 
@@ -464,9 +499,10 @@ namespace Hash
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.SystemColors.Control;
-            this.label13.Location = new System.Drawing.Point(680, 113);
+            this.label13.Location = new System.Drawing.Point(850, 141);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(98, 15);
+            this.label13.Size = new System.Drawing.Size(117, 18);
             this.label13.TabIndex = 101;
             this.label13.Text = "Hora Custodia";
             // 
@@ -503,7 +539,7 @@ namespace Hash
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.DgvElementos.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DgvElementos.Location = new System.Drawing.Point(394, 240);
+            this.DgvElementos.Location = new System.Drawing.Point(492, 300);
             this.DgvElementos.Margin = new System.Windows.Forms.Padding(2);
             this.DgvElementos.MultiSelect = false;
             this.DgvElementos.Name = "DgvElementos";
@@ -527,7 +563,7 @@ namespace Hash
             this.DgvElementos.RowTemplate.Height = 60;
             this.DgvElementos.RowTemplate.ReadOnly = true;
             this.DgvElementos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvElementos.Size = new System.Drawing.Size(493, 153);
+            this.DgvElementos.Size = new System.Drawing.Size(616, 191);
             this.DgvElementos.TabIndex = 103;
             // 
             // Sel
@@ -544,12 +580,12 @@ namespace Hash
             // 
             // Form_Custodia
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(895, 405);
+            this.ClientSize = new System.Drawing.Size(1119, 506);
             this.Controls.Add(this.DgvElementos);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.label13);
@@ -570,6 +606,7 @@ namespace Hash
             this.Controls.Add(this.label12);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "Form_Custodia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

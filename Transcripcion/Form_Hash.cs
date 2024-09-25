@@ -27,7 +27,6 @@ namespace Hash
 
             try
             {
-
                 comboBoxJerarquiaRecibe.DataSource = listaJerarquias;
                 comboBoxJerarquiaEntrega.DataSource = listaJerarquias?.ConvertAll(item => (BEJerarquia)item.Clone());
 
@@ -35,7 +34,6 @@ namespace Hash
                 comboBoxDestEntrega.DataSource = listaDestinos?.ConvertAll(item => (BEDestino)item.Clone());
        
                 listaOficiales = BEOficial.ObtenerOficiales();
-
 
 
                 AutoCompleteStringCollection source = new AutoCompleteStringCollection();
@@ -75,8 +73,8 @@ namespace Hash
             long totalBytesRead = 0;
             using (var stream = new FileStream(rutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 1048576, FileOptions.SequentialScan))
             {
-                using (var sha = SHA256.Create())
-                {
+                using (var sha = SHA1.Create())
+                {                                             
                     byte[] buffer = new byte[1048576];
                     int bytesRead;
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) != 0)
@@ -175,7 +173,7 @@ namespace Hash
             DgvElementos.DataSource = formulario_hash.ListaArchivos;
             DgvElementos.Columns["Nro_Orden"].HeaderText = "Nro Orden";
             DgvElementos.Columns["PesoArchivo"].HeaderText = "Peso";
-            DgvElementos.Columns["Hash"].HeaderText = "Hash SHA 256";
+            DgvElementos.Columns["Hash"].HeaderText = "Hash SHA 1";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
             DgvElementos.Columns["Nro_Orden"].Width = 40;

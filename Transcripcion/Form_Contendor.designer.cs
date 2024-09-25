@@ -32,8 +32,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.Menu_Hash = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Custodia = new System.Windows.Forms.ToolStripMenuItem();
-            this.Login = new System.Windows.Forms.ToolStripMenuItem();
-            this.CambiarContrasena = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,15 +43,13 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Hash,
-            this.Menu_Custodia,
-            this.Login,
-            this.CambiarContrasena});
+            this.Menu_Custodia});
             this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(1532, 32);
+            this.menuStrip1.Size = new System.Drawing.Size(1268, 32);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -77,29 +73,6 @@
             this.Menu_Custodia.Text = "Custodia";
             this.Menu_Custodia.Click += new System.EventHandler(this.Form_Custodia_Click);
             // 
-            // Login
-            // 
-            this.Login.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Login.BackColor = System.Drawing.Color.SteelBlue;
-            this.Login.Enabled = false;
-            this.Login.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Login.ForeColor = System.Drawing.Color.White;
-            this.Login.Name = "Login";
-            this.Login.Size = new System.Drawing.Size(117, 28);
-            this.Login.Text = "Cierra sesión";
-            this.Login.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            // 
-            // CambiarContrasena
-            // 
-            this.CambiarContrasena.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.CambiarContrasena.BackColor = System.Drawing.Color.SteelBlue;
-            this.CambiarContrasena.Enabled = false;
-            this.CambiarContrasena.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CambiarContrasena.ForeColor = System.Drawing.Color.White;
-            this.CambiarContrasena.Name = "CambiarContrasena";
-            this.CambiarContrasena.Size = new System.Drawing.Size(176, 28);
-            this.CambiarContrasena.Text = "Cambiar Contraseña";
-            // 
             // Form_Contenedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -107,7 +80,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1532, 778);
+            this.ClientSize = new System.Drawing.Size(1268, 733);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -120,7 +93,6 @@
             this.Name = "Form_Contenedor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hash Copy";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -132,8 +104,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem Menu_Hash;
         private System.Windows.Forms.ToolStripMenuItem Menu_Custodia;
-        private System.Windows.Forms.ToolStripMenuItem Login;
-        private System.Windows.Forms.ToolStripMenuItem CambiarContrasena;
     }
 
     
