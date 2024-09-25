@@ -20,7 +20,7 @@ namespace Hash
 
         public BEOficial() { }
 
-
+        
         static public List<BEOficial> ObtenerOficiales()
         {
 
@@ -79,7 +79,15 @@ namespace Hash
         {
             return Jerarquia.Abreviatura + " " + NombreCompleto;
         }
+
+
+
+
     }
 
-
+    public class BEOficial_Custodia
+    {
+        public DateTime Fecha_Custodia { get; set; }
+        public string Funcion { get; set; }
+    }
 }
