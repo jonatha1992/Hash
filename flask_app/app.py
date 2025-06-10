@@ -15,6 +15,17 @@ last_total_size = 0
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav', 'flac',
                           'mp4', 'avi', 'mov', 'wmv', 'bmp', 'doc', 'docx'])
 
+def human_size(num_bytes):
+    """Return a human readable file size like the Windows app."""
+    kilobytes = num_bytes / 1024.0
+    if kilobytes <= 1024:
+        return f"{kilobytes:.2f} KB"
+    megabytes = kilobytes / 1024.0
+    if megabytes <= 1024:
+        return f"{megabytes:.2f} MB"
+    gigabytes = megabytes / 1024.0
+    return f"{gigabytes:.2f} GB"
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -54,6 +65,7 @@ def index():
             'varios': 0,
         }
         total_size = 0
+        order = 1
         for file in files:
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
@@ -66,11 +78,15 @@ def index():
                 size = file.tell()
                 total_size += size
                 results.append({
+                    'order': order,
                     'name': filename,
                     'ext': extension,
                     'size': size,
-                    'hash': file_hash
+                    'size_readable': human_size(size),
+                    'hash': file_hash,
+                    'si': 'SI'
                 })
+                order += 1
         global last_results, last_counters, last_total_size
         last_results = results
         last_counters = counters
@@ -86,9 +102,17 @@ def report():
         return "No hay resultados para generar reporte", 400
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow(['Nombre', 'Extension', 'Peso', 'SHA1'])
+    writer.writerow(['Nro_Orden', 'Nombre', 'Extension', 'Peso', 'PesoArchivo', 'SHA1', 'SI'])
     for r in last_results:
-        writer.writerow([r['name'], r['ext'], r['size'], r['hash']])
+        writer.writerow([
+            r['order'],
+            r['name'],
+            r['ext'],
+            r['size'],
+            r['size_readable'],
+            r['hash'],
+            r['si'],
+        ])
     output.seek(0)
     return send_file(
         io.BytesIO(output.getvalue().encode('utf-8')),

@@ -16,16 +16,20 @@
     </ul>
     <table border="1">
         <tr>
+            <th>Nro Orden</th>
             <th>Nombre</th>
             <th>Extensión</th>
             <th>Peso (bytes)</th>
+            <th>Peso</th>
             <th>SHA1</th>
         </tr>
         {% for r in results %}
         <tr>
+            <td>{{ r.order }}</td>
             <td>{{ r.name }}</td>
             <td>{{ r.ext }}</td>
             <td>{{ r.size }}</td>
+            <td>{{ r.size_readable }}</td>
             <td>{{ r.hash }}</td>
         </tr>
         {% endfor %}
