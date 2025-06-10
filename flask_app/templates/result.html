@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Resultado</title>
+</head>
+<body>
+    <h1>Resultado del Hash</h1>
+    <p>Total size: {{ total_size }} bytes</p>
+    <ul>
+        <li>Imagenes: {{ counters['image'] }}</li>
+        <li>Clips: {{ counters['clip'] }}</li>
+        <li>Audio: {{ counters['audio'] }}</li>
+        <li>Texto: {{ counters['text'] }}</li>
+        <li>Varios: {{ counters['varios'] }}</li>
+    </ul>
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Extensión</th>
+            <th>Peso (bytes)</th>
+            <th>SHA1</th>
+        </tr>
+        {% for r in results %}
+        <tr>
+            <td>{{ r.name }}</td>
+            <td>{{ r.ext }}</td>
+            <td>{{ r.size }}</td>
+            <td>{{ r.hash }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="/">Volver</a></p>
+</body>
+</html>
