@@ -1,9 +1,16 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import hashlib
 import os
+import io
+import csv
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
+# store latest results for report generation
+last_results = []
+last_counters = {}
+last_total_size = 0
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav', 'flac',
                           'mp4', 'avi', 'mov', 'wmv', 'bmp', 'doc', 'docx'])
@@ -64,8 +71,31 @@ def index():
                     'size': size,
                     'hash': file_hash
                 })
+        global last_results, last_counters, last_total_size
+        last_results = results
+        last_counters = counters
+        last_total_size = total_size
         return render_template('result.html', results=results, counters=counters, total_size=total_size)
     return render_template('index.html')
+
+
+@app.route('/report')
+def report():
+    """Download the last hash result as a CSV report."""
+    if not last_results:
+        return "No hay resultados para generar reporte", 400
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['Nombre', 'Extension', 'Peso', 'SHA1'])
+    for r in last_results:
+        writer.writerow([r['name'], r['ext'], r['size'], r['hash']])
+    output.seek(0)
+    return send_file(
+        io.BytesIO(output.getvalue().encode('utf-8')),
+        mimetype='text/csv',
+        as_attachment=True,
+        download_name='hash_report.csv'
+    )
 
 
 if __name__ == '__main__':
