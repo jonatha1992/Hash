@@ -3,8 +3,8 @@
 This simple Flask application mimics the basic hashing functionality of the original Windows Forms application. Users can upload multiple files and the server will compute a SHA-1 hash for each file and display summary statistics.
 
 After hashing, a CSV report can be downloaded with the same columns as the
-original desktop report (order, name, extension, size in bytes, human
-readable size and SHA-1 hash).
+original desktop report (orden, nombre, extensión, tamaño en bytes,
+tamaño legible y hash SHA-1).
 
 ## Setup
 
@@ -17,7 +17,8 @@ readable size and SHA-1 hash).
    ```bash
    pip install -r requirements.txt
    ```
-3. Run the application:
+3. Run the application (no template files are required as the HTML is
+   embedded in `app.py`):
    ```bash
    python app.py
    ```

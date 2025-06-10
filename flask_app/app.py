@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template_string, request, send_file
 import hashlib
 import os
 import io
@@ -6,6 +6,67 @@ import csv
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
+# inline HTML templates to avoid extra files
+INDEX_HTML = """
+<!doctype html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"utf-8\">
+    <title>Hash Uploader</title>
+</head>
+<body>
+    <h1>Cargar archivos</h1>
+    <form method=\"post\" enctype=\"multipart/form-data\">
+        <input type=\"file\" name=\"files\" multiple>
+        <button type=\"submit\">Procesar</button>
+    </form>
+</body>
+</html>
+"""
+
+RESULT_HTML = """
+<!doctype html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"utf-8\">
+    <title>Resultado</title>
+</head>
+<body>
+    <h1>Resultado del Hash</h1>
+    <p>Total size: {{ total_size }} bytes</p>
+    <ul>
+        <li>Imagenes: {{ counters['image'] }}</li>
+        <li>Clips: {{ counters['clip'] }}</li>
+        <li>Audio: {{ counters['audio'] }}</li>
+        <li>Texto: {{ counters['text'] }}</li>
+        <li>Varios: {{ counters['varios'] }}</li>
+    </ul>
+    <table border=\"1\">
+        <tr>
+            <th>Nro Orden</th>
+            <th>Nombre</th>
+            <th>Extensión</th>
+            <th>Peso (bytes)</th>
+            <th>Peso</th>
+            <th>SHA1</th>
+        </tr>
+        {% for r in results %}
+        <tr>
+            <td>{{ r.order }}</td>
+            <td>{{ r.name }}</td>
+            <td>{{ r.ext }}</td>
+            <td>{{ r.size }}</td>
+            <td>{{ r.size_readable }}</td>
+            <td>{{ r.hash }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href=\"/report\">Descargar reporte</a></p>
+    <p><a href=\"/\">Volver</a></p>
+</body>
+</html>
+"""
 
 # store latest results for report generation
 last_results = []
@@ -91,8 +152,8 @@ def index():
         last_results = results
         last_counters = counters
         last_total_size = total_size
-        return render_template('result.html', results=results, counters=counters, total_size=total_size)
-    return render_template('index.html')
+        return render_template_string(RESULT_HTML, results=results, counters=counters, total_size=total_size)
+    return render_template_string(INDEX_HTML)
 
 
 @app.route('/report')
