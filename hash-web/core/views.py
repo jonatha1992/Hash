@@ -91,12 +91,18 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
                 # Calcular hash SHA-256
                 hash_sha256 = self._calcular_hash_archivo(archivo)
                 
+                # Obtener extensión del archivo
+                extension = os.path.splitext(archivo.name)[1].lower()
+                # Remover el punto inicial si existe
+                if extension.startswith('.'):
+                    extension = extension[1:]
+                
                 # Crear objeto Archivo
                 Archivo.objects.create(
                     formulario=formulario,
                     nro_orden=i,
                     nombre=archivo.name,
-                    extension=os.path.splitext(archivo.name)[1].lower(),
+                    extension=extension,
                     peso=archivo.size,
                     hash_sha256=hash_sha256,
                     tipo_mime=getattr(archivo, 'content_type', '') or ''
@@ -135,12 +141,18 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
             # Calcular hash
             hash_sha256 = self._calcular_hash_archivo(archivo)
             
+            # Obtener extensión del archivo
+            extension = os.path.splitext(archivo.name)[1].lower()
+            # Remover el punto inicial si existe
+            if extension.startswith('.'):
+                extension = extension[1:]
+            
             # Crear objeto Archivo
             archivo_obj = Archivo.objects.create(
                 formulario=formulario,
                 nro_orden=siguiente_orden,
                 nombre=archivo.name,
-                extension=os.path.splitext(archivo.name)[1].lower(),
+                extension=extension,
                 peso=archivo.size,
                 hash_sha256=hash_sha256,
                 tipo_mime=archivo.content_type or ''
@@ -482,70 +494,13 @@ def api_agregar_personal_custodia(request, custodia_id):
 
 # Vistas para Custodia
 def lista_custodias(request):
-        
-        if nuevo_estado not in ['BORRADOR', 'FINALIZADO', 'ARCHIVADO']:
-            return Response(
-                {'error': 'Estado inválido'}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        estado_anterior = formulario.estado
-        formulario.estado = nuevo_estado
-        formulario.save()
-        
-        # Crear entrada en historial
-        HistorialFormulario.objects.create(
-            formulario=formulario,
-            usuario=request.user,
-            accion='CAMBIO_ESTADO',
-            descripcion=f'Estado cambiado de {estado_anterior} a {nuevo_estado}'
-        )
-        
-        return Response({'estado': nuevo_estado})
-    
-    def _calcular_hash_archivo(self, archivo):
-        """Calcula el hash SHA-256 de un archivo"""
-        hash_sha256 = hashlib.sha256()
-        for chunk in archivo.chunks():
-            hash_sha256.update(chunk)
-        return hash_sha256.hexdigest().upper()
-
-
-class ArchivoViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Archivo.objects.select_related('formulario')
-    serializer_class = ArchivoSerializer
-    permission_classes = [IsAuthenticated]
-    
-    @action(detail=True, methods=['delete'])
-    def eliminar(self, request, pk=None):
-        """Eliminar un archivo"""
-        archivo = self.get_object()
-        formulario = archivo.formulario
-        
-        # Verificar que el formulario esté en borrador
-        if formulario.estado != 'BORRADOR':
-            return Response(
-                {'error': 'Solo se pueden eliminar archivos de formularios en borrador'}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        archivo.delete()
-        
-        # Reordenar archivos restantes
-        archivos_restantes = formulario.archivos.order_by('nro_orden')
-        for i, arch in enumerate(archivos_restantes, 1):
-            arch.nro_orden = i
-            arch.save()
-        
-        # Crear entrada en historial
-        HistorialFormulario.objects.create(
-            formulario=formulario,
-            usuario=request.user,
-            accion='ARCHIVO_ELIMINADO',
-            descripcion=f'Archivo "{archivo.nombre}" eliminado'
-        )
-        
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    """Vista para listar custodias"""
+    custodias = FormularioCustodia.objects.all().order_by('-fecha_creacion')
+    context = {
+        'custodias': custodias,
+        'title': 'Lista de Custodias'
+    }
+    return render(request, 'core/lista_custodias.html', context)
 
 
 # Template Views

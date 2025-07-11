@@ -17,12 +17,13 @@ class OficialSerializer(serializers.ModelSerializer):
     jerarquia_nombre = serializers.CharField(source='jerarquia.jerarquia', read_only=True)
     jerarquia_abrev = serializers.CharField(source='jerarquia.abreviatura', read_only=True)
     nombre_completo_formateado = serializers.CharField(read_only=True)
+    destino_nombre = serializers.CharField(source='destino.nombre', read_only=True)
     
     class Meta:
         model = Oficial
         fields = [
-            'id', 'legajo', 'nombre_completo', 'jerarquia', 'jerarquia_nombre', 
-            'jerarquia_abrev', 'activo', 'unidad', 'fecha_ingreso', 
+            'id', 'legajo', 'nombre', 'jerarquia', 'jerarquia_nombre', 
+            'jerarquia_abrev', 'destino', 'destino_nombre', 'activo', 'fecha_ingreso', 
             'nombre_completo_formateado'
         ]
 
@@ -33,7 +34,7 @@ class OficialBasicoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Oficial
-        fields = ['id', 'legajo', 'nombre_completo', 'display_name']
+        fields = ['id', 'legajo', 'nombre', 'display_name']
     
     def get_display_name(self, obj):
         return str(obj)
