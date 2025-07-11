@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block title %}Nuevo Formulario - Hash Web{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="bi bi-plus-circle"></i> Nuevo Formulario Hash
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-file-earmark-plus"></i> Información del Formulario</h5>
+            </div>
+            <div class="card-body">
+                <form id="formularioForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nro_hash" class="form-label">Número de Hash</label>
+                            <input type="number" class="form-control" id="nro_hash" name="nro_hash"
+                                value="{{ siguiente_numero }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tipo" class="form-label">Tipo</label>
+                            <select class="form-select" id="tipo" name="tipo" required>
+                                <option value="PROCEDIMIENTO">Procedimiento</option>
+                                <option value="VUELO">Vuelo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="procedimiento" class="form-label">Descripción del Procedimiento</label>
+                        <textarea class="form-control" id="procedimiento" name="procedimiento" rows="3" required
+                            placeholder="Ej: Allanamiento en domicilio de calle 123"></textarea>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="oficial_entrega" class="form-label">Oficial que Entrega</label>
+                            <select class="form-select" id="oficial_entrega" name="oficial_entrega" required>
+                                <option value="">Seleccione un oficial...</option>
+                                {% for oficial in oficiales %}
+                                <option value="{{ oficial.id }}">{{ oficial }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="oficial_recibe" class="form-label">Oficial que Recibe</label>
+                            <select class="form-select" id="oficial_recibe" name="oficial_recibe" required>
+                                <option value="">Seleccione un oficial...</option>
+                                {% for oficial in oficiales %}
+                                <option value="{{ oficial.id }}">{{ oficial }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="observaciones" class="form-label">Observaciones (Opcional)</label>
+                        <textarea class="form-control" id="observaciones" name="observaciones" rows="2"
+                            placeholder="Observaciones adicionales..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="archivos" class="form-label">
+                            <i class="bi bi-cloud-upload"></i> Seleccionar Archivos
+                        </label>
+                        <input type="file" class="form-control" id="archivos" name="archivos" multiple accept="*/*">
+                        <div class="form-text">
+                            Puede seleccionar múltiples archivos. Se calculará automáticamente el hash SHA-256 de cada
+                            uno.
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'core:dashboard' %}" class="btn btn-secondary me-md-2">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary" id="btnCrear">
+                            <i class="bi bi-save"></i> Crear Formulario
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> Información</h5>
+            </div>
+            <div class="card-body">
+                <h6>Proceso de Creación:</h6>
+                <ol class="small">
+                    <li>Complete la información del formulario</li>
+                    <li>Seleccione los oficiales involucrados</li>
+                    <li>Adjunte los archivos a procesar</li>
+                    <li>El sistema calculará automáticamente los hash SHA-256</li>
+                    <li>Se generará el acta correspondiente</li>
+                </ol>
+
+                <hr>
+
+                <h6>Formatos Soportados:</h6>
+                <ul class="small">
+                    <li><strong>Imágenes:</strong> JPG, PNG, BMP, GIF</li>
+                    <li><strong>Videos:</strong> MP4, AVI, MOV, WMV</li>
+                    <li><strong>Audio:</strong> MP3, WAV, FLAC</li>
+                    <li><strong>Documentos:</strong> PDF, DOC, TXT, XLS</li>
+                    <li><strong>Otros:</strong> Cualquier formato</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-list-check"></i> Progreso</h5>
+            </div>
+            <div class="card-body">
+                <div id="progresoUpload" style="display: none;">
+                    <div class="progress mb-2">
+                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <div class="text-center">
+                        <small id="estadoUpload">Procesando archivos...</small>
+                    </div>
+                </div>
+
+                <div id="resumenArchivos" style="display: none;">
+                    <h6>Archivos Procesados:</h6>
+                    <ul id="listaArchivos" class="small"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('formularioForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const btnCrear = document.getElementById('btnCrear');
+        const progresoUpload = document.getElementById('progresoUpload');
+
+        // Deshabilitar botón y mostrar progreso
+        btnCrear.disabled = true;
+        btnCrear.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Procesando...';
+        progresoUpload.style.display = 'block';
+
+        // Simular creación del formulario (aquí harías la llamada AJAX real)
+        fetch('/api/formularios/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.id) {
+                    // Éxito
+                    alert('¡Formulario creado exitosamente!');
+                    window.location.href = `/formularios/${data.id}/`;
+                } else {
+                    throw new Error('Error al crear formulario');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al crear el formulario. Por favor intente nuevamente.');
+            })
+            .finally(() => {
+                btnCrear.disabled = false;
+                btnCrear.innerHTML = '<i class="bi bi-save"></i> Crear Formulario';
+                progresoUpload.style.display = 'none';
+            });
+    });
+
+    // Actualizar información cuando se seleccionen archivos
+    document.getElementById('archivos').addEventListener('change', function (e) {
+        const archivos = e.target.files;
+        const resumen = document.getElementById('resumenArchivos');
+        const lista = document.getElementById('listaArchivos');
+
+        if (archivos.length > 0) {
+            lista.innerHTML = '';
+            for (let i = 0; i < archivos.length; i++) {
+                const li = document.createElement('li');
+                li.textContent = `${archivos[i].name} (${formatBytes(archivos[i].size)})`;
+                lista.appendChild(li);
+            }
+            resumen.style.display = 'block';
+        } else {
+            resumen.style.display = 'none';
+        }
+    });
+
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+</script>
+{% endblock %}

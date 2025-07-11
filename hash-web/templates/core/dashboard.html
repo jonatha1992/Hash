@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Hash Web{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="bi bi-speedometer2"></i> Dashboard
+        </h1>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ total_formularios }}</h4>
+                        <p class="card-text">Total Formularios</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ formularios_borrador }}</h4>
+                        <p class="card-text">En Borrador</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-pencil-square" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ formularios_finalizados }}</h4>
+                        <p class="card-text">Finalizados</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ total_archivos }}</h4>
+                        <p class="card-text">Total Archivos</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-files" style="font-size: 2rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-activity"></i> Acciones Rápidas</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <a href="{% url 'core:crear_formulario' %}" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-plus-circle"></i><br>
+                            Nuevo Formulario Hash
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="{% url 'core:lista_formularios' %}" class="btn btn-outline-primary btn-lg w-100">
+                            <i class="bi bi-list-ul"></i><br>
+                            Ver Todos los Formularios
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="{% url 'admin:core_oficial_changelist' %}"
+                            class="btn btn-outline-secondary btn-lg w-100">
+                            <i class="bi bi-people"></i><br>
+                            Gestionar Oficiales
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="{% url 'admin:index' %}" class="btn btn-outline-secondary btn-lg w-100">
+                            <i class="bi bi-gear"></i><br>
+                            Panel de Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> Información del Sistema</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><strong>Oficiales Activos:</strong> {{ oficiales_activos }}</li>
+                    <li><strong>Usuario:</strong> {{ user.get_full_name|default:user.username }}</li>
+                    <li><strong>Versión:</strong> 1.0.0</li>
+                </ul>
+
+                <hr>
+
+                <h6>Estado del Sistema</h6>
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-success me-2">●</span>
+                    <small>Sistema Operativo</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if not user.is_authenticated %}
+<div class="alert alert-warning mt-4">
+    <i class="bi bi-exclamation-triangle"></i>
+    <strong>Acceso Restringido:</strong>
+    Necesita <a href="/admin/login/">iniciar sesión</a> para acceder a todas las funcionalidades del sistema.
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Actualizar estadísticas cada 30 segundos
+        setInterval(function () {
+            // Aquí podrías hacer una llamada AJAX para actualizar estadísticas
+            console.log('Actualizando estadísticas...');
+        }, 30000);
+    });
+</script>
+{% endblock %}

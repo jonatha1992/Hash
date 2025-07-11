@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+
+{% block title %}Formulario #{{ formulario.nro_hash }} - Hash Web{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>
+                <i class="bi bi-file-earmark-text"></i>
+                Formulario Hash #{{ formulario.nro_hash }}
+            </h1>
+            <div class="d-flex gap-2">
+                <a href="/api/formularios/{{ formulario.id }}/exportar_pdf/" class="btn btn-outline-danger">
+                    <i class="bi bi-file-pdf"></i> PDF
+                </a>
+                <a href="/api/formularios/{{ formulario.id }}/exportar_excel/" class="btn btn-outline-success">
+                    <i class="bi bi-file-excel"></i> Excel
+                </a>
+                {% if formulario.estado == 'FINALIZADO' %}
+                <a href="{% url 'reports:reporte_custodia' formulario.id %}" class="btn btn-outline-info">
+                    <i class="bi bi-file-text"></i> Custodia
+                </a>
+                {% endif %}
+                <span
+                    class="badge bg-{% if formulario.estado == 'FINALIZADO' %}success{% elif formulario.estado == 'BORRADOR' %}warning{% else %}secondary{% endif %} fs-6">
+                    {{ formulario.get_estado_display }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> Información del Formulario</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Tipo:</strong> {{ formulario.get_tipo_display }}<br>
+                        <strong>Procedimiento:</strong> {{ formulario.procedimiento }}<br>
+                        <strong>Fecha de Creación:</strong> {{ formulario.fecha_creacion|date:"d/m/Y H:i:s" }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Oficial que Entrega:</strong> {{ formulario.oficial_entrega }}<br>
+                        <strong>Oficial que Recibe:</strong> {{ formulario.oficial_recibe }}<br>
+                        <strong>Total de Archivos:</strong> {{ formulario.total_archivos }}
+                    </div>
+                </div>
+
+                {% if formulario.observaciones %}
+                <hr>
+                <strong>Observaciones:</strong>
+                <p>{{ formulario.observaciones }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if formulario.archivos.all %}
+        <div class="card mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5><i class="bi bi-files"></i> Archivos Procesados ({{ formulario.archivos.count }})</h5>
+                <div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="toggleVista()" id="btnToggleVista">
+                        <i class="bi bi-grid-3x3-gap"></i> Vista Compacta
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="exportarCSV()">
+                        <i class="bi bi-download"></i> Exportar CSV
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Vista de tabla completa (por defecto) -->
+                <div id="vistaTabla">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm" id="tablaArchivos">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="width: 50px;">#</th>
+                                    <th style="width: 60px;">Tipo</th>
+                                    <th>Nombre del Archivo</th>
+                                    <th style="width: 80px;">Extensión</th>
+                                    <th style="width: 100px;">Tamaño</th>
+                                    <th>Hash SHA-256</th>
+                                    <th style="width: 100px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for archivo in formulario.archivos.all %}
+                                <tr>
+                                    <td class="text-center">
+                                        <span class="badge bg-secondary">{{ archivo.nro_orden }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        {% if archivo.es_imagen %}
+                                        <i class="bi bi-image text-primary fs-5" title="Imagen"></i>
+                                        {% elif archivo.es_video %}
+                                        <i class="bi bi-camera-video text-danger fs-5" title="Video"></i>
+                                        {% elif archivo.es_audio %}
+                                        <i class="bi bi-music-note text-success fs-5" title="Audio"></i>
+                                        {% elif archivo.es_documento %}
+                                        <i class="bi bi-file-text text-warning fs-5" title="Documento"></i>
+                                        {% else %}
+                                        <i class="bi bi-file text-secondary fs-5" title="Archivo"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-truncate" title="{{ archivo.nombre }}"
+                                                style="max-width: 300px;">
+                                                {{ archivo.nombre }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border">{{ archivo.extension|upper
+                                            }}</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <strong>{{ archivo.peso_formateado }}</strong>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <code class="small text-muted me-2" style="font-size: 10px;">
+                                                {{ archivo.hash_sha256|slice:":24" }}...
+                                            </code>
+                                        </div>
+                                        <div class="mt-1">
+                                            <small class="text-muted">{{ archivo.hash_sha256|slice:"24:48" }}...</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary btn-sm"
+                                                onclick="copiarHash('{{ archivo.hash_sha256 }}')"
+                                                title="Copiar hash completo">
+                                                <i class="bi bi-clipboard"></i>
+                                            </button>
+                                            <button class="btn btn-outline-info btn-sm"
+                                                onclick="verDetalleArchivo('{{ archivo.id }}')" title="Ver detalles">
+                                                <i class="bi bi-info-circle"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Vista compacta (oculta por defecto) -->
+                <div id="vistaCompacta" style="display: none;">
+                    <div class="row">
+                        {% for archivo in formulario.archivos.all %}
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body p-3">
+                                    <div class="d-flex align-items-start">
+                                        <div class="me-3">
+                                            {% if archivo.es_imagen %}
+                                            <i class="bi bi-image text-primary" style="font-size: 2rem;"></i>
+                                            {% elif archivo.es_video %}
+                                            <i class="bi bi-camera-video text-danger" style="font-size: 2rem;"></i>
+                                            {% elif archivo.es_audio %}
+                                            <i class="bi bi-music-note text-success" style="font-size: 2rem;"></i>
+                                            {% elif archivo.es_documento %}
+                                            <i class="bi bi-file-text text-warning" style="font-size: 2rem;"></i>
+                                            {% else %}
+                                            <i class="bi bi-file text-secondary" style="font-size: 2rem;"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="card-title mb-1 text-truncate" title="{{ archivo.nombre }}">
+                                                {{ archivo.nombre|truncatechars:25 }}
+                                            </h6>
+                                            <p class="card-text small mb-1">
+                                                <span class="badge bg-light text-dark">{{ archivo.extension|upper
+                                                    }}</span>
+                                                <span class="ms-2">{{ archivo.peso_formateado }}</span>
+                                            </p>
+                                            <p class="card-text">
+                                                <small class="text-muted font-monospace">
+                                                    {{ archivo.hash_sha256|slice:":16" }}...
+                                                </small>
+                                            </p>
+                                            <button class="btn btn-sm btn-outline-primary"
+                                                onclick="copiarHash('{{ archivo.hash_sha256 }}')">
+                                                <i class="bi bi-clipboard"></i> Copiar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Resumen de archivos al final -->
+                <div class="mt-3 p-3 bg-light rounded">
+                    <div class="row text-center">
+                        <div class="col">
+                            <strong class="text-primary">{{ formulario.imagenes }}</strong><br>
+                            <small>Imágenes</small>
+                        </div>
+                        <div class="col">
+                            <strong class="text-danger">{{ formulario.clips }}</strong><br>
+                            <small>Videos</small>
+                        </div>
+                        <div class="col">
+                            <strong class="text-success">{{ formulario.audio }}</strong><br>
+                            <small>Audio</small>
+                        </div>
+                        <div class="col">
+                            <strong class="text-warning">{{ formulario.texto }}</strong><br>
+                            <small>Documentos</small>
+                        </div>
+                        <div class="col">
+                            <strong class="text-secondary">{{ formulario.varios }}</strong><br>
+                            <small>Otros</small>
+                        </div>
+                        <div class="col">
+                            <strong class="text-info">{{ formulario.peso_total_formateado|default:"0 B" }}</strong><br>
+                            <small>Peso Total</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card mt-4">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-inbox" style="font-size: 4rem; color: #6c757d;"></i>
+                <h5 class="mt-3 text-muted">No hay archivos procesados</h5>
+                <p class="text-muted">Los archivos aparecerán aquí una vez que sean subidos y procesados.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-bar-chart"></i> Resumen</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <div class="border rounded p-2 mb-2">
+                            <h4 class="text-primary">{{ formulario.imagenes }}</h4>
+                            <small>Imágenes</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="border rounded p-2 mb-2">
+                            <h4 class="text-danger">{{ formulario.clips }}</h4>
+                            <small>Videos</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="border rounded p-2 mb-2">
+                            <h4 class="text-success">{{ formulario.audio }}</h4>
+                            <small>Audio</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="border rounded p-2 mb-2">
+                            <h4 class="text-warning">{{ formulario.texto }}</h4>
+                            <small>Documentos</small>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="text-center">
+                    <h5>{{ formulario.varios }}</h5>
+                    <small class="text-muted">Otros archivos</small>
+                </div>
+
+                <hr>
+
+                <div class="text-center">
+                    <strong>Peso Total:</strong><br>
+                    <span class="fs-5">{{ formulario.peso_total_formateado|default:"0 B" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-download"></i> Acciones</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    {% if formulario.estado == 'FINALIZADO' %}
+                    <a href="{% url 'reports:reporte_hash' formulario.id %}" class="btn btn-success">
+                        <i class="bi bi-file-pdf"></i> Descargar Acta Hash
+                    </a>
+                    <a href="{% url 'reports:reporte_custodia' formulario.id %}" class="btn btn-outline-success">
+                        <i class="bi bi-file-pdf"></i> Descargar Acta Custodia
+                    </a>
+                    {% else %}
+                    <button class="btn btn-warning" onclick="finalizarFormulario()">
+                        <i class="bi bi-check-circle"></i> Finalizar Formulario
+                    </button>
+                    {% if puede_editar %}
+                    <button class="btn btn-outline-primary" onclick="editarFormulario()">
+                        <i class="bi bi-pencil"></i> Editar
+                    </button>
+                    {% endif %}
+                    {% endif %}
+
+                    <a href="{% url 'core:lista_formularios' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Volver a la Lista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function copiarHash(hash) {
+        navigator.clipboard.writeText(hash).then(function () {
+            // Crear toast de notificación
+            const toast = document.createElement('div');
+            toast.className = 'toast show position-fixed top-0 end-0 m-3';
+            toast.innerHTML = `
+            <div class="toast-header">
+                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                <strong class="me-auto">Hash Copiado</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                Hash SHA-256 copiado al portapapeles
+            </div>
+        `;
+            document.body.appendChild(toast);
+
+            // Remover toast después de 3 segundos
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        });
+    }
+
+    function finalizarFormulario() {
+        if (confirm('¿Está seguro de que desea finalizar este formulario? No podrá editarlo posteriormente.')) {
+            // Aquí haríamos la llamada AJAX para cambiar el estado
+            alert('Formulario finalizado (función pendiente de implementar)');
+        }
+    }
+
+    function editarFormulario() {
+        alert('Función de edición pendiente de implementar');
+    }
+</script>
+{% endblock %}

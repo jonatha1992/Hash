@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %}Formularios - Hash Web{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>
+                <i class="bi bi-list-ul"></i> Formularios Hash
+            </h1>
+            <a href="{% url 'core:crear_formulario' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nuevo Formulario
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-table"></i> Lista de Formularios
+                    </h5>
+                    <small class="text-muted">Total: {{ formularios.count }} formularios</small>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if formularios %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#Hash</th>
+                                <th>Tipo</th>
+                                <th>Procedimiento</th>
+                                <th>Oficial Entrega</th>
+                                <th>Oficial Recibe</th>
+                                <th>Archivos</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for formulario in formularios %}
+                            <tr>
+                                <td>
+                                    <strong class="text-primary">#{{ formulario.nro_hash }}</strong>
+                                </td>
+                                <td>
+                                    <span
+                                        class="badge bg-{% if formulario.tipo == 'VUELO' %}info{% else %}secondary{% endif %}">
+                                        {{ formulario.get_tipo_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="text-truncate" style="max-width: 200px;"
+                                        title="{{ formulario.procedimiento }}">
+                                        {{ formulario.procedimiento }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <small>{{ formulario.oficial_entrega }}</small>
+                                </td>
+                                <td>
+                                    <small>{{ formulario.oficial_recibe }}</small>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-files me-1"></i>
+                                        <span class="badge bg-light text-dark">{{ formulario.total_archivos }}</span>
+                                        {% if formulario.peso_total_formateado %}
+                                        <small class="text-muted ms-1">({{ formulario.peso_total_formateado }})</small>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <span
+                                        class="badge bg-{% if formulario.estado == 'FINALIZADO' %}success{% elif formulario.estado == 'BORRADOR' %}warning{% else %}secondary{% endif %}">
+                                        {{ formulario.get_estado_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <small>{{ formulario.fecha_creacion|date:"d/m/Y H:i" }}</small>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'core:ver_formulario' formulario.id %}"
+                                            class="btn btn-outline-primary" title="Ver Detalles">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="/api/formularios/{{ formulario.id }}/exportar_pdf/"
+                                            class="btn btn-outline-danger" title="Exportar PDF">
+                                            <i class="bi bi-file-pdf"></i>
+                                        </a>
+                                        <a href="/api/formularios/{{ formulario.id }}/exportar_excel/"
+                                            class="btn btn-outline-success" title="Exportar Excel">
+                                            <i class="bi bi-file-excel"></i>
+                                        </a>
+                                        {% if formulario.estado == 'FINALIZADO' %}
+                                        <a href="{% url 'reports:reporte_custodia' formulario.id %}"
+                                            class="btn btn-outline-info" title="Acta Custodia">
+                                            <i class="bi bi-file-text"></i>
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <div class="mb-3">
+                        <i class="bi bi-inbox" style="font-size: 4rem; color: #6c757d;"></i>
+                    </div>
+                    <h5 class="text-muted">No hay formularios</h5>
+                    <p class="text-muted">Cree su primer formulario hash haciendo clic en el botón de arriba.</p>
+                    <a href="{% url 'core:crear_formulario' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Crear Primer Formulario
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if formularios %}
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title text-primary">{{ formularios|length }}</h5>
+                <p class="card-text">Total Formularios</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title text-warning">
+                    {{ formularios|length|add:"-1"|default:"0" }}
+                </h5>
+                <p class="card-text">En Borrador</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title text-success">0</h5>
+                <p class="card-text">Finalizados</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Filtro de búsqueda simple
+    function filtrarTabla() {
+        const input = document.getElementById('busqueda');
+        const filter = input.value.toLowerCase();
+        const tabla = document.querySelector('table tbody');
+        const filas = tabla.getElementsByTagName('tr');
+
+        for (let i = 0; i < filas.length; i++) {
+            const fila = filas[i];
+            const texto = fila.textContent || fila.innerText;
+
+            if (texto.toLowerCase().indexOf(filter) > -1) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        }
+    }
+
+    // Agregar campo de búsqueda si hay formularios
+    {% if formularios %}
+    document.addEventListener('DOMContentLoaded', function () {
+        const cardHeader = document.querySelector('.card-header .d-flex');
+        const searchDiv = document.createElement('div');
+        searchDiv.className = 'input-group input-group-sm';
+        searchDiv.style.width = '300px';
+        searchDiv.innerHTML = `
+        <input type="text" id="busqueda" class="form-control" placeholder="Buscar formularios..." onkeyup="filtrarTabla()">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+    `;
+        cardHeader.appendChild(searchDiv);
+    });
+    {% endif %}
+</script>
+{% endblock %}

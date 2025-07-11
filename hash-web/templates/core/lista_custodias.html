@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}Custodias - Hash Web{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>
+                <i class="bi bi-clipboard-data"></i> Formularios de Custodia
+            </h1>
+            <a href="{% url 'core:crear_custodia' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nueva Custodia
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-table"></i> Lista de Custodias
+                    </h5>
+                    <small class="text-muted">Total: {{ custodias.count }} custodias</small>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if custodias %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#Custodia</th>
+                                <th>#Hash</th>
+                                <th>Carátula</th>
+                                <th>Fecha Incidente</th>
+                                <th>Personal</th>
+                                <th>Estado</th>
+                                <th>Fecha Creación</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for custodia in custodias %}
+                            <tr>
+                                <td>
+                                    <strong class="text-info">#{{ custodia.nro_custodia }}</strong>
+                                </td>
+                                <td>
+                                    <a href="{% url 'core:ver_formulario' custodia.nro_hash.id %}" class="text-primary">
+                                        #{{ custodia.nro_hash.nro_hash }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <div class="text-truncate" style="max-width: 250px;"
+                                        title="{{ custodia.caratula }}">
+                                        {{ custodia.caratula }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <small>{{ custodia.fecha_hora_incidente|date:"d/m/Y H:i" }}</small>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-people me-1"></i>
+                                        <span class="badge bg-light text-dark">{{ custodia.personal.count }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-{% if custodia.estado == 'FINALIZADO' %}success{% elif custodia.estado == 'BORRADOR' %}warning{% else %}secondary{% endif %}">
+                                        {{ custodia.get_estado_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <small>{{ custodia.fecha_creacion|date:"d/m/Y H:i" }}</small>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'core:ver_custodia' custodia.id %}"
+                                            class="btn btn-outline-primary" title="Ver Detalles">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{% url 'reports:reporte_custodia' custodia.id %}"
+                                            class="btn btn-outline-danger" title="Generar PDF">
+                                            <i class="bi bi-file-pdf"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <div class="mb-3">
+                        <i class="bi bi-clipboard-data" style="font-size: 4rem; color: #6c757d;"></i>
+                    </div>
+                    <h5 class="text-muted">No hay custodias</h5>
+                    <p class="text-muted">Cree su primera custodia haciendo clic en el botón de arriba.</p>
+                    <a href="{% url 'core:crear_custodia' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Crear Primera Custodia
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if custodias %}
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title text-info">{{ custodias|length }}</h5>
+                <p class="card-text">Total Custodias</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title text-warning">
+                    {% for custodia in custodias %}
+                        {% if custodia.estado == 'BORRADOR' %}1{% endif %}
+                    {% empty %}0{% endfor %}
+                </h5>
+                <p class="card-text">En Borrador</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title text-success">
+                    {% for custodia in custodias %}
+                        {% if custodia.estado == 'FINALIZADO' %}1{% endif %}
+                    {% empty %}0{% endfor %}
+                </h5>
+                <p class="card-text">Finalizadas</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Filtro de búsqueda simple para custodias
+    function filtrarTablaCustodias() {
+        const input = document.getElementById('busquedaCustodias');
+        const filter = input.value.toLowerCase();
+        const tabla = document.querySelector('table tbody');
+        const filas = tabla.getElementsByTagName('tr');
+
+        for (let i = 0; i < filas.length; i++) {
+            const fila = filas[i];
+            const texto = fila.textContent || fila.innerText;
+
+            if (texto.toLowerCase().indexOf(filter) > -1) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        }
+    }
+
+    // Agregar campo de búsqueda si hay custodias
+    {% if custodias %}
+    document.addEventListener('DOMContentLoaded', function () {
+        const cardHeader = document.querySelector('.card-header .d-flex');
+        const searchDiv = document.createElement('div');
+        searchDiv.className = 'input-group input-group-sm';
+        searchDiv.style.width = '300px';
+        searchDiv.innerHTML = `
+            <input type="text" id="busquedaCustodias" class="form-control" placeholder="Buscar custodias..." onkeyup="filtrarTablaCustodias()">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+        `;
+        cardHeader.appendChild(searchDiv);
+    });
+    {% endif %}
+</script>
+{% endblock %}
