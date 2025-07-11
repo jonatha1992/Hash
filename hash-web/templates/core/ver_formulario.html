@@ -117,7 +117,8 @@
                                     </td>
                                     <td>
                                         <span class="badge bg-light text-dark border">
-                                            {% if archivo.extension %}{{ archivo.extension|upper }}{% else %}N/A{% endif %}
+                                            {% if archivo.extension %}{{ archivo.extension|upper }}{% else %}N/A{% endif
+                                            %}
                                         </span>
                                     </td>
                                     <td class="text-end">
@@ -180,7 +181,8 @@
                                             </h6>
                                             <p class="card-text small mb-1">
                                                 <span class="badge bg-light text-dark">
-                                                    {% if archivo.extension %}{{ archivo.extension|upper }}{% else %}N/A{% endif %}
+                                                    {% if archivo.extension %}{{ archivo.extension|upper }}{% else
+                                                    %}N/A{% endif %}
                                                 </span>
                                                 <span class="ms-2">{{ archivo.peso_formateado }}</span>
                                             </p>
