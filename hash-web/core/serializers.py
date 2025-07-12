@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Jerarquia, Oficial, TipoProcedimiento, FormularioHash, Archivo, HistorialFormulario
+from .models import Jerarquia, Oficial, TipoProcedimiento, FormularioHash, Archivo
 
 
 class JerarquiaSerializer(serializers.ModelSerializer):
@@ -70,14 +70,6 @@ class ArchivoSerializer(serializers.ModelSerializer):
             return "varios"
 
 
-class HistorialFormularioSerializer(serializers.ModelSerializer):
-    usuario_nombre = serializers.CharField(source='usuario.get_full_name', read_only=True)
-    
-    class Meta:
-        model = HistorialFormulario
-        fields = ['id', 'accion', 'descripcion', 'fecha', 'usuario_nombre']
-
-
 class FormularioHashSerializer(serializers.ModelSerializer):
     oficial_entrega_data = OficialBasicoSerializer(source='oficial_entrega', read_only=True)
     oficial_recibe_data = OficialBasicoSerializer(source='oficial_recibe', read_only=True)
@@ -85,7 +77,6 @@ class FormularioHashSerializer(serializers.ModelSerializer):
     total_archivos = serializers.ReadOnlyField()
     creado_por_nombre = serializers.CharField(source='creado_por.get_full_name', read_only=True)
     archivos = ArchivoSerializer(many=True, read_only=True)
-    historial = HistorialFormularioSerializer(many=True, read_only=True)
     
     class Meta:
         model = FormularioHash
@@ -95,7 +86,7 @@ class FormularioHashSerializer(serializers.ModelSerializer):
             'imagenes', 'clips', 'audio', 'texto', 'varios', 'total_archivos',
             'peso_total_bytes', 'peso_total_formateado', 'observaciones',
             'fecha_creacion', 'fecha_modificacion', 'creado_por', 'creado_por_nombre',
-            'estado', 'archivos', 'historial'
+            'estado', 'archivos'
         ]
         read_only_fields = [
             'imagenes', 'clips', 'audio', 'texto', 'varios', 'total_archivos',

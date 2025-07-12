@@ -352,35 +352,3 @@ class PersonalCustodia(models.Model):
         return f"{self.oficial} - {self.funcion}"
 
 
-class HistorialCustodia(models.Model):
-    """Historial de cambios en las custodias"""
-    formulario_custodia = models.ForeignKey(FormularioCustodia, on_delete=models.CASCADE, related_name='historial')
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    accion = models.CharField(max_length=50)
-    descripcion = models.TextField()
-    fecha = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        verbose_name = "Historial de Custodia"
-        verbose_name_plural = "Historiales de Custodia"
-        ordering = ['-fecha']
-    
-    def __str__(self):
-        return f"{self.formulario_custodia} - {self.accion} por {self.usuario}"
-
-
-class HistorialFormulario(models.Model):
-    """Historial de cambios en los formularios"""
-    formulario = models.ForeignKey(FormularioHash, on_delete=models.CASCADE, related_name='historial')
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    accion = models.CharField(max_length=50)
-    descripcion = models.TextField()
-    fecha = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        verbose_name = "Historial de Formulario"
-        verbose_name_plural = "Historiales de Formularios"
-        ordering = ['-fecha']
-    
-    def __str__(self):
-        return f"{self.formulario} - {self.accion} por {self.usuario}"

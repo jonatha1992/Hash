@@ -1,6 +1,6 @@
 import hashlib
 import os
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -14,11 +14,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import (Jerarquia, Destino, Oficial, TipoProcedimiento, FormularioHash, 
-                     Archivo, FormularioCustodia, PersonalCustodia, HistorialFormulario)
+                     Archivo, FormularioCustodia, PersonalCustodia)
 from .serializers import (
     JerarquiaSerializer, OficialSerializer, TipoProcedimientoSerializer,
     FormularioHashSerializer, FormularioHashListSerializer, ArchivoSerializer,
-    ArchivoUploadSerializer, HistorialFormularioSerializer
+    ArchivoUploadSerializer
 )
 
 
@@ -108,14 +108,6 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
                     tipo_mime=getattr(archivo, 'content_type', '') or ''
                 )
         
-        # Crear entrada en historial si hay usuario
-        if usuario:
-            HistorialFormulario.objects.create(
-                formulario=formulario,
-                usuario=usuario,
-                accion='CREADO',
-                descripcion=f'Formulario Hash #{formulario.nro_hash} creado con {len(archivos)} archivos'
-            )
         
         # Retornar formulario completo
         headers = self.get_success_headers(serializer.data)
@@ -161,13 +153,6 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
             archivos_procesados.append(archivo_obj)
             siguiente_orden += 1
         
-        # Crear entrada en historial
-        HistorialFormulario.objects.create(
-            formulario=formulario,
-            usuario=request.user,
-            accion='ARCHIVOS_AGREGADOS',
-            descripcion=f'{len(archivos_procesados)} archivos agregados'
-        )
         
         # Serializar archivos procesados
         serializer = ArchivoSerializer(archivos_procesados, many=True)
@@ -253,13 +238,6 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
         formulario.estado = nuevo_estado
         formulario.save()
         
-        # Crear entrada en historial
-        HistorialFormulario.objects.create(
-            formulario=formulario,
-            usuario=request.user,
-            accion='CAMBIO_ESTADO',
-            descripcion=f'Estado cambiado de {estado_anterior} a {nuevo_estado}'
-        )
         
         return Response({'estado': nuevo_estado})
     
@@ -297,13 +275,6 @@ class ArchivoViewSet(viewsets.ReadOnlyModelViewSet):
             arch.nro_orden = i
             arch.save()
         
-        # Crear entrada en historial
-        HistorialFormulario.objects.create(
-            formulario=formulario,
-            usuario=request.user,
-            accion='ARCHIVO_ELIMINADO',
-            descripcion=f'Archivo "{archivo.nombre}" eliminado'
-        )
         
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -321,14 +292,55 @@ def dashboard(request):
     return render(request, 'core/dashboard.html', context)
 
 
+from .forms import FormularioHashForm
+import os
+import hashlib
+
 def crear_formulario(request):
     """Vista para crear nuevo formulario"""
+    if request.method == 'POST':
+        form = FormularioHashForm(request.POST)
+        if form.is_valid():
+            formulario = form.save(commit=False)
+            if request.user.is_authenticated:
+                formulario.creado_por = request.user
+            formulario.save()
+
+            archivos = request.FILES.getlist('archivos')
+            if archivos:
+                for i, archivo in enumerate(archivos, 1):
+                    hash_sha256 = _calcular_hash_archivo(archivo)
+                    extension = os.path.splitext(archivo.name)[1].lower()
+                    if extension.startswith('.'):
+                        extension = extension[1:]
+
+                    Archivo.objects.create(
+                        formulario=formulario,
+                        nro_orden=i,
+                        nombre=archivo.name,
+                        extension=extension,
+                        peso=archivo.size,
+                        hash_sha256=hash_sha256,
+                        tipo_mime=getattr(archivo, 'content_type', '') or ''
+                    )
+
+
+            return redirect('core:ver_formulario', formulario_id=formulario.id)
+    else:
+        form = FormularioHashForm()
+
     context = {
-        'oficiales': Oficial.objects.filter(activo=True).select_related('jerarquia'),
-        'tipos_procedimiento': TipoProcedimiento.objects.filter(activo=True),
+        'form': form,
         'siguiente_numero': FormularioHash.objects.count() + 1,
     }
     return render(request, 'core/crear_formulario.html', context)
+
+def _calcular_hash_archivo(archivo):
+    """Calcula el hash SHA-256 de un archivo"""
+    hash_sha256 = hashlib.sha256()
+    for chunk in archivo.chunks():
+        hash_sha256.update(chunk)
+    return hash_sha256.hexdigest().upper()
 
 
 def ver_formulario(request, formulario_id):
@@ -373,30 +385,30 @@ def lista_custodias(request):
     return render(request, 'core/lista_custodias.html', context)
 
 
+from .forms import FormularioCustodiaForm, PersonalCustodiaForm
+
 def crear_custodia(request):
     """Vista para crear un nuevo formulario de custodia"""
     if request.method == 'POST':
-        # Procesar formulario
-        pass
-    
-    # Obtener datos para el formulario
-    formularios_hash = FormularioHash.objects.filter(estado='FINALIZADO')
-    jerarquias = Jerarquia.objects.all().order_by('orden')
-    destinos = Destino.objects.filter(activo=True)
-    oficiales = Oficial.objects.filter(activo=True).select_related('jerarquia', 'destino')
+        form = FormularioCustodiaForm(request.POST)
+        if form.is_valid():
+            custodia = form.save(commit=False)
+            if request.user.is_authenticated:
+                custodia.creado_por = request.user
+            custodia.save()
+            return redirect('core:ver_custodia', custodia_id=custodia.id)
+    else:
+        form = FormularioCustodiaForm()
     
     context = {
-        'formularios_hash': formularios_hash,
-        'jerarquias': jerarquias,
-        'destinos': destinos,
-        'oficiales': oficiales,
+        'form': form,
         'title': 'Crear Formulario de Custodia'
     }
     return render(request, 'core/crear_custodia.html', context)
 
 
 def ver_custodia(request, custodia_id):
-    """Vista para ver detalles de una custodia"""
+    """Vista para ver detalles de una custodia y agregar personal"""
     custodia = get_object_or_404(
         FormularioCustodia.objects.select_related(
             'nro_hash', 'creado_por'
@@ -406,9 +418,20 @@ def ver_custodia(request, custodia_id):
         ),
         id=custodia_id
     )
-    
+
+    if request.method == 'POST':
+        personal_form = PersonalCustodiaForm(request.POST)
+        if personal_form.is_valid():
+            personal = personal_form.save(commit=False)
+            personal.formulario_custodia = custodia
+            personal.save()
+            return redirect('core:ver_custodia', custodia_id=custodia.id)
+    else:
+        personal_form = PersonalCustodiaForm()
+
     context = {
         'custodia': custodia,
+        'personal_form': personal_form,
         'title': f'Custodia #{custodia.nro_custodia}'
     }
     return render(request, 'core/ver_custodia.html', context)

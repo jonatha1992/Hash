@@ -3,20 +3,15 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from .models import (Jerarquia, Destino, Oficial, TipoProcedimiento, FormularioHash, 
-                     Archivo, HistorialFormulario, FormularioCustodia, PersonalCustodia, 
-                     HistorialCustodia)
+                     Archivo, FormularioCustodia, PersonalCustodia)
 
 
 @admin.register(Jerarquia)
 class JerarquiaAdmin(admin.ModelAdmin):
-    list_display = ['abreviatura', 'nombre', 'orden', 'total_oficiales']
+    list_display = ['abreviatura', 'nombre', 'orden']
     list_editable = ['orden']
     search_fields = ['nombre', 'abreviatura']
     ordering = ['orden']
-    
-    def total_oficiales(self, obj):
-        return obj.oficiales.count()
-    total_oficiales.short_description = 'Total Oficiales'
 
 
 @admin.register(Destino)
@@ -69,18 +64,6 @@ class PersonalCustodiaInline(admin.TabularInline):
     fields = ['oficial', 'funcion', 'descripcion', 'orden', 'observaciones']
 
 
-class HistorialCustodiaInline(admin.TabularInline):
-    model = HistorialCustodia
-    extra = 0
-    readonly_fields = ['usuario', 'accion', 'descripcion', 'fecha']
-    
-    def has_add_permission(self, request, obj=None):
-        return False
-    
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-
 @admin.register(FormularioCustodia)
 class FormularioCustodiaAdmin(admin.ModelAdmin):
     list_display = [
@@ -114,7 +97,7 @@ class FormularioCustodiaAdmin(admin.ModelAdmin):
         }),
     )
     
-    inlines = [PersonalCustodiaInline, HistorialCustodiaInline]
+    inlines = [PersonalCustodiaInline]
     
     def caratula_truncada(self, obj):
         if len(obj.caratula) > 50:
@@ -161,21 +144,6 @@ class PersonalCustodiaAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(HistorialCustodia)
-class HistorialCustodiaAdmin(admin.ModelAdmin):
-    list_display = ['formulario_custodia', 'usuario', 'accion', 'fecha']
-    list_filter = ['accion', 'fecha', 'usuario']
-    search_fields = [
-        'formulario_custodia__nro_custodia', 
-        'formulario_custodia__caratula', 'descripcion'
-    ]
-    readonly_fields = ['formulario_custodia', 'usuario', 'accion', 'descripcion', 'fecha']
-    
-    def has_add_permission(self, request):
-        return False
-    
-    def has_delete_permission(self, request, obj=None):
-        return False
 
 
 @admin.register(TipoProcedimiento)
@@ -197,18 +165,6 @@ class ArchivoInline(admin.TabularInline):
     fields = ['nro_orden', 'nombre', 'extension', 'peso', 'peso_formateado', 'hash_sha256']
     
     def has_add_permission(self, request, obj=None):
-        return False
-
-
-class HistorialInline(admin.TabularInline):
-    model = HistorialFormulario
-    extra = 0
-    readonly_fields = ['usuario', 'accion', 'descripcion', 'fecha']
-    
-    def has_add_permission(self, request, obj=None):
-        return False
-    
-    def has_delete_permission(self, request, obj=None):
         return False
 
 
@@ -251,7 +207,7 @@ class FormularioHashAdmin(admin.ModelAdmin):
         }),
     )
     
-    inlines = [ArchivoInline, HistorialInline]
+    inlines = [ArchivoInline]
     
     def procedimiento_truncado(self, obj):
         if len(obj.procedimiento) > 50:
@@ -333,18 +289,6 @@ class ArchivoAdmin(admin.ModelAdmin):
     tipo_archivo.short_description = 'Tipo'
 
 
-@admin.register(HistorialFormulario)
-class HistorialFormularioAdmin(admin.ModelAdmin):
-    list_display = ['formulario', 'usuario', 'accion', 'fecha']
-    list_filter = ['accion', 'fecha', 'usuario']
-    search_fields = ['formulario__nro_hash', 'formulario__procedimiento', 'descripcion']
-    readonly_fields = ['formulario', 'usuario', 'accion', 'descripcion', 'fecha']
-    
-    def has_add_permission(self, request):
-        return False
-    
-    def has_delete_permission(self, request, obj=None):
-        return False
 
 
 # Configuración del sitio de administración
