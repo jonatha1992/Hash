@@ -18,57 +18,9 @@
                 <h5><i class="bi bi-file-earmark-plus"></i> Información del Formulario</h5>
             </div>
             <div class="card-body">
-                <form id="formularioForm" enctype="multipart/form-data">
+                <form id="formularioForm" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="nro_hash" class="form-label">Número de Hash</label>
-                            <input type="number" class="form-control" id="nro_hash" name="nro_hash"
-                                value="{{ siguiente_numero }}" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="tipo" class="form-label">Tipo</label>
-                            <select class="form-select" id="tipo" name="tipo" required>
-                                <option value="PROCEDIMIENTO">Procedimiento</option>
-                                <option value="VUELO">Vuelo</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="procedimiento" class="form-label">Descripción del Procedimiento</label>
-                        <textarea class="form-control" id="procedimiento" name="procedimiento" rows="3" required
-                            placeholder="Ej: Allanamiento en domicilio de calle 123"></textarea>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="oficial_entrega" class="form-label">Oficial que Entrega</label>
-                            <select class="form-select" id="oficial_entrega" name="oficial_entrega" required>
-                                <option value="">Seleccione un oficial...</option>
-                                {% for oficial in oficiales %}
-                                <option value="{{ oficial.id }}">{{ oficial }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="oficial_recibe" class="form-label">Oficial que Recibe</label>
-                            <select class="form-select" id="oficial_recibe" name="oficial_recibe" required>
-                                <option value="">Seleccione un oficial...</option>
-                                {% for oficial in oficiales %}
-                                <option value="{{ oficial.id }}">{{ oficial }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="observaciones" class="form-label">Observaciones (Opcional)</label>
-                        <textarea class="form-control" id="observaciones" name="observaciones" rows="2"
-                            placeholder="Observaciones adicionales..."></textarea>
-                    </div>
-
+                    {{ form.as_p }}
                     <div class="mb-3">
                         <label for="archivos" class="form-label">
                             <i class="bi bi-cloud-upload"></i> Seleccionar Archivos
@@ -79,7 +31,6 @@
                             uno.
                         </div>
                     </div>
-
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="{% url 'core:dashboard' %}" class="btn btn-secondary me-md-2">
                             <i class="bi bi-arrow-left"></i> Cancelar

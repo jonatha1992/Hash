@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Hash Web{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="bi bi-shield-lock"></i> {{ title }}
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-file-earmark-text"></i> Datos de la Custodia</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'core:lista_custodias' %}" class="btn btn-secondary me-md-2">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Crear Custodia
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> Información</h5>
+            </div>
+            <div class="card-body">
+                <p class="small">
+                    Complete los detalles del formulario de custodia. Una vez creado, podrá agregar el personal
+                    interviniente en la cadena de custodia.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
