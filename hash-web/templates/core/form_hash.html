@@ -1,0 +1,613 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Hash Web{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-3">
+            <i class="bi bi-desktop"></i> Hash Web
+        </h1>
+        <p class="text-muted mb-4">Interfaz similar a la aplicación de escritorio Hash Copy</p>
+    </div>
+</div>
+
+{% if modo == 'resultado' %}
+<!-- VISTA DE RESULTADOS -->
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading"><i class="bi bi-check-circle"></i> ¡Procesamiento Completado!</h4>
+            <p class="mb-0">El formulario #{{ formulario.nro_hash }} ha sido creado exitosamente con {{ formulario.total_archivos }} archivos procesados.</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-file-earmark-check"></i> Resultados del Procesamiento</h5>
+            </div>
+            <div class="card-body">
+                <!-- Información del Formulario -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold">Información del Formulario</h6>
+                        <table class="table table-sm">
+                            <tr><td><strong>Número Hash:</strong></td><td><span class="badge bg-primary">#{{ formulario.nro_hash }}</span></td></tr>
+                            <tr><td><strong>Tipo:</strong></td><td><span class="badge bg-{% if formulario.tipo == 'PROCEDIMIENTO' %}info{% else %}warning{% endif %}">{{ formulario.get_tipo_display }}</span></td></tr>
+                            <tr><td><strong>Procedimiento:</strong></td><td>{{ formulario.procedimiento }}</td></tr>
+                            <tr><td><strong>Estado:</strong></td><td><span class="badge bg-{% if formulario.estado == 'BORRADOR' %}warning{% elif formulario.estado == 'FINALIZADO' %}success{% else %}secondary{% endif %}">{{ formulario.get_estado_display }}</span></td></tr>
+                            <tr><td><strong>Fecha Creación:</strong></td><td>{{ formulario.fecha_creacion|date:"d/m/Y H:i:s" }}</td></tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-bold">Oficiales Intervinientes</h6>
+                        <table class="table table-sm">
+                            <tr><td><strong>Entrega:</strong></td><td>{{ formulario.oficial_entrega }}</td></tr>
+                            <tr><td><strong>Recibe:</strong></td><td>{{ formulario.oficial_recibe }}</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Estadísticas de Archivos -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h6 class="fw-bold">Resumen de Archivos Procesados</h6>
+                        <div class="row text-center">
+                            <div class="col-2">
+                                <div class="card bg-info text-white">
+                                    <div class="card-body py-2">
+                                        <h4>{{ formulario.imagenes }}</h4>
+                                        <small>Imágenes</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card bg-warning text-white">
+                                    <div class="card-body py-2">
+                                        <h4>{{ formulario.clips }}</h4>
+                                        <small>Videos</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body py-2">
+                                        <h4>{{ formulario.audio }}</h4>
+                                        <small>Audio</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body py-2">
+                                        <h4>{{ formulario.texto }}</h4>
+                                        <small>Documentos</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-body py-2">
+                                        <h4>{{ formulario.varios }}</h4>
+                                        <small>Varios</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card bg-dark text-white">
+                                    <div class="card-body py-2">
+                                        <h4>{{ formulario.total_archivos }}</h4>
+                                        <small>Total</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <strong>Peso Total: {{ formulario.peso_total_formateado }}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de Archivos -->
+                {% if formulario.archivos.exists %}
+                <div class="row">
+                    <div class="col-12">
+                        <h6 class="fw-bold">Lista de Archivos Procesados</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre del Archivo</th>
+                                        <th>Extensión</th>
+                                        <th>Tamaño</th>
+                                        <th>Tipo</th>
+                                        <th>Hash SHA-256</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for archivo in formulario.archivos.all %}
+                                    <tr>
+                                        <td><span class="badge bg-secondary">{{ archivo.nro_orden }}</span></td>
+                                        <td>{{ archivo.nombre|truncatechars:40 }}</td>
+                                        <td><span class="badge bg-light text-dark">{{ archivo.extension }}</span></td>
+                                        <td>{{ archivo.peso_formateado }}</td>
+                                        <td>
+                                            <span class="badge bg-{% if archivo.es_imagen %}info{% elif archivo.es_video %}warning{% elif archivo.es_audio %}success{% elif archivo.es_documento %}primary{% else %}secondary{% endif %}">
+                                                {{ archivo.tipo_archivo }}
+                                            </span>
+                                        </td>
+                                        <td><code class="small">{{ archivo.hash_sha256|truncatechars:32 }}...</code></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Acciones -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'core:dashboard' %}" class="btn btn-secondary me-md-2">
+                                <i class="bi bi-house"></i> Dashboard
+                            </a>
+                            <a href="{% url 'core:lista_hashes' %}" class="btn btn-outline-primary me-md-2">
+                                <i class="bi bi-list-ul"></i> Ver Todos los Hashes
+                            </a>
+                            <a href="{% url 'reports:reporte_hash' formulario.id %}" class="btn btn-success me-md-2">
+                                <i class="bi bi-file-pdf"></i> Generar PDF
+                            </a>
+                            <a href="{% url 'core:form_hash_editar' formulario.id %}" class="btn btn-primary">
+                                <i class="bi bi-pencil"></i> Editar Formulario
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <!-- Información del Sistema -->
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> Información del Proceso</h5>
+            </div>
+            <div class="card-body">
+                <h6>Proceso Completado:</h6>
+                <ul class="small">
+                    <li>✅ Formulario creado exitosamente</li>
+                    <li>✅ {{ formulario.total_archivos }} archivos procesados</li>
+                    <li>✅ Hashes SHA-256 calculados</li>
+                    <li>✅ Archivos categorizados por tipo</li>
+                    <li>✅ Estadísticas generadas</li>
+                </ul>
+
+                <hr>
+
+                <h6>Próximos Pasos:</h6>
+                <ul class="small">
+                    <li>📄 <strong>Generar PDF:</strong> Crear acta oficial</li>
+                    <li>✏️ <strong>Editar:</strong> Modificar información si es necesario</li>
+                    <li>📋 <strong>Lista:</strong> Ver todos los formularios</li>
+                    <li>🏠 <strong>Dashboard:</strong> Volver al inicio</li>
+                </ul>
+
+                <hr>
+
+                <h6>Características del Hash:</h6>
+                <ul class="small">
+                    <li><strong>Algoritmo:</strong> SHA-256</li>
+                    <li><strong>Integridad:</strong> Garantizada</li>
+                    <li><strong>Formato:</strong> Hexadecimal</li>
+                    <li><strong>Longitud:</strong> 64 caracteres</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<!-- VISTA NORMAL DE CREACIÓN/EDICIÓN -->
+<!-- FORMULARIO COMPACTO (PARTE SUPERIOR) -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-file-earmark-plus"></i> Formulario de Hash</h5>
+            </div>
+            <div class="card-body">
+                <form id="formularioEscritorioForm" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <!-- Primera fila: Número Hash, Tipo, Procedimiento -->
+                        <div class="col-md-3">
+                            <label for="nro_hash" class="form-label">Número de Hash</label>
+                            <input type="number" class="form-control form-control-sm" id="nro_hash" name="nro_hash" 
+                                   value="{{ siguiente_hash }}" {% if modo == 'edicion' %}readonly{% endif %}>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="tipo" class="form-label">Tipo</label>
+                            <select class="form-select form-select-sm" id="tipo" name="tipo" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="PROCEDIMIENTO" {% if formulario and formulario.tipo == 'PROCEDIMIENTO' %}selected{% endif %}>Procedimiento</option>
+                                <option value="VUELO" {% if formulario and formulario.tipo == 'VUELO' %}selected{% endif %}>Vuelo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="procedimiento" class="form-label">Procedimiento/Descripción</label>
+                            <input type="text" class="form-control form-control-sm" id="procedimiento" name="procedimiento" 
+                                   value="{% if formulario %}{{ formulario.procedimiento }}{% endif %}" required>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <!-- Segunda fila: Oficiales -->
+                        <div class="col-md-6">
+                            <label for="oficial_entrega" class="form-label">Oficial que Entrega</label>
+                            <select class="form-select form-select-sm" id="oficial_entrega" name="oficial_entrega" required>
+                                <option value="">Seleccionar oficial...</option>
+                                {% for oficial in oficiales %}
+                                <option value="{{ oficial.id }}" 
+                                        {% if formulario and formulario.oficial_entrega.id == oficial.id %}selected{% endif %}>
+                                    {{ oficial.nombre_completo_formateado }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="oficial_recibe" class="form-label">Oficial que Recibe</label>
+                            <select class="form-select form-select-sm" id="oficial_recibe" name="oficial_recibe" required>
+                                <option value="">Seleccionar oficial...</option>
+                                {% for oficial in oficiales %}
+                                <option value="{{ oficial.id }}" 
+                                        {% if formulario and formulario.oficial_recibe.id == oficial.id %}selected{% endif %}>
+                                    {{ oficial.nombre_completo_formateado }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <!-- Tercera fila: Archivos y Botones -->
+                        <div class="col-md-8">
+                            <label for="archivos" class="form-label">
+                                <i class="bi bi-folder2-open"></i> Seleccionar Archivos
+                            </label>
+                            <input type="file" class="form-control form-control-sm" id="archivos" name="archivos" multiple accept="*/*">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <div class="d-grid gap-2 d-md-flex w-100">
+                                <a href="{% url 'core:dashboard' %}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-arrow-left"></i> Cancelar
+                                </a>
+                                {% if modo == 'creacion' %}
+                                <button type="submit" class="btn btn-primary btn-sm" id="btnProcesar">
+                                    <i class="bi bi-play-circle"></i> Procesar
+                                </button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success btn-sm" id="btnProcesar">
+                                    <i class="bi bi-plus-circle"></i> Agregar
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Observaciones (opcional) -->
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label for="observaciones" class="form-label">Observaciones (opcional)</label>
+                            <textarea class="form-control form-control-sm" id="observaciones" name="observaciones" rows="2">{% if formulario %}{{ formulario.observaciones }}{% endif %}</textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TABLA DE ARCHIVOS PROCESADOS (PARTE INFERIOR) -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5><i class="bi bi-table"></i> Archivos Procesados</h5>
+                <div class="d-flex gap-2">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <span class="btn btn-outline-info">{{ formulario.imagenes|default:0 }} Imágenes</span>
+                        <span class="btn btn-outline-warning">{{ formulario.clips|default:0 }} Videos</span>
+                        <span class="btn btn-outline-success">{{ formulario.audio|default:0 }} Audio</span>
+                        <span class="btn btn-outline-primary">{{ formulario.texto|default:0 }} Docs</span>
+                        <span class="btn btn-outline-secondary">{{ formulario.varios|default:0 }} Otros</span>
+                        <span class="btn btn-outline-dark">{{ formulario.total_archivos|default:0 }} Total</span>
+                    </div>
+                    {% if formulario %}
+                    <a href="{% url 'reports:reporte_hash' formulario.id %}" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-file-pdf"></i> PDF
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <!-- Progreso de procesamiento -->
+                <div id="progresoProcesamiento" style="display: none;" class="p-3 border-bottom">
+                    <div class="progress mb-2">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                             role="progressbar" style="width: 0%" id="barraProgreso">0%</div>
+                    </div>
+                    <div class="text-center">
+                        <small id="estadoProcesamiento">Iniciando procesamiento...</small>
+                    </div>
+                </div>
+
+                <!-- Tabla de archivos -->
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 50px;">#</th>
+                                <th>Nombre del Archivo</th>
+                                <th style="width: 80px;">Ext.</th>
+                                <th style="width: 100px;">Tamaño</th>
+                                <th style="width: 100px;">Tipo</th>
+                                <th style="width: 200px;">Hash SHA-256</th>
+                                <th style="width: 80px;">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaArchivos">
+                            {% if formulario and formulario.archivos.exists %}
+                                {% for archivo in formulario.archivos.all %}
+                                <tr>
+                                    <td><span class="badge bg-secondary">{{ archivo.nro_orden }}</span></td>
+                                    <td>{{ archivo.nombre|truncatechars:50 }}</td>
+                                    <td><span class="badge bg-light text-dark">{{ archivo.extension }}</span></td>
+                                    <td>{{ archivo.peso_formateado }}</td>
+                                    <td>
+                                        <span class="badge bg-{% if archivo.es_imagen %}info{% elif archivo.es_video %}warning{% elif archivo.es_audio %}success{% elif archivo.es_documento %}primary{% else %}secondary{% endif %}">
+                                            {{ archivo.tipo_archivo }}
+                                        </span>
+                                    </td>
+                                    <td><code class="small">{{ archivo.hash_sha256|truncatechars:32 }}...</code></td>
+                                    <td><span class="badge bg-success">✓ Procesado</span></td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr id="filaVacia">
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox fs-1"></i>
+                                        <p class="mt-2">No hay archivos procesados</p>
+                                        <small>Seleccione archivos y haga clic en "Procesar" para comenzar</small>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información lateral -->
+<div class="row mt-3">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="bi bi-info-circle"></i> Información</h6>
+            </div>
+            <div class="card-body">
+                <h6>Proceso:</h6>
+                <ol class="small">
+                    <li>Complete el formulario</li>
+                    <li>Seleccione archivos</li>
+                    <li>Haga clic en "Procesar"</li>
+                    <li>Se calcularán los hashes</li>
+                    <li>Verá los resultados abajo</li>
+                </ol>
+
+                <hr>
+
+                <h6>Formatos:</h6>
+                <ul class="small">
+                    <li><strong>Imágenes:</strong> JPG, PNG, BMP, GIF</li>
+                    <li><strong>Videos:</strong> MP4, AVI, MOV, WMV</li>
+                    <li><strong>Audio:</strong> MP3, WAV, FLAC</li>
+                    <li><strong>Documentos:</strong> PDF, DOC, TXT, XLS</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% if modo != 'resultado' %}
+<script>
+    document.getElementById('formularioEscritorioForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Obtener el formulario y crear FormData
+        const form = this;
+        const formData = new FormData(form);
+        
+        // Verificar que se hayan seleccionado archivos
+        const archivosInput = document.getElementById('archivos');
+        const archivos = archivosInput.files;
+        
+        if (archivos.length === 0) {
+            alert('Por favor, seleccione al menos un archivo para procesar.');
+            return;
+        }
+        
+        // Agregar archivos al FormData manualmente para asegurar que se envíen
+        for (let i = 0; i < archivos.length; i++) {
+            formData.append('archivos', archivos[i]);
+        }
+        
+        const btnProcesar = document.getElementById('btnProcesar');
+        const progreso = document.getElementById('progresoProcesamiento');
+        const barraProgreso = document.getElementById('barraProgreso');
+        const estadoProcesamiento = document.getElementById('estadoProcesamiento');
+        const tablaArchivos = document.getElementById('tablaArchivos');
+
+        // Deshabilitar botón y mostrar progreso
+        btnProcesar.disabled = true;
+        btnProcesar.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Procesando...';
+        progreso.style.display = 'block';
+
+        // Limpiar tabla
+        tablaArchivos.innerHTML = '';
+
+        // Simular progreso
+        let progresoActual = 0;
+        const intervalo = setInterval(() => {
+            progresoActual += Math.random() * 10;
+            if (progresoActual > 90) progresoActual = 90;
+            
+            barraProgreso.style.width = progresoActual + '%';
+            barraProgreso.textContent = Math.round(progresoActual) + '%';
+            estadoProcesamiento.textContent = `Procesando archivos... ${Math.round(progresoActual)}%`;
+        }, 200);
+
+        // Determinar URL según el modo
+        const modo = '{{ modo }}';
+        let url;
+        
+        if (modo === 'creacion') {
+            url = '/api/procesar-carpeta/';
+        } else {
+            url = `/api/hashes/{{ formulario.id }}/agregar-archivos/`;
+        }
+        
+        // Debug: mostrar información del FormData
+        console.log('Archivos a enviar:', archivos.length);
+        for (let i = 0; i < archivos.length; i++) {
+            console.log(`Archivo ${i + 1}:`, archivos[i].name, archivos[i].size);
+        }
+        
+        // Llamada a la API
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(JSON.stringify(err));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            clearInterval(intervalo);
+            barraProgreso.style.width = '100%';
+            barraProgreso.textContent = '100%';
+            estadoProcesamiento.textContent = '¡Procesamiento completado!';
+            
+            // Mostrar archivos en la tabla (comentado para evitar duplicados)
+            // mostrarArchivosEnTabla(data);
+            
+            // Redirigir a la vista de resultados si está disponible
+            if (data.redirect_url) {
+                setTimeout(() => {
+                    tablaArchivos.innerHTML = '';
+                    window.location.href = data.redirect_url;
+                }, 2000);
+            }
+        })
+        .catch(error => {
+            clearInterval(intervalo);
+            console.error('Error:', error);
+            alert('Error al procesar los archivos: ' + error.message);
+        })
+        .finally(() => {
+            btnProcesar.disabled = false;
+            btnProcesar.innerHTML = '{% if modo == "creacion" %}<i class="bi bi-play-circle"></i> Procesar{% else %}<i class="bi bi-plus-circle"></i> Agregar{% endif %}';
+        });
+    });
+
+    function mostrarArchivosEnTabla(data) {
+        const tablaArchivos = document.getElementById('tablaArchivos');
+        
+        if (data.formulario && data.formulario.archivos) {
+            data.formulario.archivos.forEach((archivo, index) => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td><span class="badge bg-secondary">${archivo.nro_orden}</span></td>
+                    <td>${archivo.nombre}</td>
+                    <td><span class="badge bg-light text-dark">${archivo.extension}</span></td>
+                    <td>${archivo.peso_formateado}</td>
+                    <td>
+                        <span class="badge bg-${getTipoColor(archivo.tipo_archivo)}">
+                            ${archivo.tipo_archivo}
+                        </span>
+                    </td>
+                    <td><code class="small">${archivo.hash_sha256.substring(0, 32)}...</code></td>
+                    <td><span class="badge bg-success">✓ Procesado</span></td>
+                `;
+                tablaArchivos.appendChild(fila);
+            });
+        }
+    }
+
+    function getTipoColor(tipo) {
+        switch(tipo) {
+            case 'imagen': return 'info';
+            case 'video': return 'warning';
+            case 'audio': return 'success';
+            case 'documento': return 'primary';
+            default: return 'secondary';
+        }
+    }
+
+    // Actualizar información cuando se seleccionen archivos
+    document.getElementById('archivos').addEventListener('change', function (e) {
+        const archivos = e.target.files;
+        const tablaArchivos = document.getElementById('tablaArchivos');
+        const filaVacia = document.getElementById('filaVacia');
+
+        if (archivos.length > 0) {
+            // Limpiar tabla
+            tablaArchivos.innerHTML = '';
+            
+            // Mostrar archivos seleccionados
+            for (let i = 0; i < archivos.length; i++) {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td><span class="badge bg-secondary">${i + 1}</span></td>
+                    <td>${archivos[i].name}</td>
+                    <td><span class="badge bg-light text-dark">${archivos[i].name.split('.').pop()}</span></td>
+                    <td>${formatBytes(archivos[i].size)}</td>
+                    <td><span class="badge bg-secondary">Pendiente</span></td>
+                    <td><code class="small text-muted">Calculando...</code></td>
+                    <td><span class="badge bg-warning">⏳ Esperando</span></td>
+                `;
+                tablaArchivos.appendChild(fila);
+            }
+        } else if (filaVacia) {
+            tablaArchivos.innerHTML = filaVacia.outerHTML;
+        }
+    });
+
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+</script>
+{% endif %}
+{% endblock %} 

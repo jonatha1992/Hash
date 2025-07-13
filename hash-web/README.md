@@ -1,21 +1,17 @@
-# Hash Web Application
+# Hash Web - Aplicación Web para Gestión de Hash
 
-Aplicación web para gestión de hash de archivos forenses.
+## 📋 Descripción
 
-## Setup Rápido
+Hash Web es una aplicación Django que simula la funcionalidad de la aplicación de escritorio Hash Copy. Permite procesar archivos, calcular hashes SHA-256, categorizar archivos por tipo y gestionar formularios de hash y custodia.
 
-### Windows:
+## 🚀 Instalación Rápida
+
+### Opción 1: Inicio Automático (Windows)
 ```bash
-setup.bat
+start_quick.bat
 ```
 
-### Linux/Mac:
-```bash
-chmod +x setup.sh
-./setup.sh
-```
-
-### Manual:
+### Opción 2: Configuración Manual
 ```bash
 # 1. Crear entorno virtual
 python -m venv venv
@@ -32,48 +28,126 @@ pip install -r requirements.txt
 # 4. Ejecutar migraciones
 python manage.py migrate
 
-# 5. Crear superusuario
-python manage.py createsuperuser
+# 5. Cargar datos de demostración
+python setup_demo.py
 
-# 6. Ejecutar servidor
+# 6. Iniciar servidor
 python manage.py runserver
 ```
 
-## Acceso
+## 📱 Uso de la Aplicación
 
-- **Aplicación**: http://127.0.0.1:8000/
-- **Admin Panel**: http://127.0.0.1:8000/admin/
-- **API Docs**: http://127.0.0.1:8000/api/docs/
+### Acceso
+- **URL**: http://localhost:8000
+- **Credenciales**: admin/admin123
 
-## Credenciales por defecto
-- Usuario: `admin`
-- Contraseña: `admin123`
+### Funcionalidades Principales
 
-## Características
+#### 1. Dashboard
+- Vista general del sistema
+- Estadísticas de formularios
+- Acceso rápido a funciones
 
-- ✅ Cálculo de hash SHA-256
-- ✅ Gestión de oficiales y jerarquías  
-- ✅ Upload múltiple de archivos
+#### 2. Modo Avanzado (Simula App de Escritorio)
+- Procesamiento de múltiples archivos
+- Cálculo automático de hashes SHA-256
+- Categorización por tipo de archivo
+- Interfaz similar a la aplicación de escritorio
+
+#### 3. Gestión de Formularios
+- Crear formularios de hash
+- Ver detalles con estadísticas
+- Generar reportes PDF
+
+#### 4. Gestión de Custodia
+- Crear actas de custodia
+- Asignar oficiales
+- Seguimiento de elementos
+
+## 🛠️ Comandos Útiles
+
+```bash
+# Verificación del sistema
+python verify_setup.py
+
+# Limpieza del proyecto
+python cleanup.py
+
+# Inicio rápido del servidor
+start_server.bat
+
+# Cargar datos de demostración
+python setup_demo.py
+
+# Crear superusuario
+python manage.py createsuperuser
+```
+
+## 📁 Estructura del Proyecto
+
+```
+hash-web/
+├── core/                 # App principal
+│   ├── models.py        # Modelos de datos
+│   ├── views.py         # Vistas y lógica
+│   ├── urls.py          # URLs de la app
+│   └── templates/       # Plantillas HTML
+├── reports/             # Generación de PDFs
+├── hash_project/        # Configuración Django
+├── static/              # Archivos estáticos
+├── media/               # Archivos subidos
+└── templates/           # Plantillas base
+```
+
+## 🔧 Configuración de Desarrollo
+
+### Archivos de Configuración
+- `.vscode/settings.json` - Configuración VS Code
+- `.eslintrc.json` - Configuración ESLint
+- `pyproject.toml` - Configuración Python
+- `hash-web.code-workspace` - Workspace VS Code
+
+### Nota sobre Errores del Linter
+Los errores que ves en los archivos `.html` son **falsos positivos** del linter de JavaScript. Esto es normal en proyectos Django y no afecta el funcionamiento.
+
+## 📊 Características
+
+### Similitudes con la App de Escritorio
+- ✅ Procesamiento de múltiples archivos
+- ✅ Cálculo de hashes SHA-256
+- ✅ Categorización por tipo de archivo
+- ✅ Gestión de oficiales y jerarquías
+- ✅ Formularios de hash y custodia
 - ✅ Generación de reportes PDF
-- ✅ API REST completa
-- ✅ Panel de administración
-- ✅ Deploy rápido
+- ✅ Interfaz similar al modo avanzado
 
-## Deployment
+### Funcionalidades Web Adicionales
+- 🌐 Acceso desde cualquier navegador
+- 📱 Interfaz responsive
+- 🔐 Sistema de autenticación
+- 📊 Dashboard con estadísticas
+- 📄 API REST para integración
+- 🖨️ Generación automática de PDFs
 
-### Desarrollo
+## 🐛 Solución de Problemas
+
+### Errores del Linter
+Los errores en templates HTML son normales. Ver la documentación de configuración para más detalles.
+
+### Verificación del Sistema
 ```bash
-python manage.py runserver 0.0.0.0:8000
+python verify_setup.py
 ```
 
-### Producción
+### Reiniciar Servidor
 ```bash
-pip install gunicorn
-gunicorn hash_project.wsgi:application --bind 0.0.0.0:8000
+python manage.py runserver
 ```
 
-### Docker
-```bash
-docker build -t hash-web .
-docker run -p 8000:8000 hash-web
-```
+## 📝 Licencia
+
+Este proyecto es parte del sistema Hash Copy para gestión de archivos digitales.
+
+---
+
+**Hash Web** - Versión web de la aplicación de escritorio Hash Copy 

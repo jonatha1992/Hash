@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Hash Web{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="bi bi-exclamation-triangle"></i> Eliminar Formulario
+        </h1>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5><i class="bi bi-trash"></i> Confirmar Eliminación</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <h6><i class="bi bi-exclamation-triangle"></i> ¡Atención!</h6>
+                    <p>Está a punto de eliminar el formulario <strong>#{{ formulario.nro_hash }}</strong>.</p>
+                    <p>Esta acción <strong>NO SE PUEDE DESHACER</strong> y eliminará:</p>
+                    <ul>
+                        <li>El formulario completo</li>
+                        <li>Todos los archivos asociados ({{ formulario.total_archivos }} archivos)</li>
+                        <li>Todos los hashes calculados</li>
+                        <li>Todas las estadísticas</li>
+                    </ul>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6>Detalles del Formulario a Eliminar</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>Número de Hash:</strong> #{{ formulario.nro_hash }}<br>
+                                <strong>Tipo:</strong> {{ formulario.get_tipo_display }}<br>
+                                <strong>Procedimiento:</strong> {{ formulario.procedimiento }}<br>
+                                <strong>Estado:</strong> 
+                                <span class="badge bg-{% if formulario.estado == 'BORRADOR' %}warning{% elif formulario.estado == 'FINALIZADO' %}success{% else %}secondary{% endif %}">
+                                    {{ formulario.get_estado_display }}
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Oficial Entrega:</strong> {{ formulario.oficial_entrega }}<br>
+                                <strong>Oficial Recibe:</strong> {{ formulario.oficial_recibe }}<br>
+                                <strong>Fecha Creación:</strong> {{ formulario.fecha_creacion|date:"d/m/Y H:i" }}<br>
+                                <strong>Total Archivos:</strong> {{ formulario.total_archivos }} archivos
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Estadísticas de Archivos:</h6>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <strong>Imágenes:</strong> {{ formulario.imagenes }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Videos:</strong> {{ formulario.clips }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Audio:</strong> {{ formulario.audio }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Documentos:</strong> {{ formulario.texto }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Otros:</strong> {{ formulario.varios }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Peso Total:</strong> {{ formulario.peso_total_formateado }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'core:lista_formularios' %}" class="btn btn-secondary me-md-2">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar Definitivamente
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

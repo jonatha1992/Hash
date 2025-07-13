@@ -1,0 +1,49 @@
+{
+    "folders": [
+        {
+            "name": "Hash Web",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "*.html": "django-html",
+            "templates/**/*.html": "django-html"
+        },
+        "emmet.includeLanguages": {
+            "django-html": "html"
+        },
+        "javascript.validate.enable": false,
+        "typescript.validate.enable": false,
+        "html.validate.scripts": false,
+        "html.validate.styles": false,
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": false,
+        "python.linting.flake8Enabled": true,
+        "python.linting.mypyEnabled": false,
+        "python.defaultInterpreterPath": "./venv/Scripts/python.exe",
+        "python.terminal.activateEnvironment": true,
+        "files.exclude": {
+            "**/__pycache__": true,
+            "**/*.pyc": true,
+            "**/migrations": false
+        },
+        "python.analysis.extraPaths": [
+            "./"
+        ],
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "files.autoSave": "afterDelay",
+        "files.autoSaveDelay": 1000
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.python",
+            "ms-python.flake8",
+            "ms-python.black-formatter",
+            "ms-python.isort",
+            "batisteo.vscode-django",
+            "ms-vscode.vscode-typescript-next"
+        ]
+    }
+}

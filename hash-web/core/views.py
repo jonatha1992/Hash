@@ -78,8 +78,14 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
         if 'archivos' in data:
             del data['archivos']
         
+        # Remover nro_hash si está vacío para que se auto-genere
+        if 'nro_hash' in data and not data['nro_hash']:
+            del data['nro_hash']
+        
         serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
+        if not serializer.is_valid():
+            print("Validation errors:", serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         # Guardar formulario
         usuario = request.user if request.user.is_authenticated else None
@@ -89,7 +95,7 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
         if archivos:
             for i, archivo in enumerate(archivos, 1):
                 # Calcular hash SHA-256
-                hash_sha256 = self._calcular_hash_archivo(archivo)
+                hash_sha256 = _calcular_hash_archivo(archivo)
                 
                 # Obtener extensión del archivo
                 extension = os.path.splitext(archivo.name)[1].lower()
@@ -107,7 +113,6 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
                     hash_sha256=hash_sha256,
                     tipo_mime=getattr(archivo, 'content_type', '') or ''
                 )
-        
         
         # Retornar formulario completo
         headers = self.get_success_headers(serializer.data)
@@ -131,7 +136,7 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
         
         for archivo in archivos:
             # Calcular hash
-            hash_sha256 = self._calcular_hash_archivo(archivo)
+            hash_sha256 = _calcular_hash_archivo(archivo)
             
             # Obtener extensión del archivo
             extension = os.path.splitext(archivo.name)[1].lower()
@@ -241,12 +246,7 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
         
         return Response({'estado': nuevo_estado})
     
-    def _calcular_hash_archivo(self, archivo):
-        """Calcula el hash SHA-256 de un archivo"""
-        hash_sha256 = hashlib.sha256()
-        for chunk in archivo.chunks():
-            hash_sha256.update(chunk)
-        return hash_sha256.hexdigest().upper()
+
 
 
 class ArchivoViewSet(viewsets.ReadOnlyModelViewSet):
@@ -282,22 +282,82 @@ class ArchivoViewSet(viewsets.ReadOnlyModelViewSet):
 # Template Views para Hash
 def dashboard(request):
     """Dashboard principal"""
+    # Estadísticas básicas
+    total_formularios = FormularioHash.objects.count()
+    total_archivos = Archivo.objects.count()
+    formularios_recientes = FormularioHash.objects.select_related(
+        'oficial_entrega__jerarquia', 'oficial_recibe__jerarquia'
+    ).order_by('-fecha_creacion')[:5]
+    
     context = {
-        'total_formularios': FormularioHash.objects.count(),
-        'formularios_borrador': FormularioHash.objects.filter(estado='BORRADOR').count(),
-        'formularios_finalizados': FormularioHash.objects.filter(estado='FINALIZADO').count(),
-        'total_archivos': Archivo.objects.count(),
-        'oficiales_activos': Oficial.objects.filter(activo=True).count(),
+        'total_formularios': total_formularios,
+        'total_archivos': total_archivos,
+        'formularios_recientes': formularios_recientes,
+        'title': 'Dashboard - Hash Web'
     }
     return render(request, 'core/dashboard.html', context)
+
+
+def form_hash(request, formulario_id=None):
+    """Vista unificada del modo escritorio - permite crear y editar formularios"""
+    
+    # Obtener datos necesarios
+    oficiales = Oficial.objects.select_related('jerarquia', 'destino').filter(activo=True)
+    
+    if formulario_id:
+        # Modo edición - cargar formulario existente
+        formulario = get_object_or_404(
+            FormularioHash.objects.select_related(
+                'oficial_entrega__jerarquia', 'oficial_entrega__destino',
+                'oficial_recibe__jerarquia', 'oficial_recibe__destino',
+                'tipo_procedimiento'
+            ).prefetch_related('archivos'),
+            id=formulario_id
+        )
+        modo = 'edicion'
+        siguiente_hash = formulario.nro_hash
+    else:
+        # Modo creación - nuevo formulario
+        formulario = None
+        modo = 'creacion'
+        # Obtener el siguiente número de hash disponible
+        ultimo_hash = FormularioHash.objects.aggregate(
+            max_hash=models.Max('nro_hash')
+        )['max_hash']
+        siguiente_hash = (ultimo_hash or 0) + 1
+    
+    # Verificar si hay un formulario recién creado en la sesión
+    formulario_creado_id = request.session.get('formulario_creado_id')
+    if formulario_creado_id and modo == 'creacion':
+        try:
+            formulario_creado = FormularioHash.objects.select_related(
+                'oficial_entrega__jerarquia', 'oficial_entrega__destino',
+                'oficial_recibe__jerarquia', 'oficial_recibe__destino',
+                'tipo_procedimiento'
+            ).prefetch_related('archivos').get(id=formulario_creado_id)
+            modo = 'resultado'
+            formulario = formulario_creado
+            # Limpiar la sesión
+            del request.session['formulario_creado_id']
+        except FormularioHash.DoesNotExist:
+            pass
+    
+    context = {
+        'formulario': formulario,
+        'oficiales': oficiales,
+        'siguiente_hash': siguiente_hash,
+        'modo': modo,
+        'title': f'Formulario Hash - {"Editar" if formulario and modo == "edicion" else "Nuevo" if modo == "creacion" else "Resultado"} Formulario'
+    }
+    return render(request, 'core/form_hash.html', context)
 
 
 from .forms import FormularioHashForm
 import os
 import hashlib
 
-def crear_formulario(request):
-    """Vista para crear nuevo formulario"""
+def crear_hash(request):
+    """Vista para crear nuevo hash"""
     if request.method == 'POST':
         form = FormularioHashForm(request.POST)
         if form.is_valid():
@@ -325,15 +385,46 @@ def crear_formulario(request):
                     )
 
 
-            return redirect('core:ver_formulario', formulario_id=formulario.id)
+            return redirect('core:form_hash_editar', formulario_id=formulario.id)
     else:
-        form = FormularioHashForm()
+        try:
+            form = FormularioHashForm()
+        except Exception as e:
+            print(f"Error al crear formulario: {e}")
+            form = None
 
+    # Obtener datos para debug
+    oficiales_count = Oficial.objects.filter(activo=True).count()
+    tipos_count = TipoProcedimiento.objects.filter(activo=True).count()
+    
     context = {
         'form': form,
         'siguiente_numero': FormularioHash.objects.count() + 1,
+        'debug_info': {
+            'oficiales_count': oficiales_count,
+            'tipos_count': tipos_count,
+        }
     }
-    return render(request, 'core/crear_formulario.html', context)
+    return render(request, 'core/crear_hash.html', context)
+
+
+
+
+def eliminar_hash(request, formulario_id):
+    """Vista para eliminar un hash"""
+    formulario = get_object_or_404(FormularioHash, id=formulario_id)
+    
+    if request.method == 'POST':
+        # Confirmar eliminación
+        formulario.delete()
+        return redirect('core:lista_hashes')
+    
+    context = {
+        'formulario': formulario,
+        'title': f'Eliminar Formulario #{formulario.nro_hash}'
+    }
+    return render(request, 'core/eliminar_hash.html', context)
+
 
 def _calcular_hash_archivo(archivo):
     """Calcula el hash SHA-256 de un archivo"""
@@ -343,12 +434,14 @@ def _calcular_hash_archivo(archivo):
     return hash_sha256.hexdigest().upper()
 
 
-def ver_formulario(request, formulario_id):
-    """Vista para ver/editar formulario"""
+def ver_hash(request, formulario_id):
+    """Vista para ver/editar hash"""
     formulario = get_object_or_404(
         FormularioHash.objects.select_related(
-            'oficial_entrega__jerarquia', 'oficial_recibe__jerarquia'
-        ).prefetch_related('archivos', 'historial'),
+            'oficial_entrega__jerarquia', 'oficial_entrega__destino',
+            'oficial_recibe__jerarquia', 'oficial_recibe__destino',
+            'tipo_procedimiento'
+        ).prefetch_related('archivos'),
         id=formulario_id
     )
     
@@ -356,10 +449,10 @@ def ver_formulario(request, formulario_id):
         'formulario': formulario,
         'puede_editar': formulario.estado == 'BORRADOR',
     }
-    return render(request, 'core/ver_formulario.html', context)
+    return render(request, 'core/ver_hash.html', context)
 
 
-def lista_formularios(request):
+def lista_hashes(request):
     """Vista para listar formularios"""
     formularios = FormularioHash.objects.select_related(
         'oficial_entrega__jerarquia', 'oficial_recibe__jerarquia'
@@ -368,7 +461,7 @@ def lista_formularios(request):
     context = {
         'formularios': formularios,
     }
-    return render(request, 'core/lista_formularios.html', context)
+    return render(request, 'core/lista_hashes.html', context)
 
 
 # Template Views para Custodia
@@ -515,66 +608,7 @@ def api_agregar_personal_custodia(request, custodia_id):
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 
-# Vistas para Custodia
-def lista_custodias(request):
-    """Vista para listar custodias"""
-    custodias = FormularioCustodia.objects.all().order_by('-fecha_creacion')
-    context = {
-        'custodias': custodias,
-        'title': 'Lista de Custodias'
-    }
-    return render(request, 'core/lista_custodias.html', context)
 
-
-# Template Views
-def dashboard(request):
-    """Dashboard principal"""
-    context = {
-        'total_formularios': FormularioHash.objects.count(),
-        'formularios_borrador': FormularioHash.objects.filter(estado='BORRADOR').count(),
-        'formularios_finalizados': FormularioHash.objects.filter(estado='FINALIZADO').count(),
-        'total_archivos': Archivo.objects.count(),
-        'oficiales_activos': Oficial.objects.filter(activo=True).count(),
-    }
-    return render(request, 'core/dashboard.html', context)
-
-
-def crear_formulario(request):
-    """Vista para crear nuevo formulario"""
-    context = {
-        'oficiales': Oficial.objects.filter(activo=True).select_related('jerarquia'),
-        'tipos_procedimiento': TipoProcedimiento.objects.filter(activo=True),
-        'siguiente_numero': FormularioHash.objects.count() + 1,
-    }
-    return render(request, 'core/crear_formulario.html', context)
-
-
-def ver_formulario(request, formulario_id):
-    """Vista para ver/editar formulario"""
-    formulario = get_object_or_404(
-        FormularioHash.objects.select_related(
-            'oficial_entrega__jerarquia', 'oficial_recibe__jerarquia'
-        ).prefetch_related('archivos', 'historial'),
-        id=formulario_id
-    )
-    
-    context = {
-        'formulario': formulario,
-        'puede_editar': formulario.estado == 'BORRADOR',
-    }
-    return render(request, 'core/ver_formulario.html', context)
-
-
-def lista_formularios(request):
-    """Vista para listar formularios"""
-    formularios = FormularioHash.objects.select_related(
-        'oficial_entrega__jerarquia', 'oficial_recibe__jerarquia'
-    ).order_by('-fecha_creacion')
-    
-    context = {
-        'formularios': formularios,
-    }
-    return render(request, 'core/lista_formularios.html', context)
 
 
 # API para AJAX
@@ -599,3 +633,215 @@ def estadisticas_dashboard(request):
         ).data
     }
     return Response(data)
+
+
+@api_view(['POST'])
+@permission_classes([])  # Quitar autenticación temporalmente
+def procesar_carpeta(request):
+    """Procesar todos los archivos de una carpeta, similar a la app de escritorio"""
+    try:
+        # Obtener datos del formulario
+        formulario_data = request.data.copy()
+        archivos = request.FILES.getlist('archivos')
+        
+        # Debug: mostrar información recibida
+        print(f"Archivos recibidos: {len(archivos)}")
+        print(f"Request.FILES keys: {list(request.FILES.keys())}")
+        print(f"Request.data keys: {list(request.data.keys())}")
+        
+        if not archivos:
+            return Response(
+                {'error': 'No se enviaron archivos'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Remover nro_hash si está vacío para que se auto-genere
+        if 'nro_hash' in formulario_data and not formulario_data['nro_hash']:
+            del formulario_data['nro_hash']
+        
+        # Crear formulario
+        serializer = FormularioHashSerializer(data=formulario_data)
+        if not serializer.is_valid():
+            print("Validation errors:", serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Manejar usuario autenticado o no
+        usuario = request.user if request.user.is_authenticated else None
+        formulario = serializer.save(creado_por=usuario)
+        
+        # Procesar archivos con progreso
+        archivos_procesados = []
+        total_archivos = len(archivos)
+        
+        for i, archivo in enumerate(archivos, 1):
+            # Calcular hash SHA-256 (equivalente a SHA-1 en la app de escritorio)
+            hash_sha256 = _calcular_hash_archivo(archivo)
+            
+            # Obtener extensión
+            extension = os.path.splitext(archivo.name)[1].lower()
+            if extension.startswith('.'):
+                extension = extension[1:]
+            
+            # Crear objeto Archivo
+            archivo_obj = Archivo.objects.create(
+                formulario=formulario,
+                nro_orden=i,
+                nombre=archivo.name,
+                extension=extension,
+                peso=archivo.size,
+                hash_sha256=hash_sha256,
+                tipo_mime=archivo.content_type or ''
+            )
+            
+            archivos_procesados.append(archivo_obj)
+        
+        # Recalcular contadores del formulario
+        formulario.calcular_contadores()
+        
+        # Guardar ID del formulario en la sesión para mostrar resultados
+        request.session['formulario_creado_id'] = formulario.id
+        
+        # Retornar formulario completo con estadísticas
+        formulario_serializer = FormularioHashSerializer(formulario)
+        return Response({
+            'formulario': formulario_serializer.data,
+            'archivos_procesados': len(archivos_procesados),
+            'peso_total': formulario.peso_total_formateado,
+            'contadores': {
+                'imagenes': formulario.imagenes,
+                'clips': formulario.clips,
+                'audio': formulario.audio,
+                'texto': formulario.texto,
+                'varios': formulario.varios
+            },
+            'redirect_url': f'/form_hash/{formulario.id}/'
+        }, status=status.HTTP_201_CREATED)
+        
+    except Exception as e:
+        print(f"Error en procesar_carpeta: {str(e)}")
+        return Response(
+            {'error': f'Error al procesar carpeta: {str(e)}'}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['POST'])
+@permission_classes([])  # Quitar autenticación temporalmente
+def agregar_archivos_formulario(request, formulario_id):
+    """API para agregar archivos a un formulario existente"""
+    try:
+        formulario = get_object_or_404(FormularioHash, id=formulario_id)
+        archivos = request.FILES.getlist('archivos')
+        
+        if not archivos:
+            return Response(
+                {'error': 'No se enviaron archivos'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Procesar archivos
+        archivos_procesados = []
+        siguiente_orden = formulario.archivos.count() + 1
+        
+        for archivo in archivos:
+            # Calcular hash SHA-256
+            hash_sha256 = _calcular_hash_archivo(archivo)
+            
+            # Obtener extensión del archivo
+            extension = os.path.splitext(archivo.name)[1].lower()
+            if extension.startswith('.'):
+                extension = extension[1:]
+            
+            # Crear objeto Archivo
+            archivo_obj = Archivo.objects.create(
+                formulario=formulario,
+                nro_orden=siguiente_orden,
+                nombre=archivo.name,
+                extension=extension,
+                peso=archivo.size,
+                hash_sha256=hash_sha256,
+                tipo_mime=archivo.content_type or ''
+            )
+            
+            archivos_procesados.append(archivo_obj)
+            siguiente_orden += 1
+        
+        # Recalcular contadores del formulario
+        formulario.calcular_contadores()
+        
+        # Retornar respuesta
+        return Response({
+            'success': True,
+            'formulario_id': formulario.id,
+            'archivos_procesados': len(archivos_procesados),
+            'peso_total': formulario.peso_total_formateado,
+            'contadores': {
+                'imagenes': formulario.imagenes,
+                'clips': formulario.clips,
+                'audio': formulario.audio,
+                'texto': formulario.texto,
+                'varios': formulario.varios
+            }
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        return Response(
+            {'error': f'Error al agregar archivos: {str(e)}'}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def api_obtener_detalles_formulario(request, formulario_id):
+    """API para obtener detalles completos de un formulario"""
+    try:
+        formulario = get_object_or_404(
+            FormularioHash.objects.select_related(
+                'oficial_entrega__jerarquia', 'oficial_recibe__jerarquia',
+                'tipo_procedimiento', 'creado_por'
+            ).prefetch_related('archivos'),
+            id=formulario_id
+        )
+        
+        # Serializar formulario con todos los detalles
+        serializer = FormularioHashSerializer(formulario)
+        
+        return Response({
+            'success': True,
+            'formulario': serializer.data
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        return Response({
+            'success': False,
+            'error': f'Error al obtener detalles: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def api_eliminar_formulario(request, formulario_id):
+    """API para eliminar un formulario por AJAX"""
+    try:
+        formulario = get_object_or_404(FormularioHash, id=formulario_id)
+        
+        # Obtener información antes de eliminar
+        nro_hash = formulario.nro_hash
+        total_archivos = formulario.total_archivos
+        
+        # Eliminar formulario (esto también eliminará los archivos por CASCADE)
+        formulario.delete()
+        
+        return Response({
+            'success': True,
+            'message': f'Formulario #{nro_hash} eliminado exitosamente',
+            'formulario_id': formulario_id,
+            'total_archivos_eliminados': total_archivos
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        return Response({
+            'success': False,
+            'error': f'Error al eliminar formulario: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

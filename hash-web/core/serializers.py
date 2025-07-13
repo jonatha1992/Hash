@@ -7,14 +7,14 @@ class JerarquiaSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Jerarquia
-        fields = ['id', 'jerarquia', 'abreviatura', 'orden', 'total_oficiales']
+        fields = ['id', 'nombre', 'abreviatura', 'orden', 'total_oficiales']
     
     def get_total_oficiales(self, obj):
         return obj.oficiales.count()
 
 
 class OficialSerializer(serializers.ModelSerializer):
-    jerarquia_nombre = serializers.CharField(source='jerarquia.jerarquia', read_only=True)
+    jerarquia_nombre = serializers.CharField(source='jerarquia.nombre', read_only=True)
     jerarquia_abrev = serializers.CharField(source='jerarquia.abreviatura', read_only=True)
     nombre_completo_formateado = serializers.CharField(read_only=True)
     destino_nombre = serializers.CharField(source='destino.nombre', read_only=True)
@@ -93,6 +93,14 @@ class FormularioHashSerializer(serializers.ModelSerializer):
             'peso_total_bytes', 'peso_total_formateado', 'fecha_creacion', 
             'fecha_modificacion', 'creado_por'
         ]
+    
+    def create(self, validated_data):
+        """Crear formulario con auto-generación del nro_hash"""
+        # Si no se proporciona nro_hash, se auto-generará en el modelo
+        if 'nro_hash' not in validated_data or not validated_data['nro_hash']:
+            validated_data.pop('nro_hash', None)
+        
+        return super().create(validated_data)
 
 
 class FormularioHashListSerializer(serializers.ModelSerializer):

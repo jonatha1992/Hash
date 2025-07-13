@@ -1,75 +1,73 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard - Hash Web{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
         <h1 class="mb-4">
-            <i class="bi bi-speedometer2"></i> Dashboard
+            <i class="bi bi-speedometer2"></i> Dashboard - Hash Web
         </h1>
     </div>
 </div>
 
+<!-- Estadísticas -->
 <div class="row mb-4">
     <div class="col-md-3">
         <div class="card bg-primary text-white">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h4>{{ total_formularios }}</h4>
-                        <p class="card-text">Total Formularios</p>
+                        <h4 class="card-title">{{ total_formularios }}</h4>
+                        <p class="card-text">Formularios</p>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
+                        <i class="bi bi-file-earmark-text fs-1"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col-md-3">
-        <div class="card bg-warning text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h4>{{ formularios_borrador }}</h4>
-                        <p class="card-text">En Borrador</p>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="bi bi-pencil-square" style="font-size: 2rem;"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="col-md-3">
         <div class="card bg-success text-white">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h4>{{ formularios_finalizados }}</h4>
-                        <p class="card-text">Finalizados</p>
+                        <h4 class="card-title">{{ total_archivos }}</h4>
+                        <p class="card-text">Archivos</p>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                        <i class="bi bi-folder2 fs-1"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="col-md-3">
         <div class="card bg-info text-white">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <h4>{{ total_archivos }}</h4>
-                        <p class="card-text">Total Archivos</p>
+                        <h4 class="card-title">{{ formularios_recientes|length }}</h4>
+                        <p class="card-text">Recientes</p>
                     </div>
                     <div class="align-self-center">
-                        <i class="bi bi-files" style="font-size: 2rem;"></i>
+                        <i class="bi bi-clock-history fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">Hash Web</h4>
+                        <p class="card-text">Sistema</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-shield-check fs-1"></i>
                     </div>
                 </div>
             </div>
@@ -77,86 +75,196 @@
     </div>
 </div>
 
+<!-- Acciones Principales -->
+<div class="row mb-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header py-2">
+                <h6 class="mb-0"><i class="bi bi-lightning-charge"></i> Acciones Rápidas</h6>
+            </div>
+            <div class="card-body py-2">
+                <div class="row g-2">
+                    <div class="col-6 col-md-3">
+                        <a href="{% url 'core:form_hash' %}" class="btn btn-primary w-100 py-1 px-1 fs-6">
+                            <i class="bi bi-desktop"></i> <span class="d-none d-md-inline">Hash</span>
+                            <div class="small"><small>Crear nuevo Hash</small></div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a href="{% url 'core:lista_hashes' %}" class="btn btn-outline-primary w-100 py-1 px-1 fs-6">
+                            <i class="bi bi-list-ul"></i> <span class="d-none d-md-inline">Ver Hashes</span>
+                            <div class="small"><small>Gestionar existentes</small></div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a href="{% url 'core:crear_custodia' %}" class="btn btn-success w-100 py-1 px-1 fs-6">
+                            <i class="bi bi-shield-lock"></i> <span class="d-none d-md-inline">Custodia</span>
+                            <div class="small"><small>Crear acta de custodia</small></div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a href="{% url 'core:lista_custodias' %}" class="btn btn-outline-success w-100 py-1 px-1 fs-6">
+                            <i class="bi bi-shield-check"></i> <span class="d-none d-md-inline">Ver Custodias</span>
+                            <div class="small"><small>Gestionar custodias</small></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Formularios Recientes -->
+{% if formularios_recientes %}
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-activity"></i> Acciones Rápidas</h5>
+                <h5><i class="bi bi-clock-history"></i> Formularios Recientes</h5>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <a href="{% url 'core:crear_formulario' %}" class="btn btn-primary btn-lg w-100">
-                            <i class="bi bi-plus-circle"></i><br>
-                            Nuevo Formulario Hash
-                        </a>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <a href="{% url 'core:lista_formularios' %}" class="btn btn-outline-primary btn-lg w-100">
-                            <i class="bi bi-list-ul"></i><br>
-                            Ver Todos los Formularios
-                        </a>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <a href="{% url 'admin:core_oficial_changelist' %}"
-                            class="btn btn-outline-secondary btn-lg w-100">
-                            <i class="bi bi-people"></i><br>
-                            Gestionar Oficiales
-                        </a>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <a href="{% url 'admin:index' %}" class="btn btn-outline-secondary btn-lg w-100">
-                            <i class="bi bi-gear"></i><br>
-                            Panel de Admin
-                        </a>
-                    </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="py-2"># Hash</th>
+                                <th class="py-2">Tipo</th>
+                                <th class="py-2">Procedimiento</th>
+                                <th class="py-2">Oficiales</th>
+                                <th class="py-2">Archivos</th>
+                                <th class="py-2">Fecha</th>
+                                <th class="py-2">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for formulario in formularios_recientes %}
+                            <tr>
+                                <td class="py-2">
+                                    <span class="badge bg-primary">#{{ formulario.nro_hash }}</span>
+                                </td>
+                                <td class="py-2">
+                                    <span class="badge bg-{% if formulario.tipo == 'PROCEDIMIENTO' %}info{% else %}warning{% endif %}">
+                                        {{ formulario.get_tipo_display }}
+                                    </span>
+                                </td>
+                                <td class="py-2">
+                                    <strong>{{ formulario.procedimiento|truncatechars:40 }}</strong>
+                                </td>
+                                <td class="py-2">
+                                    <small>
+                                        <strong>Entrega:</strong> {{ formulario.oficial_entrega }}<br>
+                                        <strong>Recibe:</strong> {{ formulario.oficial_recibe }}
+                                    </small>
+                                </td>
+                                <td class="py-2">
+                                    <span class="badge bg-secondary">{{ formulario.total_archivos }} archivos</span>
+                                    <br>
+                                    <small>{{ formulario.peso_total_formateado }}</small>
+                                </td>
+                                <td class="py-2">
+                                    <small>{{ formulario.fecha_creacion|date:"d/m/Y H:i" }}</small>
+                                </td>
+                                <td class="py-2">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{% url 'core:form_hash_editar' formulario.id %}" 
+                                           class="btn btn-outline-primary" title="Editar">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'reports:reporte_hash' formulario.id %}" 
+                                           class="btn btn-outline-success" title="PDF">
+                                            <i class="bi bi-file-pdf"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-outline-danger" 
+                                                onclick="eliminarFormulario({{ formulario.id }}, {{ formulario.nro_hash }})" 
+                                                title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h5><i class="bi bi-info-circle"></i> Información del Sistema</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled">
-                    <li><strong>Oficiales Activos:</strong> {{ oficiales_activos }}</li>
-                    <li><strong>Usuario:</strong> {{ user.get_full_name|default:user.username }}</li>
-                    <li><strong>Versión:</strong> 1.0.0</li>
-                </ul>
-
-                <hr>
-
-                <h6>Estado del Sistema</h6>
-                <div class="d-flex align-items-center">
-                    <span class="badge bg-success me-2">●</span>
-                    <small>Sistema Operativo</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-{% if not user.is_authenticated %}
-<div class="alert alert-warning mt-4">
-    <i class="bi bi-exclamation-triangle"></i>
-    <strong>Acceso Restringido:</strong>
-    Necesita <a href="/admin/login/">iniciar sesión</a> para acceder a todas las funcionalidades del sistema.
 </div>
 {% endif %}
 
+<!-- Información del Sistema y Configuración -->
+<div class="row mt-2">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header py-2">
+                <h6 class="mb-0"><i class="bi bi-info-circle"></i> Información del Sistema</h6>
+            </div>
+            <div class="card-body py-2">
+                <h6 class="fs-6">Características Principales:</h6>
+                <ul class="small mb-1">
+                    <li><strong>Hash:</strong> Interfaz similar a la aplicación Hash Copy</li>
+                    <li><strong>Procesamiento Masivo:</strong> Selección de múltiples archivos</li>
+                    <li><strong>Hash SHA-256:</strong> Cálculo automático de hashes</li>
+                    <li><strong>Categorización:</strong> Clasificación por tipo de archivo</li>
+                    <li><strong>Reportes PDF:</strong> Generación automática de actas</li>
+                    <li><strong>Números Correlativos:</strong> Hash automáticos y editables</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header py-2">
+                <h6 class="mb-0"><i class="bi bi-gear"></i> Configuración</h6>
+            </div>
+            <div class="card-body py-2">
+                <h6 class="fs-6">Formatos Soportados:</h6>
+                <ul class="small mb-1">
+                    <li><strong>Imágenes:</strong> JPG, PNG, BMP, GIF</li>
+                    <li><strong>Videos:</strong> MP4, AVI, MOV, WMV</li>
+                    <li><strong>Audio:</strong> MP3, WAV, FLAC</li>
+                    <li><strong>Documentos:</strong> PDF, DOC, TXT, XLS</li>
+                    <li><strong>Otros:</strong> Cualquier formato</li>
+                </ul>
+                <hr class="my-2">
+                <h6 class="fs-6">Funcionalidades:</h6>
+                <ul class="small mb-1">
+                    <li>✅ Crear formularios con múltiples archivos</li>
+                    <li>✅ Agregar archivos a formularios existentes</li>
+                    <li>✅ Cambiar números de hash correlativos</li>
+                    <li>✅ Generar reportes PDF</li>
+                    <li>✅ Gestión de oficiales y jerarquías</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Actualizar estadísticas cada 30 segundos
-        setInterval(function () {
-            // Aquí podrías hacer una llamada AJAX para actualizar estadísticas
-            console.log('Actualizando estadísticas...');
-        }, 30000);
-    });
+function eliminarFormulario(formularioId, nroHash) {
+    if (confirm(`¿Está seguro de que desea eliminar el formulario #${nroHash}?`)) {
+        fetch(`/api/hashes/${formularioId}/eliminar/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                window.location.reload();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al eliminar el formulario');
+        });
+    }
+}
 </script>
 {% endblock %}

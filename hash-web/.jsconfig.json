@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es2020",
+        "module": "commonjs",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "allowJs": true,
+        "checkJs": false
+    },
+    "exclude": [
+        "templates/**/*",
+        "static/**/*",
+        "**/*.py",
+        "**/*.pyc",
+        "__pycache__/**",
+        "venv/**",
+        ".venv/**",
+        "node_modules/**"
+    ],
+    "include": [
+        "static/js/**/*.js"
+    ]
+}

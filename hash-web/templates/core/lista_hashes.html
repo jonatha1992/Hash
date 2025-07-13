@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+
+{% block title %}Formularios Hash - Hash Web{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-list-ul"></i> Formularios Hash</h1>
+            <a href="{% url 'core:form_hash' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nuevo Hash
+            </a>
+        </div>
+    </div>
+</div>
+
+{% if formularios %}
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="py-2"># Hash</th>
+                        <th class="py-2">Tipo</th>
+                        <th class="py-2">Procedimiento</th>
+                        <th class="py-2">Oficiales</th>
+                        <th class="py-2">Archivos</th>
+                        <th class="py-2">Estado</th>
+                        <th class="py-2">Fecha</th>
+                        <th class="py-2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for formulario in formularios %}
+                    <tr>
+                        <td class="py-2">
+                            <span class="badge bg-primary fs-6">#{{ formulario.nro_hash }}</span>
+                        </td>
+                        <td class="py-2">
+                            <span class="badge bg-{% if formulario.tipo == 'PROCEDIMIENTO' %}info{% else %}warning{% endif %}">
+                                {{ formulario.get_tipo_display }}
+                            </span>
+                        </td>
+                        <td class="py-2">
+                            <strong>{{ formulario.procedimiento|truncatechars:40 }}</strong>
+                        </td>
+                        <td class="py-2">
+                            <small>
+                                <strong>Entrega:</strong> {{ formulario.oficial_entrega }}<br>
+                                <strong>Recibe:</strong> {{ formulario.oficial_recibe }}
+                            </small>
+                        </td>
+                        <td class="py-2">
+                            <span class="badge bg-secondary">{{ formulario.total_archivos }} archivos</span>
+                            <br>
+                            <small>{{ formulario.peso_total_formateado }}</small>
+                        </td>
+                        <td class="py-2">
+                            <span class="badge bg-{% if formulario.estado == 'BORRADOR' %}warning{% elif formulario.estado == 'FINALIZADO' %}success{% else %}secondary{% endif %}">
+                                {{ formulario.get_estado_display }}
+                            </span>
+                        </td>
+                        <td class="py-2">
+                            <small>{{ formulario.fecha_creacion|date:"d/m/Y H:i" }}</small>
+                        </td>
+                        <td class="py-2">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{% url 'core:form_hash_editar' formulario.id %}" 
+                                   class="btn btn-outline-primary" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'reports:reporte_hash' formulario.id %}" 
+                                   class="btn btn-outline-success" title="Generar PDF">
+                                    <i class="bi bi-file-pdf"></i>
+                                </a>
+                                <button type="button" class="btn btn-outline-info" 
+                                        onclick="verDetalles({{ formulario.id }})" title="Ver detalles">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" 
+                                        onclick="eliminarFormulario({{ formulario.id }}, {{ formulario.nro_hash }})" 
+                                        title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body text-center">
+        <i class="bi bi-inbox fs-1 text-muted"></i>
+        <h5 class="mt-3">No hay formularios</h5>
+        <p class="text-muted">Cree su primer formulario de hash para comenzar</p>
+        <a href="{% url 'core:form_hash' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Crear Primer Hash
+        </a>
+    </div>
+</div>
+{% endif %}
+
+<!-- Modal para detalles -->
+<div class="modal fade" id="detallesModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles del Formulario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="detallesContent">
+                <!-- Contenido dinámico -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <a href="#" class="btn btn-primary" id="btnEditar">Editar</a>
+                <a href="#" class="btn btn-success" id="btnPDF">Generar PDF</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function verDetalles(formularioId) {
+    // Mostrar loading en el modal
+    const modal = new bootstrap.Modal(document.getElementById('detallesModal'));
+    const modalBody = document.getElementById('detallesContent');
+    
+    modalBody.innerHTML = '<div class="text-center"><i class="bi bi-arrow-clockwise fs-1 text-primary"></i><p>Cargando detalles...</p></div>';
+    modal.show();
+    
+    // Hacer llamada AJAX para obtener detalles
+    fetch(`/api/hashes/${formularioId}/detalles/`, {
+        method: 'GET',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const formulario = data.formulario;
+            
+            // Crear contenido HTML con los detalles
+            const contenido = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold">Información General</h6>
+                        <table class="table table-sm">
+                            <tr><td><strong>Número Hash:</strong></td><td>#${formulario.nro_hash}</td></tr>
+                            <tr><td><strong>Tipo:</strong></td><td>${formulario.tipo}</td></tr>
+                            <tr><td><strong>Procedimiento:</strong></td><td>${formulario.procedimiento}</td></tr>
+                            <tr><td><strong>Estado:</strong></td><td><span class="badge bg-${formulario.estado === 'BORRADOR' ? 'warning' : formulario.estado === 'FINALIZADO' ? 'success' : 'secondary'}">${formulario.estado}</span></td></tr>
+                            <tr><td><strong>Fecha Creación:</strong></td><td>${new Date(formulario.fecha_creacion).toLocaleString('es-AR')}</td></tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-bold">Oficiales</h6>
+                        <table class="table table-sm">
+                            <tr><td><strong>Entrega:</strong></td><td>${formulario.oficial_entrega_data.display_name}</td></tr>
+                            <tr><td><strong>Recibe:</strong></td><td>${formulario.oficial_recibe_data.display_name}</td></tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6 class="fw-bold">Resumen de Archivos</h6>
+                        <div class="row text-center">
+                            <div class="col-2"><span class="badge bg-info">${formulario.imagenes} Imágenes</span></div>
+                            <div class="col-2"><span class="badge bg-warning">${formulario.clips} Videos</span></div>
+                            <div class="col-2"><span class="badge bg-success">${formulario.audio} Audio</span></div>
+                            <div class="col-2"><span class="badge bg-primary">${formulario.texto} Documentos</span></div>
+                            <div class="col-2"><span class="badge bg-secondary">${formulario.varios} Varios</span></div>
+                            <div class="col-2"><span class="badge bg-dark">${formulario.total_archivos} Total</span></div>
+                        </div>
+                        <p class="mt-2"><strong>Peso Total:</strong> ${formulario.peso_total_formateado}</p>
+                    </div>
+                </div>
+                
+                ${formulario.archivos && formulario.archivos.length > 0 ? `
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6 class="fw-bold">Lista de Archivos</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Extensión</th>
+                                        <th>Tamaño</th>
+                                        <th>Tipo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${formulario.archivos.map(archivo => `
+                                        <tr>
+                                            <td>${archivo.nro_orden}</td>
+                                            <td>${archivo.nombre}</td>
+                                            <td><span class="badge bg-light text-dark">${archivo.extension}</span></td>
+                                            <td>${archivo.peso_formateado}</td>
+                                            <td><span class="badge bg-${archivo.tipo_archivo === 'imagen' ? 'info' : archivo.tipo_archivo === 'video' ? 'warning' : archivo.tipo_archivo === 'audio' ? 'success' : archivo.tipo_archivo === 'documento' ? 'primary' : 'secondary'}">${archivo.tipo_archivo}</span></td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                ` : '<p class="text-muted">No hay archivos asociados</p>'}
+            `;
+            
+            modalBody.innerHTML = contenido;
+            
+            // Actualizar enlaces del modal
+            document.getElementById('btnEditar').href = `/form_hash/${formularioId}/`;
+            document.getElementById('btnPDF').href = `/reports/hash/${formularioId}/`;
+        } else {
+            modalBody.innerHTML = `<div class="alert alert-danger">Error: ${data.error}</div>`;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        modalBody.innerHTML = '<div class="alert alert-danger">Error al cargar los detalles</div>';
+    });
+}
+
+function eliminarFormulario(formularioId, nroHash) {
+    if (confirm(`¿Está seguro de que desea eliminar el formulario #${nroHash}?`)) {
+        fetch(`/api/hashes/${formularioId}/eliminar/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                window.location.reload();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al eliminar el formulario');
+        });
+    }
+}
+
+// Actualizar botones del modal
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('detallesModal');
+    if (modal) {
+        modal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const formularioId = button.getAttribute('data-formulario-id');
+            
+            // Actualizar enlaces del modal
+            document.getElementById('btnEditar').href = `/form_hash/${formularioId}/`;
+            document.getElementById('btnPDF').href = `/reports/hash/${formularioId}/`;
+        });
+    }
+});
+</script>
+{% endblock %}

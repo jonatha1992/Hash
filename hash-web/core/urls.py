@@ -1,34 +1,30 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from . import views
-
-# Router para API REST
-router = DefaultRouter()
-router.register(r'jerarquias', views.JerarquiaViewSet)
-router.register(r'oficiales', views.OficialViewSet)
-router.register(r'tipos-procedimiento', views.TipoProcedimientoViewSet)
-router.register(r'formularios', views.FormularioHashViewSet)
-router.register(r'archivos', views.ArchivoViewSet)
 
 app_name = 'core'
 
 urlpatterns = [
-    # API endpoints
-    path('api/', include(router.urls)),
-    path('api/estadisticas/', views.estadisticas_dashboard, name='api_estadisticas'),
-    
-    # Template views - Hash
+    # Dashboard
     path('', views.dashboard, name='dashboard'),
-    path('formularios/', views.lista_formularios, name='lista_formularios'),
-    path('formularios/nuevo/', views.crear_formulario, name='crear_formulario'),
-    path('formularios/<int:formulario_id>/', views.ver_formulario, name='ver_formulario'),
     
-    # Template views - Custodia
+    # Hash
+    path('form_hash/', views.form_hash, name='form_hash'),
+    path('form_hash/<int:formulario_id>/', views.form_hash, name='form_hash_editar'),
+
+    # Listas
+    path('hashes/', views.lista_hashes, name='lista_hashes'),
+    path('hashes/<int:formulario_id>/eliminar/', views.eliminar_hash, name='eliminar_hash'),
     path('custodias/', views.lista_custodias, name='lista_custodias'),
+    
+    # Custodia
     path('custodias/nueva/', views.crear_custodia, name='crear_custodia'),
     path('custodias/<int:custodia_id>/', views.ver_custodia, name='ver_custodia'),
     
-    # APIs específicas para custodia
-    path('api/custodias/crear/', views.api_crear_custodia, name='api_crear_custodia'),
-    path('api/custodias/<int:custodia_id>/personal/', views.api_agregar_personal_custodia, name='api_agregar_personal_custodia'),
+    # APIs
+    path('api/crear-custodia/', views.api_crear_custodia, name='api_crear_custodia'),
+    path('api/custodias/<int:custodia_id>/agregar-personal/', views.api_agregar_personal_custodia, name='api_agregar_personal_custodia'),
+    path('api/procesar-carpeta/', views.procesar_carpeta, name='api_procesar_carpeta'),
+    path('api/hashes/<int:formulario_id>/detalles/', views.api_obtener_detalles_formulario, name='api_obtener_detalles'),
+    path('api/hashes/<int:formulario_id>/agregar-archivos/', views.agregar_archivos_formulario, name='api_agregar_archivos'),
+    path('api/hashes/<int:formulario_id>/eliminar/', views.api_eliminar_formulario, name='api_eliminar_formulario'),
 ]
