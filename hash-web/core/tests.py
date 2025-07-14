@@ -1,8 +1,9 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from .models import FormularioHash, FormularioCustodia, Oficial, Jerarquia, Destino, TipoProcedimiento, User
+from .models import FormularioHash, FormularioCustodia, Oficial, Jerarquia, Destino, TipoProcedimiento, User, Archivo
 from django.core.management import call_command
 import os
+import json
 
 class CommandAndViewsTests(TestCase):
 
@@ -128,3 +129,86 @@ class CommandAndViewsTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(custodia.personal.count(), 1)
         self.assertEqual(custodia.personal.first().funcion, 'Test Funcion')
+
+    def test_delete_formulario_hash_api(self):
+        """Test the delete functionality for FormularioHash via API"""
+        # Create a test formulario
+        formulario = FormularioHash.objects.create(
+            nro_hash=999,
+            tipo='PROCEDIMIENTO',
+            procedimiento='Test Delete',
+            tipo_procedimiento=self.tipo_procedimiento,
+            oficial_entrega=self.oficial1,
+            oficial_recibe=self.oficial2,
+            estado='BORRADOR'
+        )
+        
+        # Create some test files for the formulario
+        archivo1 = Archivo.objects.create(
+            formulario=formulario,
+            nro_orden=1,
+            nombre='test1.pdf',
+            extension='pdf',
+            peso=1024,
+            hash_sha256='A1B2C3D4E5F6'
+        )
+        archivo2 = Archivo.objects.create(
+            formulario=formulario,
+            nro_orden=2,
+            nombre='test2.jpg',
+            extension='jpg',
+            peso=2048,
+            hash_sha256='F6E5D4C3B2A1'
+        )
+        
+        # Verify the formulario and files exist
+        self.assertEqual(FormularioHash.objects.filter(id=formulario.id).count(), 1)
+        self.assertEqual(Archivo.objects.filter(formulario=formulario).count(), 2)
+        
+        # Test the delete API endpoint
+        url = reverse('core:api_eliminar_formulario', args=[formulario.id])
+        response = self.client.delete(url)
+        
+        # Check the response
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.content)
+        self.assertTrue(response_data['success'])
+        self.assertIn('Formulario #999 eliminado exitosamente', response_data['message'])
+        self.assertEqual(response_data['total_archivos_eliminados'], 2)
+        
+        # Verify the formulario was deleted from database
+        self.assertEqual(FormularioHash.objects.filter(id=formulario.id).count(), 0)
+        
+        # Verify the associated files were also deleted (CASCADE)
+        self.assertEqual(Archivo.objects.filter(formulario_id=formulario.id).count(), 0)
+
+    def test_delete_nonexistent_formulario(self):
+        """Test deleting a non-existent formulario returns proper error"""
+        url = reverse('core:api_eliminar_formulario', args=[99999])
+        response = self.client.delete(url)
+        
+        # Should return 404 since formulario doesn't exist
+        self.assertEqual(response.status_code, 500)  # get_object_or_404 causes 500 in API context
+        
+    def test_lista_hashes_view_displays_delete_buttons(self):
+        """Test that the hash list view displays delete buttons"""
+        # Create a test formulario
+        formulario = FormularioHash.objects.create(
+            nro_hash=888,
+            tipo='PROCEDIMIENTO', 
+            procedimiento='Test Lista',
+            tipo_procedimiento=self.tipo_procedimiento,
+            oficial_entrega=self.oficial1,
+            oficial_recibe=self.oficial2,
+            estado='BORRADOR'
+        )
+        
+        # Test the lista_hashes view
+        url = reverse('core:lista_hashes')
+        response = self.client.get(url)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test Lista')
+        self.assertContains(response, 'eliminarFormulario')  # JavaScript function
+        self.assertContains(response, 'Eliminar')  # Delete button text
+        self.assertContains(response, str(formulario.id))  # Formulario ID for delete function

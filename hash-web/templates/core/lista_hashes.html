@@ -125,6 +125,43 @@
         </div>
     </div>
 </div>
+
+<!-- Modal para confirmación de eliminación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">
+                    <i class="bi bi-exclamation-triangle"></i> Confirmar Eliminación
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-exclamation-triangle-fill text-warning fs-2 me-3"></i>
+                    <div>
+                        <h6 class="mb-0">¿Está seguro de que desea eliminar este formulario?</h6>
+                        <p class="mb-0 text-muted" id="deleteHashInfo">Esta acción no se puede deshacer.</p>
+                    </div>
+                </div>
+                <div class="alert alert-warning mb-0">
+                    <small>
+                        <i class="bi bi-info-circle"></i>
+                        Se eliminará el formulario y todos sus archivos asociados de forma permanente.
+                    </small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                    <i class="bi bi-trash"></i> Eliminar Formulario
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -235,7 +272,21 @@ function verDetalles(formularioId) {
 }
 
 function eliminarFormulario(formularioId, nroHash) {
-    if (confirm(`¿Está seguro de que desea eliminar el formulario #${nroHash}?`)) {
+    // Configurar el modal de confirmación
+    const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+    const deleteInfo = document.getElementById('deleteHashInfo');
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
+    
+    // Actualizar información del modal
+    deleteInfo.innerHTML = `Formulario <strong>#${nroHash}</strong> - Esta acción no se puede deshacer.`;
+    
+    // Configurar el botón de confirmación
+    confirmBtn.onclick = function() {
+        // Deshabilitar el botón para evitar múltiples clics
+        confirmBtn.disabled = true;
+        confirmBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Eliminando...';
+        
+        // Realizar la llamada AJAX
         fetch(`/api/hashes/${formularioId}/eliminar/`, {
             method: 'DELETE',
             headers: {
@@ -244,18 +295,66 @@ function eliminarFormulario(formularioId, nroHash) {
         })
         .then(response => response.json())
         .then(data => {
+            // Cerrar el modal
+            modal.hide();
+            
             if (data.success) {
-                alert(data.message);
-                window.location.reload();
+                // Mostrar notificación de éxito más elegante
+                showNotification('success', `Formulario #${nroHash} eliminado exitosamente`, `Se eliminaron ${data.total_archivos_eliminados} archivos asociados.`);
+                
+                // Recargar la página después de un breve delay
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             } else {
-                alert('Error: ' + data.error);
+                showNotification('error', 'Error al eliminar', data.error);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error al eliminar el formulario');
+            modal.hide();
+            showNotification('error', 'Error de conexión', 'No se pudo conectar con el servidor. Intente nuevamente.');
+        })
+        .finally(() => {
+            // Restaurar el botón
+            confirmBtn.disabled = false;
+            confirmBtn.innerHTML = '<i class="bi bi-trash"></i> Eliminar Formulario';
         });
-    }
+    };
+    
+    // Mostrar el modal
+    modal.show();
+}
+
+// Función para mostrar notificaciones elegantes
+function showNotification(type, title, message) {
+    // Crear elemento de notificación
+    const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    const icon = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+    
+    const notification = document.createElement('div');
+    notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+    notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 350px;';
+    notification.innerHTML = `
+        <div class="d-flex align-items-center">
+            <i class="${icon} me-2"></i>
+            <div>
+                <strong>${title}</strong>
+                ${message ? `<br><small>${message}</small>` : ''}
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    // Agregar al DOM
+    document.body.appendChild(notification);
+    
+    // Auto-remover después de 4 segundos
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 4000);
 }
 
 // Actualizar botones del modal
