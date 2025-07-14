@@ -1,4 +1,5 @@
 from django import forms
+from django.db import models
 from .models import FormularioHash, Oficial, TipoProcedimiento, FormularioCustodia, PersonalCustodia, Jerarquia, Destino
 
 class FormularioHashForm(forms.ModelForm):
@@ -170,7 +171,7 @@ class QuickJerarquiaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Sugerir el siguiente orden disponible
         if not self.instance.pk:
-            max_orden = Jerarquia.objects.aggregate(max_orden=forms.models.Max('orden'))['max_orden']
+            max_orden = Jerarquia.objects.aggregate(max_orden=models.Max('orden'))['max_orden']
             self.fields['orden'].initial = (max_orden or 0) + 1
 
 
