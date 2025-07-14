@@ -1,5 +1,5 @@
 from django import forms
-from .models import FormularioHash, Oficial, TipoProcedimiento, FormularioCustodia, PersonalCustodia
+from .models import FormularioHash, Oficial, TipoProcedimiento, FormularioCustodia, PersonalCustodia, Jerarquia, Destino
 
 class FormularioHashForm(forms.ModelForm):
     class Meta:
@@ -79,3 +79,25 @@ class PersonalCustodiaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['oficial'].queryset = Oficial.objects.filter(activo=True)
+
+
+class OficialForm(forms.ModelForm):
+    """Form for adding new officials quickly"""
+    class Meta:
+        model = Oficial
+        fields = ['legajo', 'nombre', 'jerarquia', 'destino']
+        widgets = {
+            'legajo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: 12345'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre completo'}),
+            'jerarquia': forms.Select(attrs={'class': 'form-select'}),
+            'destino': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['jerarquia'].queryset = Jerarquia.objects.all()
+        self.fields['destino'].queryset = Destino.objects.filter(activo=True)
+        
+        # Make all fields required
+        for field in self.fields:
+            self.fields[field].required = True

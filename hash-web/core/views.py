@@ -847,6 +847,108 @@ def api_obtener_detalles_formulario(request, formulario_id):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@api_view(['POST'])
+@permission_classes([])  # Remove authentication for now
+def api_crear_oficial(request):
+    """API para crear un nuevo oficial"""
+    try:
+        data = request.data
+        
+        # Validate required fields
+        required_fields = ['legajo', 'nombre', 'jerarquia', 'destino']
+        for field in required_fields:
+            if not data.get(field):
+                return Response(
+                    {'error': f'El campo {field} es requerido'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        
+        # Check if legajo already exists
+        if Oficial.objects.filter(legajo=data['legajo']).exists():
+            return Response(
+                {'error': 'Ya existe un oficial con ese legajo'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Create the official
+        oficial = Oficial.objects.create(
+            legajo=data['legajo'],
+            nombre=data['nombre'],
+            jerarquia_id=data['jerarquia'],
+            destino_id=data['destino'],
+            activo=True
+        )
+        
+        # Return the created official
+        serializer = OficialSerializer(oficial)
+        return Response({
+            'success': True,
+            'oficial': serializer.data,
+            'message': 'Oficial creado exitosamente'
+        }, status=status.HTTP_201_CREATED)
+        
+    except Exception as e:
+        return Response({
+            'success': False,
+            'error': f'Error al crear oficial: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+@permission_classes([])  # Remove authentication for now
+def api_buscar_oficiales(request):
+    """API para buscar oficiales con autocompletado"""
+    try:
+        termino = request.query_params.get('q', '').strip()
+        if len(termino) < 2:
+            return Response([])
+        
+        # Search in name, legajo and formatted name
+        oficiales = Oficial.objects.select_related('jerarquia', 'destino').filter(
+            models.Q(nombre__icontains=termino) |
+            models.Q(legajo__icontains=termino),
+            activo=True
+        )[:10]
+        
+        # Return formatted data for select2
+        results = []
+        for oficial in oficiales:
+            results.append({
+                'id': oficial.id,
+                'text': oficial.nombre_completo_formateado,
+                'legajo': oficial.legajo,
+                'nombre': oficial.nombre,
+                'jerarquia': oficial.jerarquia.abreviatura,
+                'destino': oficial.destino.nombre
+            })
+        
+        return Response(results)
+        
+    except Exception as e:
+        return Response({
+            'error': f'Error al buscar oficiales: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+@permission_classes([])  # Remove authentication for now  
+def api_obtener_jerarquias_destinos(request):
+    """API para obtener jerarquías y destinos para el formulario de oficial"""
+    try:
+        jerarquias = Jerarquia.objects.all().order_by('orden')
+        destinos = Destino.objects.filter(activo=True).order_by('nombre')
+        
+        return Response({
+            'jerarquias': [{'id': j.id, 'nombre': j.nombre, 'abrev': j.abreviatura} for j in jerarquias],
+            'destinos': [{'id': d.id, 'nombre': d.nombre} for d in destinos]
+        })
+        
+    except Exception as e:
+        return Response({
+            'error': f'Error al obtener jerarquías y destinos: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def api_eliminar_formulario(request, formulario_id):

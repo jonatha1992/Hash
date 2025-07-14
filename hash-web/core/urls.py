@@ -27,4 +27,9 @@ urlpatterns = [
     path('api/hashes/<int:formulario_id>/detalles/', views.api_obtener_detalles_formulario, name='api_obtener_detalles'),
     path('api/hashes/<int:formulario_id>/agregar-archivos/', views.agregar_archivos_formulario, name='api_agregar_archivos'),
     path('api/hashes/<int:formulario_id>/eliminar/', views.api_eliminar_formulario, name='api_eliminar_formulario'),
+    
+    # Oficial APIs
+    path('api/oficiales/crear/', views.api_crear_oficial, name='api_crear_oficial'),
+    path('api/oficiales/buscar/', views.api_buscar_oficiales, name='api_buscar_oficiales'),
+    path('api/jerarquias-destinos/', views.api_obtener_jerarquias_destinos, name='api_jerarquias_destinos'),
 ]

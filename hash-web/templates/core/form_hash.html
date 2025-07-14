@@ -253,27 +253,37 @@
                         <!-- Segunda fila: Oficiales -->
                         <div class="col-md-6">
                             <label for="oficial_entrega" class="form-label">Oficial que Entrega</label>
-                            <select class="form-select form-select-sm" id="oficial_entrega" name="oficial_entrega" required>
-                                <option value="">Seleccionar oficial...</option>
-                                {% for oficial in oficiales %}
-                                <option value="{{ oficial.id }}" 
-                                        {% if formulario and formulario.oficial_entrega.id == oficial.id %}selected{% endif %}>
-                                    {{ oficial.nombre_completo_formateado }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                            <div class="input-group input-group-sm">
+                                <select class="form-select form-select-sm searchable-oficial" id="oficial_entrega" name="oficial_entrega" required>
+                                    <option value="">Seleccionar oficial...</option>
+                                    {% for oficial in oficiales %}
+                                    <option value="{{ oficial.id }}" 
+                                            {% if formulario and formulario.oficial_entrega.id == oficial.id %}selected{% endif %}>
+                                        {{ oficial.nombre_completo_formateado }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <button type="button" class="btn btn-outline-success btn-sm" onclick="abrirModalNuevoOficial('entrega')" title="Agregar nuevo oficial">
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <label for="oficial_recibe" class="form-label">Oficial que Recibe</label>
-                            <select class="form-select form-select-sm" id="oficial_recibe" name="oficial_recibe" required>
-                                <option value="">Seleccionar oficial...</option>
-                                {% for oficial in oficiales %}
-                                <option value="{{ oficial.id }}" 
-                                        {% if formulario and formulario.oficial_recibe.id == oficial.id %}selected{% endif %}>
-                                    {{ oficial.nombre_completo_formateado }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                            <div class="input-group input-group-sm">
+                                <select class="form-select form-select-sm searchable-oficial" id="oficial_recibe" name="oficial_recibe" required>
+                                    <option value="">Seleccionar oficial...</option>
+                                    {% for oficial in oficiales %}
+                                    <option value="{{ oficial.id }}" 
+                                            {% if formulario and formulario.oficial_recibe.id == oficial.id %}selected{% endif %}>
+                                        {{ oficial.nombre_completo_formateado }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <button type="button" class="btn btn-outline-success btn-sm" onclick="abrirModalNuevoOficial('recibe')" title="Agregar nuevo oficial">
+                                    <i class="bi bi-plus-circle"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -429,11 +439,278 @@
     </div>
 </div>
 {% endif %}
+
+<!-- Modal para agregar nuevo oficial -->
+<div class="modal fade" id="modalNuevoOficial" tabindex="-1" aria-labelledby="modalNuevoOficialLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNuevoOficialLabel">
+                    <i class="bi bi-person-plus"></i> Agregar Nuevo Oficial
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formNuevoOficial">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="legajo" class="form-label">Legajo <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="legajo" name="legajo" required placeholder="Ej: 12345">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre Completo <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Nombre completo del oficial">
+                    </div>
+                    <div class="mb-3">
+                        <label for="jerarquia" class="form-label">Jerarquía <span class="text-danger">*</span></label>
+                        <select class="form-select" id="jerarquia" name="jerarquia" required>
+                            <option value="">Seleccionar jerarquía...</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="destino" class="form-label">Destino <span class="text-danger">*</span></label>
+                        <select class="form-select" id="destino" name="destino" required>
+                            <option value="">Seleccionar destino...</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Alertas -->
+                    <div id="alertaOficial" class="alert d-none" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardarOficial">
+                        <i class="bi bi-save"></i> Guardar Oficial
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 {% if modo != 'resultado' %}
 <script>
+    // Variables globales
+    let targetFieldForNewOficial = null;
+    let jerarquiasData = [];
+    let destinosData = [];
+
+    // Función para abrir el modal de nuevo oficial
+    function abrirModalNuevoOficial(targetField) {
+        targetFieldForNewOficial = targetField;
+        
+        // Limpiar formulario
+        document.getElementById('formNuevoOficial').reset();
+        const alerta = document.getElementById('alertaOficial');
+        if (alerta) {
+            alerta.classList.add('d-none');
+        }
+        
+        // Cargar jerarquías y destinos si no están cargados
+        if (jerarquiasData.length === 0) {
+            loadJerarquiasDestinos();
+        }
+        
+        // Esperar un poco para asegurar que los datos estén cargados
+        setTimeout(() => {
+            populateJerarquiasDestinos();
+            // Mostrar modal usando Bootstrap
+            if (typeof bootstrap !== 'undefined') {
+                const modal = new bootstrap.Modal(document.getElementById('modalNuevoOficial'));
+                modal.show();
+            } else {
+                // Fallback si Bootstrap no está cargado
+                document.getElementById('modalNuevoOficial').style.display = 'block';
+                document.getElementById('modalNuevoOficial').classList.add('show');
+                document.body.classList.add('modal-open');
+            }
+        }, 100);
+    }
+
+    // Función para cargar jerarquías y destinos
+    function loadJerarquiasDestinos() {
+        fetch('{% url "core:api_jerarquias_destinos" %}')
+            .then(response => response.json())
+            .then(data => {
+                jerarquiasData = data.jerarquias;
+                destinosData = data.destinos;
+                populateJerarquiasDestinos();
+            })
+            .catch(error => {
+                console.error('Error al cargar jerarquías y destinos:', error);
+            });
+    }
+
+    // Función para poblar los selects de jerarquías y destinos
+    function populateJerarquiasDestinos() {
+        // Cargar jerarquías
+        const jerarquiaSelect = document.getElementById('jerarquia');
+        if (jerarquiaSelect && jerarquiasData.length > 0) {
+            jerarquiaSelect.innerHTML = '<option value="">Seleccionar jerarquía...</option>';
+            jerarquiasData.forEach(j => {
+                jerarquiaSelect.innerHTML += `<option value="${j.id}">${j.abrev} - ${j.nombre}</option>`;
+            });
+        }
+        
+        // Cargar destinos
+        const destinoSelect = document.getElementById('destino');
+        if (destinoSelect && destinosData.length > 0) {
+            destinoSelect.innerHTML = '<option value="">Seleccionar destino...</option>';
+            destinosData.forEach(d => {
+                destinoSelect.innerHTML += `<option value="${d.id}">${d.nombre}</option>`;
+            });
+        }
+    }
+
+    // Función para agregar el nuevo oficial al select
+    function addOficialToSelect(oficial, targetField) {
+        const selectId = targetField === 'entrega' ? 'oficial_entrega' : 'oficial_recibe';
+        const selectElement = document.getElementById(selectId);
+        
+        if (selectElement) {
+            // Crear nueva opción
+            const option = document.createElement('option');
+            option.value = oficial.id;
+            option.text = oficial.nombre_completo_formateado;
+            option.selected = true;
+            selectElement.appendChild(option);
+            
+            // Si Select2 está inicializado, actualizarlo
+            if (typeof $ !== 'undefined' && $('#' + selectId).hasClass('select2-hidden-accessible')) {
+                // Crear nueva opción para Select2
+                const newOption = new Option(oficial.nombre_completo_formateado, oficial.id, true, true);
+                $('#' + selectId).append(newOption).trigger('change');
+            }
+        }
+    }
+
+    // Inicializar cuando el documento esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar jerarquías y destinos
+        loadJerarquiasDestinos();
+        
+        // Inicializar Select2 si está disponible
+        if (typeof $ !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+            setTimeout(function() {
+                initializeSearchableOfficials();
+            }, 500);
+        }
+        
+        // Manejar envío del formulario de nuevo oficial
+        const formNuevoOficial = document.getElementById('formNuevoOficial');
+        if (formNuevoOficial) {
+            formNuevoOficial.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const btnGuardar = document.getElementById('btnGuardarOficial');
+                const alerta = document.getElementById('alertaOficial');
+                
+                // Deshabilitar botón
+                if (btnGuardar) {
+                    btnGuardar.disabled = true;
+                    btnGuardar.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Guardando...';
+                }
+                
+                // Enviar datos
+                fetch('{% url "core:api_crear_oficial" %}', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Mostrar éxito
+                        if (alerta) {
+                            alerta.className = 'alert alert-success';
+                            alerta.innerHTML = '<i class="bi bi-check-circle"></i> ' + data.message;
+                            alerta.classList.remove('d-none');
+                        }
+                        
+                        // Agregar el nuevo oficial al select correspondiente
+                        addOficialToSelect(data.oficial, targetFieldForNewOficial);
+                        
+                        // Cerrar modal después de un breve delay
+                        setTimeout(() => {
+                            if (typeof bootstrap !== 'undefined') {
+                                const modal = bootstrap.Modal.getInstance(document.getElementById('modalNuevoOficial'));
+                                if (modal) {
+                                    modal.hide();
+                                }
+                            } else {
+                                // Fallback
+                                document.getElementById('modalNuevoOficial').style.display = 'none';
+                                document.getElementById('modalNuevoOficial').classList.remove('show');
+                                document.body.classList.remove('modal-open');
+                            }
+                        }, 1000);
+                        
+                    } else {
+                        // Mostrar error
+                        if (alerta) {
+                            alerta.className = 'alert alert-danger';
+                            alerta.innerHTML = '<i class="bi bi-exclamation-circle"></i> ' + data.error;
+                            alerta.classList.remove('d-none');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    if (alerta) {
+                        alerta.className = 'alert alert-danger';
+                        alerta.innerHTML = '<i class="bi bi-exclamation-circle"></i> Error al crear oficial';
+                        alerta.classList.remove('d-none');
+                    }
+                })
+                .finally(() => {
+                    // Rehabilitar botón
+                    if (btnGuardar) {
+                        btnGuardar.disabled = false;
+                        btnGuardar.innerHTML = '<i class="bi bi-save"></i> Guardar Oficial';
+                    }
+                });
+            });
+        }
+    });
+
+    // Función para inicializar los campos searchables de oficiales
+    function initializeSearchableOfficials() {
+        if (typeof $ === 'undefined' || typeof $.fn.select2 === 'undefined') {
+            console.log('Select2 no está disponible, manteniendo selects normales');
+            return;
+        }
+        
+        $('.searchable-oficial').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Escriba para buscar oficial...',
+            allowClear: true,
+            minimumInputLength: 2,
+            ajax: {
+                url: '{% url "core:api_buscar_oficiales" %}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.map(function(oficial) {
+                            return {
+                                id: oficial.id,
+                                text: oficial.text
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+    }
+
+    // El resto del código original del formulario...
     document.getElementById('formularioEscritorioForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
