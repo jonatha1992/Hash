@@ -19,6 +19,14 @@ Pruebas para la clase `Formulario_Hash` que incluyen:
 - Manejo de listas vacías y casos mixtos
 - Validación de lógica de categorización por extensión
 
+### HashUtilitiesTests.cs
+Pruebas para la nueva clase utilitaria `HashUtilities` que incluyen:
+- Cálculo de hash SHA256 con validación de hashes conocidos
+- Manejo de errores para archivos inexistentes o rutas inválidas
+- Validación de formato de hash SHA256
+- Pruebas de consistencia y diferenciación de hashes
+- Validación de caracteres hexadecimales y longitud correcta
+
 ### HashCalculationTests.cs
 Pruebas para el algoritmo de cálculo de hash SHA256 que incluyen:
 - Verificación de hashes conocidos para contenido específico
@@ -54,3 +62,14 @@ Estas pruebas están diseñadas para:
 - Los tests de categorización validan la lógica de extensiones de archivo hardcodeada
 - Se incluyen pruebas para casos límite y valores extremos
 - Las pruebas están diseñadas para ser independientes y pueden ejecutarse en cualquier orden
+
+## Mejoras Incluidas
+
+### Nueva Clase HashUtilities
+Se ha agregado una nueva clase utilitaria `HashUtilities` que proporciona:
+- Método estático `CalcularHashSHA256()` para cálculo de hash reutilizable
+- Método `EsHashSHA256Valido()` para validación de formato de hash
+- Mejor separación de responsabilidades y código más testeable
+- Manejo robusto de errores con excepciones específicas
+
+Esta clase permite que el código de cálculo de hash sea más fácil de probar y reutilizar en toda la aplicación.

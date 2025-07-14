@@ -52,6 +52,7 @@
     <Compile Include="BEArchivoTests.cs" />
     <Compile Include="FormularioHashTests.cs" />
     <Compile Include="HashCalculationTests.cs" />
+    <Compile Include="HashUtilitiesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
