@@ -286,7 +286,7 @@ namespace Transcripcion
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(82, 17);
             this.label6.TabIndex = 66;
-            this.label6.Text = "Imagenes:";
+            this.label6.Text = "Imágenes:";
             // 
             // label7
             // 
@@ -339,7 +339,7 @@ namespace Transcripcion
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(48, 17);
             this.label11.TabIndex = 70;
-            this.label11.Text = "Clips:";
+            this.label11.Text = "Videos:";
             // 
             // lblImg
             // 
@@ -383,7 +383,7 @@ namespace Transcripcion
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(53, 17);
             this.label13.TabIndex = 74;
-            this.label13.Text = "Texto:";
+            this.label13.Text = "Documentos:";
             // 
             // lblTxt
             // 
@@ -440,7 +440,7 @@ namespace Transcripcion
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(107, 18);
             this.label5.TabIndex = 79;
-            this.label5.Text = "Listado Hash";
+            this.label5.Text = "Detalles de Archivos";
             // 
             // buttonImprimirHash
             // 

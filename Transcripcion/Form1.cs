@@ -168,7 +168,7 @@ namespace Transcripcion
         private void Actualizar()
         {
             formulario.Contar();
-            lblAudio.Text = formulario.Texto.ToString();
+            lblTxt.Text = formulario.Texto.ToString();
             lblClip.Text = formulario.Clips.ToString();
             lblAudio.Text = formulario.Audio.ToString();
             lblImg.Text = formulario.Imagenes.ToString();
@@ -183,12 +183,18 @@ namespace Transcripcion
             DgvElementos.Columns["PesoArchivo"].HeaderText = "Peso";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
+            DgvElementos.Columns["TipoArchivo"].HeaderText = "Tipo";
             DgvElementos.Columns["Nro_Orden"].Width = 30;
             DgvElementos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             DgvElementos.Columns["Extension"].Width = 35;
+            DgvElementos.Columns["TipoArchivo"].Width = 80;
             DgvElementos.Columns["PesoArchivo"].Width = 65;
             DgvElementos.Columns["Peso"].Visible= false;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            
+            // Aplicar colores según el tipo de archivo
+            AplicarColoresPorTipoArchivo();
+            
             labelPesoTotal.Text = formulario.pesototal;
 
         }
@@ -589,6 +595,46 @@ namespace Transcripcion
         private void rbtnVuelo_CheckedChanged(object sender, EventArgs e)
         {
             buttonImpCustodia.Visible = true;
+        }
+
+        private void AplicarColoresPorTipoArchivo()
+        {
+            if (DgvElementos.Rows.Count == 0) return;
+            
+            foreach (DataGridViewRow row in DgvElementos.Rows)
+            {
+                if (row.DataBoundItem is BEArchivo archivo)
+                {
+                    System.Drawing.Color colorFondo;
+                    System.Drawing.Color colorTexto = System.Drawing.Color.Black;
+                    
+                    switch (archivo.TipoArchivo)
+                    {
+                        case "Imagen":
+                            colorFondo = System.Drawing.Color.LightBlue;
+                            break;
+                        case "Video":
+                            colorFondo = System.Drawing.Color.LightCoral;
+                            break;
+                        case "Audio":
+                            colorFondo = System.Drawing.Color.LightGreen;
+                            break;
+                        case "Documento":
+                            colorFondo = System.Drawing.Color.LightYellow;
+                            break;
+                        default: // Varios
+                            colorFondo = System.Drawing.Color.LightGray;
+                            break;
+                    }
+                    
+                    // Aplicar color solo a la columna de tipo
+                    if (DgvElementos.Columns["TipoArchivo"] != null)
+                    {
+                        row.Cells["TipoArchivo"].Style.BackColor = colorFondo;
+                        row.Cells["TipoArchivo"].Style.ForeColor = colorTexto;
+                    }
+                }
+            }
         }
 
 

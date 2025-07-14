@@ -28,13 +28,25 @@ namespace Hash
         }
         public void Contar()
         {
-            Imagenes = ListaArchivos.Count(x => x.Extension == ".jpg" || x.Extension == ".png" || x.Extension == ".jpeg" || x.Extension == ".bmp");
-            Clips = ListaArchivos.Count(a => a.Extension == ".mp4" || a.Extension == ".avi" || a.Extension == ".mov");
-            Audio = ListaArchivos.Count(a => a.Extension == ".mp3" || a.Extension == ".wav" || a.Extension == ".flac");
-            Texto = ListaArchivos.Count(a => a.Extension == ".pdf" || a.Extension == ".txt" || a.Extension == ".docx" || a.Extension == ".doc");
-            Varios = ListaArchivos.Count(a => a.Extension != ".txt" && a.Extension != ".doc" && a.Extension != ".docx" && a.Extension != ".pdf"
-            && a.Extension != ".png" && a.Extension != ".jpg" && a.Extension != ".jpeg" && a.Extension != ".gif" && a.Extension != ".bmp"
-            && a.Extension != ".mp4" && a.Extension != ".avi" && a.Extension != ".wmv" && a.Extension != ".mov");
+            // Extensiones de imágenes ampliadas
+            string[] extensionesImagenes = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tiff", ".tif", ".webp", ".svg", ".ico", ".raw", ".cr2", ".nef", ".arw" };
+            Imagenes = ListaArchivos.Count(x => extensionesImagenes.Contains(x.Extension.ToLower()));
+
+            // Extensiones de videos/clips ampliadas
+            string[] extensionesClips = { ".mp4", ".avi", ".mov", ".wmv", ".mkv", ".flv", ".webm", ".m4v", ".3gp", ".mpg", ".mpeg", ".mts", ".m2ts", ".vob", ".f4v" };
+            Clips = ListaArchivos.Count(a => extensionesClips.Contains(a.Extension.ToLower()));
+
+            // Extensiones de audio ampliadas
+            string[] extensionesAudio = { ".mp3", ".wav", ".flac", ".aac", ".ogg", ".wma", ".m4a", ".opus", ".aiff", ".au", ".ra", ".mka", ".ape", ".ac3" };
+            Audio = ListaArchivos.Count(a => extensionesAudio.Contains(a.Extension.ToLower()));
+
+            // Extensiones de texto/documentos ampliadas
+            string[] extensionesTexto = { ".pdf", ".txt", ".docx", ".doc", ".rtf", ".odt", ".xls", ".xlsx", ".ppt", ".pptx", ".csv", ".xml", ".json", ".log", ".md", ".html", ".htm" };
+            Texto = ListaArchivos.Count(a => extensionesTexto.Contains(a.Extension.ToLower()));
+
+            // Varios: archivos que no están en ninguna categoría anterior
+            var todasLasExtensiones = extensionesImagenes.Concat(extensionesClips).Concat(extensionesAudio).Concat(extensionesTexto);
+            Varios = ListaArchivos.Count(a => !todasLasExtensiones.Contains(a.Extension.ToLower()));
 
             //int contador = 1;
             //foreach (var x in ListaArchivos)
