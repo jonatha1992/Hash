@@ -265,10 +265,8 @@
                             <label for="tipo" class="form-label">Tipo</label>
                             <select class="form-select form-select-sm" id="tipo" name="tipo" required>
                                 <option value="">Seleccionar...</option>
-                                <option value="PROCEDIMIENTO" {% if formulario and formulario.tipo == 'PROCEDIMIENTO'
-                                    %}selected{% endif %}>Procedimiento</option>
-                                <option value="VUELO" {% if formulario and formulario.tipo == 'VUELO' %}selected{% endif
-                                    %}>Vuelo</option>
+                                <option value="PROCEDIMIENTO" {% if formulario and formulario.tipo == 'PROCEDIMIENTO' %}selected{% endif %}>Procedimiento</option>
+                                <option value="VUELO" {% if formulario and formulario.tipo == 'VUELO' %}selected{% endif %}>Vuelo</option>
                             </select>
                         </div>
                         <div class="col-md-6">
