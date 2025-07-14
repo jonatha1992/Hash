@@ -848,7 +848,7 @@ def api_obtener_detalles_formulario(request, formulario_id):
 
 
 @api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
+@permission_classes([])  # Remove authentication requirement to match anonymous access pattern
 def api_eliminar_formulario(request, formulario_id):
     """API para eliminar un formulario por AJAX"""
     try:
