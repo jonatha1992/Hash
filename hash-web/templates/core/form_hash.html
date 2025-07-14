@@ -259,15 +259,15 @@
                         <div class="col-md-3">
                             <label for="nro_hash" class="form-label">Número de Hash</label>
                             <input type="number" class="form-control form-control-sm" id="nro_hash" name="nro_hash"
-                                value="{{ siguiente_hash }}" {% if modo=='edicion' %}readonly{% endif %}>
+                                value="{{ siguiente_hash }}" {% if modo == 'edicion' %}readonly{% endif %}>
                         </div>
                         <div class="col-md-3">
                             <label for="tipo" class="form-label">Tipo</label>
                             <select class="form-select form-select-sm" id="tipo" name="tipo" required>
                                 <option value="">Seleccionar...</option>
-                                <option value="PROCEDIMIENTO" {% if formulario and formulario.tipo=='PROCEDIMIENTO'
+                                <option value="PROCEDIMIENTO" {% if formulario and formulario.tipo == 'PROCEDIMIENTO'
                                     %}selected{% endif %}>Procedimiento</option>
-                                <option value="VUELO" {% if formulario and formulario.tipo=='VUELO' %}selected{% endif
+                                <option value="VUELO" {% if formulario and formulario.tipo == 'VUELO' %}selected{% endif
                                     %}>Vuelo</option>
                             </select>
                         </div>
@@ -288,8 +288,7 @@
                                     required>
                                     <option value="">Seleccionar oficial...</option>
                                     {% for oficial in oficiales %}
-                                    <option value="{{ oficial.id }}" {% if formulario and
-                                        formulario.oficial_entrega.id==oficial.id %}selected{% endif %}>
+                                    <option value="{{ oficial.id }}" {% if formulario and formulario.oficial_entrega.id == oficial.id %}selected{% endif %}>
                                         {{ oficial.nombre_completo_formateado }}
                                     </option>
                                     {% endfor %}
@@ -307,8 +306,7 @@
                                     required>
                                     <option value="">Seleccionar oficial...</option>
                                     {% for oficial in oficiales %}
-                                    <option value="{{ oficial.id }}" {% if formulario and
-                                        formulario.oficial_recibe.id==oficial.id %}selected{% endif %}>
+                                    <option value="{{ oficial.id }}" {% if formulario and formulario.oficial_recibe.id == oficial.id %}selected{% endif %}>
                                         {{ oficial.nombre_completo_formateado }}
                                     </option>
                                     {% endfor %}
