@@ -8,7 +8,6 @@
         <h1 class="mb-3">
             <i class="bi bi-desktop"></i> Hash Web
         </h1>
-        <p class="text-muted mb-4">Interfaz similar a la aplicación de escritorio Hash Copy</p>
     </div>
 </div>
 
@@ -18,7 +17,8 @@
     <div class="col-12">
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <h4 class="alert-heading"><i class="bi bi-check-circle"></i> ¡Procesamiento Completado!</h4>
-            <p class="mb-0">El formulario #{{ formulario.nro_hash }} ha sido creado exitosamente con {{ formulario.total_archivos }} archivos procesados.</p>
+            <p class="mb-0">El formulario #{{ formulario.nro_hash }} ha sido creado exitosamente con {{
+                formulario.total_archivos }} archivos procesados.</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     </div>
@@ -36,18 +36,43 @@
                     <div class="col-md-6">
                         <h6 class="fw-bold">Información del Formulario</h6>
                         <table class="table table-sm">
-                            <tr><td><strong>Número Hash:</strong></td><td><span class="badge bg-primary">#{{ formulario.nro_hash }}</span></td></tr>
-                            <tr><td><strong>Tipo:</strong></td><td><span class="badge bg-{% if formulario.tipo == 'PROCEDIMIENTO' %}info{% else %}warning{% endif %}">{{ formulario.get_tipo_display }}</span></td></tr>
-                            <tr><td><strong>Procedimiento:</strong></td><td>{{ formulario.procedimiento }}</td></tr>
-                            <tr><td><strong>Estado:</strong></td><td><span class="badge bg-{% if formulario.estado == 'BORRADOR' %}warning{% elif formulario.estado == 'FINALIZADO' %}success{% else %}secondary{% endif %}">{{ formulario.get_estado_display }}</span></td></tr>
-                            <tr><td><strong>Fecha Creación:</strong></td><td>{{ formulario.fecha_creacion|date:"d/m/Y H:i:s" }}</td></tr>
+                            <tr>
+                                <td><strong>Número Hash:</strong></td>
+                                <td><span class="badge bg-primary">#{{ formulario.nro_hash }}</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tipo:</strong></td>
+                                <td><span
+                                        class="badge bg-{% if formulario.tipo == 'PROCEDIMIENTO' %}info{% else %}warning{% endif %}">{{
+                                        formulario.get_tipo_display }}</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Procedimiento:</strong></td>
+                                <td>{{ formulario.procedimiento }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Estado:</strong></td>
+                                <td><span
+                                        class="badge bg-{% if formulario.estado == 'BORRADOR' %}warning{% elif formulario.estado == 'FINALIZADO' %}success{% else %}secondary{% endif %}">{{
+                                        formulario.get_estado_display }}</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fecha Creación:</strong></td>
+                                <td>{{ formulario.fecha_creacion|date:"d/m/Y H:i:s" }}</td>
+                            </tr>
                         </table>
                     </div>
                     <div class="col-md-6">
                         <h6 class="fw-bold">Oficiales Intervinientes</h6>
                         <table class="table table-sm">
-                            <tr><td><strong>Entrega:</strong></td><td>{{ formulario.oficial_entrega }}</td></tr>
-                            <tr><td><strong>Recibe:</strong></td><td>{{ formulario.oficial_recibe }}</td></tr>
+                            <tr>
+                                <td><strong>Entrega:</strong></td>
+                                <td>{{ formulario.oficial_entrega }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recibe:</strong></td>
+                                <td>{{ formulario.oficial_recibe }}</td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -137,11 +162,13 @@
                                         <td><span class="badge bg-light text-dark">{{ archivo.extension }}</span></td>
                                         <td>{{ archivo.peso_formateado }}</td>
                                         <td>
-                                            <span class="badge bg-{% if archivo.es_imagen %}info{% elif archivo.es_video %}warning{% elif archivo.es_audio %}success{% elif archivo.es_documento %}primary{% else %}secondary{% endif %}">
+                                            <span
+                                                class="badge bg-{% if archivo.es_imagen %}info{% elif archivo.es_video %}warning{% elif archivo.es_audio %}success{% elif archivo.es_documento %}primary{% else %}secondary{% endif %}">
                                                 {{ archivo.tipo_archivo }}
                                             </span>
                                         </td>
-                                        <td><code class="small">{{ archivo.hash_sha256|truncatechars:32 }}...</code></td>
+                                        <td><code class="small">{{ archivo.hash_sha256|truncatechars:32 }}...</code>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -226,26 +253,29 @@
             <div class="card-body">
                 <form id="formularioEscritorioForm" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    
+
                     <div class="row">
                         <!-- Primera fila: Número Hash, Tipo, Procedimiento -->
                         <div class="col-md-3">
                             <label for="nro_hash" class="form-label">Número de Hash</label>
-                            <input type="number" class="form-control form-control-sm" id="nro_hash" name="nro_hash" 
-                                   value="{{ siguiente_hash }}" {% if modo == 'edicion' %}readonly{% endif %}>
+                            <input type="number" class="form-control form-control-sm" id="nro_hash" name="nro_hash"
+                                value="{{ siguiente_hash }}" {% if modo=='edicion' %}readonly{% endif %}>
                         </div>
                         <div class="col-md-3">
                             <label for="tipo" class="form-label">Tipo</label>
                             <select class="form-select form-select-sm" id="tipo" name="tipo" required>
                                 <option value="">Seleccionar...</option>
-                                <option value="PROCEDIMIENTO" {% if formulario and formulario.tipo == 'PROCEDIMIENTO' %}selected{% endif %}>Procedimiento</option>
-                                <option value="VUELO" {% if formulario and formulario.tipo == 'VUELO' %}selected{% endif %}>Vuelo</option>
+                                <option value="PROCEDIMIENTO" {% if formulario and formulario.tipo=='PROCEDIMIENTO'
+                                    %}selected{% endif %}>Procedimiento</option>
+                                <option value="VUELO" {% if formulario and formulario.tipo=='VUELO' %}selected{% endif
+                                    %}>Vuelo</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="procedimiento" class="form-label">Procedimiento/Descripción</label>
-                            <input type="text" class="form-control form-control-sm" id="procedimiento" name="procedimiento" 
-                                   value="{% if formulario %}{{ formulario.procedimiento }}{% endif %}" required>
+                            <input type="text" class="form-control form-control-sm" id="procedimiento"
+                                name="procedimiento"
+                                value="{% if formulario %}{{ formulario.procedimiento }}{% endif %}" required>
                         </div>
                     </div>
 
@@ -254,16 +284,18 @@
                         <div class="col-md-6">
                             <label for="oficial_entrega" class="form-label">Oficial que Entrega</label>
                             <div class="input-group">
-                                <select class="form-select form-select-sm" id="oficial_entrega" name="oficial_entrega" required>
+                                <select class="form-select form-select-sm" id="oficial_entrega" name="oficial_entrega"
+                                    required>
                                     <option value="">Seleccionar oficial...</option>
                                     {% for oficial in oficiales %}
-                                    <option value="{{ oficial.id }}" 
-                                            {% if formulario and formulario.oficial_entrega.id == oficial.id %}selected{% endif %}>
+                                    <option value="{{ oficial.id }}" {% if formulario and
+                                        formulario.oficial_entrega.id==oficial.id %}selected{% endif %}>
                                         {{ oficial.nombre_completo_formateado }}
                                     </option>
                                     {% endfor %}
                                 </select>
-                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalCrearOficial" data-tipo="entrega">
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#modalCrearOficial" data-tipo="entrega">
                                     <i class="bi bi-plus"></i>
                                 </button>
                             </div>
@@ -271,16 +303,18 @@
                         <div class="col-md-6">
                             <label for="oficial_recibe" class="form-label">Oficial que Recibe</label>
                             <div class="input-group">
-                                <select class="form-select form-select-sm" id="oficial_recibe" name="oficial_recibe" required>
+                                <select class="form-select form-select-sm" id="oficial_recibe" name="oficial_recibe"
+                                    required>
                                     <option value="">Seleccionar oficial...</option>
                                     {% for oficial in oficiales %}
-                                    <option value="{{ oficial.id }}" 
-                                            {% if formulario and formulario.oficial_recibe.id == oficial.id %}selected{% endif %}>
+                                    <option value="{{ oficial.id }}" {% if formulario and
+                                        formulario.oficial_recibe.id==oficial.id %}selected{% endif %}>
                                         {{ oficial.nombre_completo_formateado }}
                                     </option>
                                     {% endfor %}
                                 </select>
-                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalCrearOficial" data-tipo="recibe">
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#modalCrearOficial" data-tipo="recibe">
                                     <i class="bi bi-plus"></i>
                                 </button>
                             </div>
@@ -293,7 +327,8 @@
                             <label for="archivos" class="form-label">
                                 <i class="bi bi-folder2-open"></i> Seleccionar Archivos
                             </label>
-                            <input type="file" class="form-control form-control-sm" id="archivos" name="archivos" multiple accept="*/*">
+                            <input type="file" class="form-control form-control-sm" id="archivos" name="archivos"
+                                multiple accept="*/*">
                         </div>
                         <div class="col-md-4 d-flex align-items-end">
                             <div class="d-grid gap-2 d-md-flex w-100">
@@ -317,7 +352,8 @@
                     <div class="row mt-2">
                         <div class="col-12">
                             <label for="observaciones" class="form-label">Observaciones (opcional)</label>
-                            <textarea class="form-control form-control-sm" id="observaciones" name="observaciones" rows="2">{% if formulario %}{{ formulario.observaciones }}{% endif %}</textarea>
+                            <textarea class="form-control form-control-sm" id="observaciones" name="observaciones"
+                                rows="2">{% if formulario %}{{ formulario.observaciones }}{% endif %}</textarea>
                         </div>
                     </div>
                 </form>
@@ -352,8 +388,8 @@
                 <!-- Progreso de procesamiento -->
                 <div id="progresoProcesamiento" style="display: none;" class="p-3 border-bottom">
                     <div class="progress mb-2">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" 
-                             role="progressbar" style="width: 0%" id="barraProgreso">0%</div>
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                            style="width: 0%" id="barraProgreso">0%</div>
                     </div>
                     <div class="text-center">
                         <small id="estadoProcesamiento">Iniciando procesamiento...</small>
@@ -376,29 +412,30 @@
                         </thead>
                         <tbody id="tablaArchivos">
                             {% if formulario and formulario.archivos.exists %}
-                                {% for archivo in formulario.archivos.all %}
-                                <tr>
-                                    <td><span class="badge bg-secondary">{{ archivo.nro_orden }}</span></td>
-                                    <td>{{ archivo.nombre|truncatechars:50 }}</td>
-                                    <td><span class="badge bg-light text-dark">{{ archivo.extension }}</span></td>
-                                    <td>{{ archivo.peso_formateado }}</td>
-                                    <td>
-                                        <span class="badge bg-{% if archivo.es_imagen %}info{% elif archivo.es_video %}warning{% elif archivo.es_audio %}success{% elif archivo.es_documento %}primary{% else %}secondary{% endif %}">
-                                            {{ archivo.tipo_archivo }}
-                                        </span>
-                                    </td>
-                                    <td><code class="small">{{ archivo.hash_sha256|truncatechars:32 }}...</code></td>
-                                    <td><span class="badge bg-success">✓ Procesado</span></td>
-                                </tr>
-                                {% endfor %}
+                            {% for archivo in formulario.archivos.all %}
+                            <tr>
+                                <td><span class="badge bg-secondary">{{ archivo.nro_orden }}</span></td>
+                                <td>{{ archivo.nombre|truncatechars:50 }}</td>
+                                <td><span class="badge bg-light text-dark">{{ archivo.extension }}</span></td>
+                                <td>{{ archivo.peso_formateado }}</td>
+                                <td>
+                                    <span
+                                        class="badge bg-{% if archivo.es_imagen %}info{% elif archivo.es_video %}warning{% elif archivo.es_audio %}success{% elif archivo.es_documento %}primary{% else %}secondary{% endif %}">
+                                        {{ archivo.tipo_archivo }}
+                                    </span>
+                                </td>
+                                <td><code class="small">{{ archivo.hash_sha256|truncatechars:32 }}...</code></td>
+                                <td><span class="badge bg-success">✓ Procesado</span></td>
+                            </tr>
+                            {% endfor %}
                             {% else %}
-                                <tr id="filaVacia">
-                                    <td colspan="7" class="text-center text-muted py-4">
-                                        <i class="bi bi-inbox fs-1"></i>
-                                        <p class="mt-2">No hay archivos procesados</p>
-                                        <small>Seleccione archivos y haga clic en "Procesar" para comenzar</small>
-                                    </td>
-                                </tr>
+                            <tr id="filaVacia">
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    <i class="bi bi-inbox fs-1"></i>
+                                    <p class="mt-2">No hay archivos procesados</p>
+                                    <small>Seleccione archivos y haga clic en "Procesar" para comenzar</small>
+                                </td>
+                            </tr>
                             {% endif %}
                         </tbody>
                     </table>
@@ -442,7 +479,8 @@
 <!-- MODALES PARA CREACIÓN RÁPIDA -->
 {% if modo != 'resultado' %}
 <!-- Modal Crear Oficial -->
-<div class="modal fade" id="modalCrearOficial" tabindex="-1" aria-labelledby="modalCrearOficialLabel" aria-hidden="true">
+<div class="modal fade" id="modalCrearOficial" tabindex="-1" aria-labelledby="modalCrearOficialLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -463,7 +501,7 @@
                             <input type="text" class="form-control" id="oficial_nombre" name="nombre" required>
                         </div>
                     </div>
-                    
+
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="oficial_destino" class="form-label">Destino/Unidad *</label>
@@ -482,7 +520,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="oficial_es_civil" name="es_civil" onchange="toggleJerarquia()">
+                                    <input class="form-check-input" type="checkbox" id="oficial_es_civil"
+                                        name="es_civil" onchange="toggleJerarquia()">
                                     <label class="form-check-label" for="oficial_es_civil">
                                         Es Civil (sin jerarquía)
                                     </label>
@@ -494,20 +533,22 @@
                                     <select class="form-select" id="oficial_jerarquia" name="jerarquia">
                                         <option value="">Seleccionar jerarquía...</option>
                                         {% for jerarquia in jerarquias %}
-                                        <option value="{{ jerarquia.id }}">{{ jerarquia.abreviatura }} - {{ jerarquia.nombre }}</option>
+                                        <option value="{{ jerarquia.id }}">{{ jerarquia.abreviatura }} - {{
+                                            jerarquia.nombre }}</option>
                                         {% endfor %}
                                     </select>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="abrirModalJerarquia()">
+                                    <button type="button" class="btn btn-outline-secondary"
+                                        onclick="abrirModalJerarquia()">
                                         <i class="bi bi-plus"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="alert alert-info mt-3">
-                        <i class="bi bi-info-circle"></i> 
-                        <strong>Nota:</strong> Los campos marcados con * son obligatorios. 
+                        <i class="bi bi-info-circle"></i>
+                        <strong>Nota:</strong> Los campos marcados con * son obligatorios.
                         Si marca "Es Civil", no necesita seleccionar jerarquía.
                     </div>
                 </form>
@@ -523,7 +564,8 @@
 </div>
 
 <!-- Modal Crear Jerarquía -->
-<div class="modal fade" id="modalCrearJerarquia" tabindex="-1" aria-labelledby="modalCrearJerarquiaLabel" aria-hidden="true">
+<div class="modal fade" id="modalCrearJerarquia" tabindex="-1" aria-labelledby="modalCrearJerarquiaLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -536,15 +578,18 @@
                 <form id="formCrearJerarquia">
                     <div class="mb-3">
                         <label for="jerarquia_nombre" class="form-label">Nombre de la Jerarquía *</label>
-                        <input type="text" class="form-control" id="jerarquia_nombre" name="nombre" placeholder="Ej: Teniente Coronel" required>
+                        <input type="text" class="form-control" id="jerarquia_nombre" name="nombre"
+                            placeholder="Ej: Teniente Coronel" required>
                     </div>
                     <div class="mb-3">
                         <label for="jerarquia_abreviatura" class="form-label">Abreviatura *</label>
-                        <input type="text" class="form-control" id="jerarquia_abreviatura" name="abreviatura" placeholder="Ej: Tte. Crl." required>
+                        <input type="text" class="form-control" id="jerarquia_abreviatura" name="abreviatura"
+                            placeholder="Ej: Tte. Crl." required>
                     </div>
                     <div class="mb-3">
                         <label for="jerarquia_orden" class="form-label">Orden Jerárquico *</label>
-                        <input type="number" class="form-control" id="jerarquia_orden" name="orden" placeholder="1 = Mayor jerarquía" required>
+                        <input type="number" class="form-control" id="jerarquia_orden" name="orden"
+                            placeholder="1 = Mayor jerarquía" required>
                         <div class="form-text">Menor número = Mayor jerarquía</div>
                     </div>
                 </form>
@@ -560,7 +605,8 @@
 </div>
 
 <!-- Modal Crear Destino -->
-<div class="modal fade" id="modalCrearDestino" tabindex="-1" aria-labelledby="modalCrearDestinoLabel" aria-hidden="true">
+<div class="modal fade" id="modalCrearDestino" tabindex="-1" aria-labelledby="modalCrearDestinoLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -573,10 +619,11 @@
                 <form id="formCrearDestino">
                     <div class="mb-3">
                         <label for="destino_nombre" class="form-label">Nombre del Destino/Unidad *</label>
-                        <input type="text" class="form-control" id="destino_nombre" name="nombre" placeholder="Ej: Comisaría 1ra" required>
+                        <input type="text" class="form-control" id="destino_nombre" name="nombre"
+                            placeholder="Ej: Comisaría 1ra" required>
                     </div>
                     <div class="alert alert-info">
-                        <i class="bi bi-info-circle"></i> 
+                        <i class="bi bi-info-circle"></i>
                         El destino se agregará y estará disponible inmediatamente.
                     </div>
                 </form>
@@ -603,21 +650,21 @@
         // Obtener el formulario y crear FormData
         const form = this;
         const formData = new FormData(form);
-        
+
         // Verificar que se hayan seleccionado archivos
         const archivosInput = document.getElementById('archivos');
         const archivos = archivosInput.files;
-        
+
         if (archivos.length === 0) {
             alert('Por favor, seleccione al menos un archivo para procesar.');
             return;
         }
-        
+
         // Agregar archivos al FormData manualmente para asegurar que se envíen
         for (let i = 0; i < archivos.length; i++) {
             formData.append('archivos', archivos[i]);
         }
-        
+
         const btnProcesar = document.getElementById('btnProcesar');
         const progreso = document.getElementById('progresoProcesamiento');
         const barraProgreso = document.getElementById('barraProgreso');
@@ -637,7 +684,7 @@
         const intervalo = setInterval(() => {
             progresoActual += Math.random() * 10;
             if (progresoActual > 90) progresoActual = 90;
-            
+
             barraProgreso.style.width = progresoActual + '%';
             barraProgreso.textContent = Math.round(progresoActual) + '%';
             estadoProcesamiento.textContent = `Procesando archivos... ${Math.round(progresoActual)}%`;
@@ -646,63 +693,63 @@
         // Determinar URL según el modo
         const modo = '{{ modo }}';
         let url;
-        
+
         if (modo === 'creacion') {
             url = '/api/procesar-carpeta/';
         } else {
             url = `/api/hashes/{{ formulario.id }}/agregar-archivos/`;
         }
-        
+
         // Debug: mostrar información del FormData
         console.log('Archivos a enviar:', archivos.length);
         for (let i = 0; i < archivos.length; i++) {
             console.log(`Archivo ${i + 1}:`, archivos[i].name, archivos[i].size);
         }
-        
+
         // Llamada a la API
         fetch(url, {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => {
-                    throw new Error(JSON.stringify(err));
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            clearInterval(intervalo);
-            barraProgreso.style.width = '100%';
-            barraProgreso.textContent = '100%';
-            estadoProcesamiento.textContent = '¡Procesamiento completado!';
-            
-            // Mostrar archivos en la tabla (comentado para evitar duplicados)
-            // mostrarArchivosEnTabla(data);
-            
-            // Redirigir a la vista de resultados si está disponible
-            if (data.redirect_url) {
-                setTimeout(() => {
-                    tablaArchivos.innerHTML = '';
-                    window.location.href = data.redirect_url;
-                }, 2000);
-            }
-        })
-        .catch(error => {
-            clearInterval(intervalo);
-            console.error('Error:', error);
-            alert('Error al procesar los archivos: ' + error.message);
-        })
-        .finally(() => {
-            btnProcesar.disabled = false;
-            btnProcesar.innerHTML = '{% if modo == "creacion" %}<i class="bi bi-play-circle"></i> Procesar{% else %}<i class="bi bi-plus-circle"></i> Agregar{% endif %}';
-        });
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(JSON.stringify(err));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                clearInterval(intervalo);
+                barraProgreso.style.width = '100%';
+                barraProgreso.textContent = '100%';
+                estadoProcesamiento.textContent = '¡Procesamiento completado!';
+
+                // Mostrar archivos en la tabla (comentado para evitar duplicados)
+                // mostrarArchivosEnTabla(data);
+
+                // Redirigir a la vista de resultados si está disponible
+                if (data.redirect_url) {
+                    setTimeout(() => {
+                        tablaArchivos.innerHTML = '';
+                        window.location.href = data.redirect_url;
+                    }, 2000);
+                }
+            })
+            .catch(error => {
+                clearInterval(intervalo);
+                console.error('Error:', error);
+                alert('Error al procesar los archivos: ' + error.message);
+            })
+            .finally(() => {
+                btnProcesar.disabled = false;
+                btnProcesar.innerHTML = '{% if modo == "creacion" %}<i class="bi bi-play-circle"></i> Procesar{% else %}<i class="bi bi-plus-circle"></i> Agregar{% endif %}';
+            });
     });
 
     function mostrarArchivosEnTabla(data) {
         const tablaArchivos = document.getElementById('tablaArchivos');
-        
+
         if (data.formulario && data.formulario.archivos) {
             data.formulario.archivos.forEach((archivo, index) => {
                 const fila = document.createElement('tr');
@@ -725,7 +772,7 @@
     }
 
     function getTipoColor(tipo) {
-        switch(tipo) {
+        switch (tipo) {
             case 'imagen': return 'info';
             case 'video': return 'warning';
             case 'audio': return 'success';
@@ -743,7 +790,7 @@
         if (archivos.length > 0) {
             // Limpiar tabla
             tablaArchivos.innerHTML = '';
-            
+
             // Mostrar archivos seleccionados
             for (let i = 0; i < archivos.length; i++) {
                 const fila = document.createElement('tr');
@@ -780,7 +827,7 @@
         const esCircuil = document.getElementById('oficial_es_civil').checked;
         const divJerarquia = document.getElementById('divJerarquia');
         const selectJerarquia = document.getElementById('oficial_jerarquia');
-        
+
         if (esCircuil) {
             divJerarquia.style.display = 'none';
             selectJerarquia.value = '';
@@ -802,7 +849,7 @@
                 }
             })
             .catch(error => console.error('Error:', error));
-        
+
         const modalJerarquia = window.bootstrap ? new window.bootstrap.Modal(document.getElementById('modalCrearJerarquia')) : null;
         if (modalJerarquia) {
             modalJerarquia.show();
@@ -819,145 +866,145 @@
     function crearOficial() {
         const form = document.getElementById('formCrearOficial');
         const formData = new FormData(form);
-        
+
         // Validación básica
         const legajo = formData.get('legajo');
         const nombre = formData.get('nombre');
         const destino = formData.get('destino');
         const esCivil = formData.get('es_civil') === 'on';
         const jerarquia = formData.get('jerarquia');
-        
+
         if (!legajo || !nombre || !destino) {
             alert('Por favor complete todos los campos obligatorios.');
             return;
         }
-        
+
         if (!esCivil && !jerarquia) {
             alert('Debe seleccionar una jerarquía o marcar como civil.');
             return;
         }
-        
+
         // Enviar datos
         fetch('/api/crear-oficial-rapido/', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Actualizar el select correspondiente
-                const selectId = tipoOficialSeleccionado === 'entrega' ? 'oficial_entrega' : 'oficial_recibe';
-                const select = document.getElementById(selectId);
-                
-                // Agregar nueva opción
-                const option = document.createElement('option');
-                option.value = data.oficial.id;
-                option.text = data.oficial.nombre_completo_formateado;
-                option.selected = true;
-                select.appendChild(option);
-                
-                // Actualizar el otro select también
-                const otroSelectId = tipoOficialSeleccionado === 'entrega' ? 'oficial_recibe' : 'oficial_entrega';
-                const otroSelect = document.getElementById(otroSelectId);
-                const otraOption = document.createElement('option');
-                otraOption.value = data.oficial.id;
-                otraOption.text = data.oficial.nombre_completo_formateado;
-                otroSelect.appendChild(otraOption);
-                
-                // Cerrar modal y limpiar form
-                const modalElement = document.getElementById('modalCrearOficial');
-                const modal = window.bootstrap ? window.bootstrap.Modal.getInstance(modalElement) : null;
-                if (modal) {
-                    modal.hide();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Actualizar el select correspondiente
+                    const selectId = tipoOficialSeleccionado === 'entrega' ? 'oficial_entrega' : 'oficial_recibe';
+                    const select = document.getElementById(selectId);
+
+                    // Agregar nueva opción
+                    const option = document.createElement('option');
+                    option.value = data.oficial.id;
+                    option.text = data.oficial.nombre_completo_formateado;
+                    option.selected = true;
+                    select.appendChild(option);
+
+                    // Actualizar el otro select también
+                    const otroSelectId = tipoOficialSeleccionado === 'entrega' ? 'oficial_recibe' : 'oficial_entrega';
+                    const otroSelect = document.getElementById(otroSelectId);
+                    const otraOption = document.createElement('option');
+                    otraOption.value = data.oficial.id;
+                    otraOption.text = data.oficial.nombre_completo_formateado;
+                    otroSelect.appendChild(otraOption);
+
+                    // Cerrar modal y limpiar form
+                    const modalElement = document.getElementById('modalCrearOficial');
+                    const modal = window.bootstrap ? window.bootstrap.Modal.getInstance(modalElement) : null;
+                    if (modal) {
+                        modal.hide();
+                    }
+                    form.reset();
+
+                    // Mostrar mensaje de éxito
+                    mostrarMensaje('success', data.message);
+                } else {
+                    mostrarErrores(data.errors);
                 }
-                form.reset();
-                
-                // Mostrar mensaje de éxito
-                mostrarMensaje('success', data.message);
-            } else {
-                mostrarErrores(data.errors);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al crear el oficial');
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al crear el oficial');
+            });
     }
 
     function crearJerarquia() {
         const form = document.getElementById('formCrearJerarquia');
         const formData = new FormData(form);
-        
+
         fetch('/api/crear-jerarquia-rapida/', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Actualizar el select de jerarquías
-                const select = document.getElementById('oficial_jerarquia');
-                const option = document.createElement('option');
-                option.value = data.jerarquia.id;
-                option.text = `${data.jerarquia.abreviatura} - ${data.jerarquia.nombre}`;
-                option.selected = true;
-                select.appendChild(option);
-                
-                // Cerrar modal y limpiar form
-                const modalElement = document.getElementById('modalCrearJerarquia');
-                const modal = window.bootstrap ? window.bootstrap.Modal.getInstance(modalElement) : null;
-                if (modal) {
-                    modal.hide();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Actualizar el select de jerarquías
+                    const select = document.getElementById('oficial_jerarquia');
+                    const option = document.createElement('option');
+                    option.value = data.jerarquia.id;
+                    option.text = `${data.jerarquia.abreviatura} - ${data.jerarquia.nombre}`;
+                    option.selected = true;
+                    select.appendChild(option);
+
+                    // Cerrar modal y limpiar form
+                    const modalElement = document.getElementById('modalCrearJerarquia');
+                    const modal = window.bootstrap ? window.bootstrap.Modal.getInstance(modalElement) : null;
+                    if (modal) {
+                        modal.hide();
+                    }
+                    form.reset();
+
+                    mostrarMensaje('success', data.message);
+                } else {
+                    mostrarErrores(data.errors);
                 }
-                form.reset();
-                
-                mostrarMensaje('success', data.message);
-            } else {
-                mostrarErrores(data.errors);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al crear la jerarquía');
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al crear la jerarquía');
+            });
     }
 
     function crearDestino() {
         const form = document.getElementById('formCrearDestino');
         const formData = new FormData(form);
-        
+
         fetch('/api/crear-destino-rapido/', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Actualizar el select de destinos
-                const select = document.getElementById('oficial_destino');
-                const option = document.createElement('option');
-                option.value = data.destino.id;
-                option.text = data.destino.nombre;
-                option.selected = true;
-                select.appendChild(option);
-                
-                // Cerrar modal y limpiar form
-                const modalElement = document.getElementById('modalCrearDestino');
-                const modal = window.bootstrap ? window.bootstrap.Modal.getInstance(modalElement) : null;
-                if (modal) {
-                    modal.hide();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Actualizar el select de destinos
+                    const select = document.getElementById('oficial_destino');
+                    const option = document.createElement('option');
+                    option.value = data.destino.id;
+                    option.text = data.destino.nombre;
+                    option.selected = true;
+                    select.appendChild(option);
+
+                    // Cerrar modal y limpiar form
+                    const modalElement = document.getElementById('modalCrearDestino');
+                    const modal = window.bootstrap ? window.bootstrap.Modal.getInstance(modalElement) : null;
+                    if (modal) {
+                        modal.hide();
+                    }
+                    form.reset();
+
+                    mostrarMensaje('success', data.message);
+                } else {
+                    mostrarErrores(data.errors);
                 }
-                form.reset();
-                
-                mostrarMensaje('success', data.message);
-            } else {
-                mostrarErrores(data.errors);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al crear el destino');
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al crear el destino');
+            });
     }
 
     function mostrarMensaje(tipo, mensaje) {
@@ -968,11 +1015,11 @@
             ${mensaje}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
-        
+
         // Insertar al principio del contenido
         const container = document.querySelector('.row').parentNode;
         container.insertBefore(alertDiv, container.firstChild);
-        
+
         // Auto-remover después de 5 segundos
         setTimeout(() => {
             alertDiv.remove();
@@ -988,12 +1035,12 @@
     }
 
     // Event listeners para los botones de agregar oficial
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Manejar clicks en botones de agregar oficial
         document.querySelectorAll('[data-bs-target="#modalCrearOficial"]').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 tipoOficialSeleccionado = this.getAttribute('data-tipo');
-                
+
                 // Limpiar formulario
                 document.getElementById('formCrearOficial').reset();
                 document.getElementById('oficial_es_civil').checked = false;
@@ -1005,18 +1052,18 @@
         function validarOficiales() {
             const entrega = document.getElementById('oficial_entrega').value;
             const recibe = document.getElementById('oficial_recibe').value;
-            
+
             if (entrega && recibe && entrega === recibe) {
                 // Mostrar error
                 const errorDiv = document.getElementById('error-mismos-oficiales') || document.createElement('div');
                 errorDiv.id = 'error-mismos-oficiales';
                 errorDiv.className = 'alert alert-warning mt-2';
                 errorDiv.innerHTML = '<i class="bi bi-exclamation-triangle"></i> El oficial que entrega no puede ser el mismo que recibe.';
-                
+
                 if (!document.getElementById('error-mismos-oficiales')) {
                     document.getElementById('oficial_recibe').parentNode.parentNode.appendChild(errorDiv);
                 }
-                
+
                 // Deshabilitar submit
                 document.getElementById('btnProcesar').disabled = true;
                 return false;
@@ -1026,7 +1073,7 @@
                 if (errorDiv) {
                     errorDiv.remove();
                 }
-                
+
                 // Habilitar submit
                 document.getElementById('btnProcesar').disabled = false;
                 return true;
@@ -1039,4 +1086,4 @@
     });
 </script>
 {% endif %}
-{% endblock %} 
+{% endblock %}
