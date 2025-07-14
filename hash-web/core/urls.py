@@ -27,4 +27,10 @@ urlpatterns = [
     path('api/hashes/<int:formulario_id>/detalles/', views.api_obtener_detalles_formulario, name='api_obtener_detalles'),
     path('api/hashes/<int:formulario_id>/agregar-archivos/', views.agregar_archivos_formulario, name='api_agregar_archivos'),
     path('api/hashes/<int:formulario_id>/eliminar/', views.api_eliminar_formulario, name='api_eliminar_formulario'),
+    
+    # Quick Add APIs
+    path('api/crear-oficial-rapido/', views.api_crear_oficial_rapido, name='api_crear_oficial_rapido'),
+    path('api/crear-jerarquia-rapida/', views.api_crear_jerarquia_rapida, name='api_crear_jerarquia_rapida'),
+    path('api/crear-destino-rapido/', views.api_crear_destino_rapido, name='api_crear_destino_rapido'),
+    path('api/obtener-opciones-formulario/', views.api_obtener_opciones_formulario, name='api_obtener_opciones_formulario'),
 ]
