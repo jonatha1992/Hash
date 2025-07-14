@@ -848,7 +848,7 @@ def api_obtener_detalles_formulario(request, formulario_id):
 
 
 @api_view(['POST'])
-@permission_classes([])  # Remove authentication for now
+@permission_classes([IsAuthenticated])  # Enforce authentication
 def api_crear_oficial(request):
     """API para crear un nuevo oficial"""
     try:
