@@ -696,7 +696,11 @@
         })
         .finally(() => {
             btnProcesar.disabled = false;
-            btnProcesar.innerHTML = '{% if modo == "creacion" %}<i class="bi bi-play-circle"></i> Procesar{% else %}<i class="bi bi-plus-circle"></i> Agregar{% endif %}';
+            {% if modo == 'creacion' %}
+            btnProcesar.innerHTML = '<i class="bi bi-play-circle"></i> Procesar';
+            {% else %}
+            btnProcesar.innerHTML = '<i class="bi bi-plus-circle"></i> Agregar';
+            {% endif %}
         });
     });
 
