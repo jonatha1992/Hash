@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 
@@ -98,6 +99,11 @@ namespace Transcripcion
             return hash;
         }
 
+        private bool ExisteHashDuplicado(string hash)
+        {
+            return formulario.ListaArchivos.Any(archivo => archivo.Hash == hash);
+        }
+
 
         private void buttonCarpetaSeleccionada_Click(object sender, EventArgs e)
         {
@@ -123,6 +129,7 @@ namespace Transcripcion
                     int totalArchivos = RutaArchivos.Count;
                     circularProgressBar1.Maximum = totalArchivos;
                     int archivosProcesados = 0;
+                    int archivosDuplicados = 0;
 
                     // Mostrar los nombres de los archivos en la consola
                     foreach (string archivo in RutaArchivos)
@@ -130,15 +137,33 @@ namespace Transcripcion
                         BEArchivo archivo1 = new BEArchivo(archivo);
                         archivo1.Hash = calcularHash(archivo);
 
-                        archivo1.Nro_Orden = formulario.ListaArchivos.Count + 1;
-                        formulario.ListaArchivos.Add(archivo1);
-                        NombreArchivos.Add(archivo1.Nombre);
+                        // Verificar si ya existe un archivo con el mismo hash
+                        if (!ExisteHashDuplicado(archivo1.Hash))
+                        {
+                            archivo1.Nro_Orden = formulario.ListaArchivos.Count + 1;
+                            formulario.ListaArchivos.Add(archivo1);
+                            NombreArchivos.Add(archivo1.Nombre);
+                        }
+                        else
+                        {
+                            archivosDuplicados++;
+                        }
 
                         archivosProcesados++;
                         circularProgressBar1.Value = archivosProcesados;
                         circularProgressBar1.Text = $"{(int)((archivosProcesados / (double)totalArchivos) * 100)}%";
                     }
                     OcultarSpriner();
+                    
+                    // Mostrar mensaje sobre archivos duplicados si los hay
+                    if (archivosDuplicados > 0)
+                    {
+                        MessageBox.Show($"Se encontraron {archivosDuplicados} archivo(s) duplicado(s) basado en hash SHA-256. Los duplicados fueron omitidos.", 
+                                       "Archivos Duplicados Detectados", 
+                                       MessageBoxButtons.OK, 
+                                       MessageBoxIcon.Information);
+                    }
+                    
                     Actualizar();
 
                 }
@@ -240,17 +265,43 @@ namespace Transcripcion
             try
             {
                 string[] datos = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+                int archivosDuplicados = 0;
+                int archivosAgregados = 0;
 
-                foreach (var archivoMp3 in datos)
+                foreach (var archivoPath in datos)
                 {
-                    NombreArchivos.Add(Path.GetFileName(archivoMp3));
-                    //ListaArchivos.Add(archivoMp3);
+                    if (File.Exists(archivoPath))
+                    {
+                        BEArchivo archivo = new BEArchivo(archivoPath);
+                        archivo.Hash = calcularHash(archivoPath);
+
+                        // Verificar si ya existe un archivo con el mismo hash
+                        if (!ExisteHashDuplicado(archivo.Hash))
+                        {
+                            archivo.Nro_Orden = formulario.ListaArchivos.Count + 1;
+                            formulario.ListaArchivos.Add(archivo);
+                            NombreArchivos.Add(archivo.Nombre);
+                            archivosAgregados++;
+                        }
+                        else
+                        {
+                            archivosDuplicados++;
+                        }
+                    }
                 }
 
-                listBoxArchivos.DataSource = null;
-                listBoxArchivos.DataSource = NombreArchivos;
-                //Reproductor.URL = RutasArchivos[0];
-                MessageBox.Show("Ar cargado Correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (archivosAgregados > 0)
+                {
+                    Actualizar();
+                }
+
+                string mensaje = $"Se agregaron {archivosAgregados} archivo(s) correctamente.";
+                if (archivosDuplicados > 0)
+                {
+                    mensaje += $"\nSe omitieron {archivosDuplicados} archivo(s) duplicado(s) basado en hash SHA-256.";
+                }
+
+                MessageBox.Show(mensaje, "Archivos Procesados", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
