@@ -509,11 +509,23 @@
         
         // Cargar jerarquías y destinos si no están cargados
         if (jerarquiasData.length === 0) {
-            loadJerarquiasDestinos();
-        }
-        
-        // Esperar un poco para asegurar que los datos estén cargados
-        setTimeout(() => {
+            loadJerarquiasDestinos().then(() => {
+                populateJerarquiasDestinos();
+                // Mostrar modal usando Bootstrap
+                if (typeof bootstrap !== 'undefined') {
+                    const modal = new bootstrap.Modal(document.getElementById('modalNuevoOficial'));
+                    modal.show();
+                } else {
+                    // Fallback si Bootstrap no está cargado
+                    document.getElementById('modalNuevoOficial').style.display = 'block';
+                    document.getElementById('modalNuevoOficial').classList.add('show');
+                    document.body.classList.add('modal-open');
+                }
+            }).catch((error) => {
+                console.error('Error loading data:', error);
+                alert('Failed to load data. Please try again.');
+            });
+        } else {
             populateJerarquiasDestinos();
             // Mostrar modal usando Bootstrap
             if (typeof bootstrap !== 'undefined') {
