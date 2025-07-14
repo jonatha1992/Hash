@@ -219,7 +219,10 @@ class Archivo(models.Model):
         verbose_name = "Archivo"
         verbose_name_plural = "Archivos"
         ordering = ['formulario', 'nro_orden']
-        unique_together = ['formulario', 'nro_orden']
+        unique_together = [
+            ['formulario', 'nro_orden'],
+            ['formulario', 'hash_sha256']  # Prevent duplicate files with same hash in same formulario
+        ]
     
     def __str__(self):
         return f"{self.nro_orden}. {self.nombre}"

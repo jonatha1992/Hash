@@ -93,9 +93,19 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
         
         # Procesar archivos si los hay
         if archivos:
-            for i, archivo in enumerate(archivos, 1):
+            archivos_procesados = 0
+            for archivo in archivos:
                 # Calcular hash SHA-256
                 hash_sha256 = _calcular_hash_archivo(archivo)
+                
+                # Verificar si ya existe un archivo con el mismo hash en este formulario
+                if formulario.archivos.filter(hash_sha256=hash_sha256).exists():
+                    print(f"Archivo duplicado omitido: {archivo.name} (hash ya existe)")
+                    continue
+                
+                # Obtener el siguiente número de orden
+                archivos_procesados += 1
+                siguiente_orden = formulario.archivos.count() + 1
                 
                 # Obtener extensión del archivo
                 extension = os.path.splitext(archivo.name)[1].lower()
@@ -106,7 +116,7 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
                 # Crear objeto Archivo
                 Archivo.objects.create(
                     formulario=formulario,
-                    nro_orden=i,
+                    nro_orden=siguiente_orden,
                     nombre=archivo.name,
                     extension=extension,
                     peso=archivo.size,
@@ -138,6 +148,11 @@ class FormularioHashViewSet(viewsets.ModelViewSet):
             # Calcular hash
             hash_sha256 = _calcular_hash_archivo(archivo)
             
+            # Verificar si ya existe un archivo con el mismo hash en este formulario
+            if formulario.archivos.filter(hash_sha256=hash_sha256).exists():
+                print(f"Archivo duplicado omitido: {archivo.name} (hash ya existe)")
+                continue
+                
             # Obtener extensión del archivo
             extension = os.path.splitext(archivo.name)[1].lower()
             # Remover el punto inicial si existe
@@ -673,9 +688,17 @@ def procesar_carpeta(request):
         archivos_procesados = []
         total_archivos = len(archivos)
         
-        for i, archivo in enumerate(archivos, 1):
+        for archivo in archivos:
             # Calcular hash SHA-256 (equivalente a SHA-1 en la app de escritorio)
             hash_sha256 = _calcular_hash_archivo(archivo)
+            
+            # Verificar si ya existe un archivo con el mismo hash en este formulario
+            if formulario.archivos.filter(hash_sha256=hash_sha256).exists():
+                print(f"Archivo duplicado omitido: {archivo.name} (hash ya existe)")
+                continue
+            
+            # Obtener el siguiente número de orden
+            siguiente_orden = formulario.archivos.count() + 1
             
             # Obtener extensión
             extension = os.path.splitext(archivo.name)[1].lower()
@@ -685,7 +708,7 @@ def procesar_carpeta(request):
             # Crear objeto Archivo
             archivo_obj = Archivo.objects.create(
                 formulario=formulario,
-                nro_orden=i,
+                nro_orden=siguiente_orden,
                 nombre=archivo.name,
                 extension=extension,
                 peso=archivo.size,
@@ -747,6 +770,11 @@ def agregar_archivos_formulario(request, formulario_id):
             # Calcular hash SHA-256
             hash_sha256 = _calcular_hash_archivo(archivo)
             
+            # Verificar si ya existe un archivo con el mismo hash en este formulario
+            if formulario.archivos.filter(hash_sha256=hash_sha256).exists():
+                print(f"Archivo duplicado omitido: {archivo.name} (hash ya existe)")
+                continue
+                
             # Obtener extensión del archivo
             extension = os.path.splitext(archivo.name)[1].lower()
             if extension.startswith('.'):
@@ -792,7 +820,7 @@ def agregar_archivos_formulario(request, formulario_id):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([])  # Remove authentication for detail view
 def api_obtener_detalles_formulario(request, formulario_id):
     """API para obtener detalles completos de un formulario"""
     try:
