@@ -548,17 +548,21 @@
         const jerarquiaSelect = document.getElementById('jerarquia');
         if (jerarquiaSelect && jerarquiasData.length > 0) {
             jerarquiaSelect.innerHTML = '<option value="">Seleccionar jerarquía...</option>';
+            let jerarquiaOptions = '<option value="">Seleccionar jerarquía...</option>';
             jerarquiasData.forEach(j => {
-                jerarquiaSelect.innerHTML += `<option value="${j.id}">${j.abrev} - ${j.nombre}</option>`;
+                jerarquiaOptions += `<option value="${j.id}">${j.abrev} - ${j.nombre}</option>`;
             });
+            jerarquiaSelect.innerHTML = jerarquiaOptions;
         }
         
         // Cargar destinos
         const destinoSelect = document.getElementById('destino');
         if (destinoSelect && destinosData.length > 0) {
-            destinoSelect.innerHTML = '<option value="">Seleccionar destino...</option>';
+            let destinoOptions = '<option value="">Seleccionar destino...</option>';
             destinosData.forEach(d => {
-                destinoSelect.innerHTML += `<option value="${d.id}">${d.nombre}</option>`;
+                destinoOptions += `<option value="${d.id}">${d.nombre}</option>`;
+            });
+            destinoSelect.innerHTML = destinoOptions;
             });
         }
     }
