@@ -33,8 +33,9 @@ namespace Hash
             Audio = ListaArchivos.Count(a => a.Extension == ".mp3" || a.Extension == ".wav" || a.Extension == ".flac");
             Texto = ListaArchivos.Count(a => a.Extension == ".pdf" || a.Extension == ".txt" || a.Extension == ".docx" || a.Extension == ".doc");
             Varios = ListaArchivos.Count(a => a.Extension != ".txt" && a.Extension != ".doc" && a.Extension != ".docx" && a.Extension != ".pdf"
-            && a.Extension != ".png" && a.Extension != ".jpg" && a.Extension != ".jpeg" && a.Extension != ".gif" && a.Extension != ".bmp"
-            && a.Extension != ".mp4" && a.Extension != ".avi" && a.Extension != ".wmv" && a.Extension != ".mov");
+            && a.Extension != ".png" && a.Extension != ".jpg" && a.Extension != ".jpeg" && a.Extension != ".bmp"
+            && a.Extension != ".mp4" && a.Extension != ".avi" && a.Extension != ".mov"
+            && a.Extension != ".mp3" && a.Extension != ".wav" && a.Extension != ".flac");
 
             //int contador = 1;
             //foreach (var x in ListaArchivos)
