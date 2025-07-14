@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 
@@ -117,15 +118,27 @@ namespace Transcripcion
 
                     MostrarSpriner();
 
+                    // Obtener archivos de la carpeta seleccionada
+                    string[] archivosEncontrados = Directory.GetFiles(carpetaSeleccionada, "*", SearchOption.AllDirectories);
+                    
+                    // Filtrar archivos duplicados basados en la ruta completa
+                    var archivosNuevos = archivosEncontrados.Where(archivo => !RutaArchivos.Contains(archivo)).ToList();
+                    
+                    if (archivosNuevos.Count == 0)
+                    {
+                        OcultarSpriner();
+                        MessageBox.Show("Todos los archivos de la carpeta seleccionada ya han sido procesados.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
 
-                    RutaArchivos.AddRange(Directory.GetFiles(carpetaSeleccionada, "*", SearchOption.AllDirectories));
+                    RutaArchivos.AddRange(archivosNuevos);
 
-                    int totalArchivos = RutaArchivos.Count;
+                    int totalArchivos = archivosNuevos.Count;
                     circularProgressBar1.Maximum = totalArchivos;
                     int archivosProcesados = 0;
 
-                    // Mostrar los nombres de los archivos en la consola
-                    foreach (string archivo in RutaArchivos)
+                    // Procesar solo los archivos nuevos
+                    foreach (string archivo in archivosNuevos)
                     {
                         BEArchivo archivo1 = new BEArchivo(archivo);
                         archivo1.Hash = calcularHash(archivo);
@@ -202,6 +215,18 @@ namespace Transcripcion
                 {
                     foreach (string archivo in listBoxArchivos.SelectedItems)
                     {
+                        // Buscar y remover de todas las listas relacionadas
+                        var archivoEncontrado = formulario.ListaArchivos.Find(x => x.Nombre.Contains(archivo.ToString()));
+                        if (archivoEncontrado != null)
+                        {
+                            // Remover de RutaArchivos usando el nombre del archivo
+                            var rutaARemover = RutaArchivos.Find(ruta => Path.GetFileName(ruta) == archivoEncontrado.Nombre);
+                            if (rutaARemover != null)
+                            {
+                                RutaArchivos.Remove(rutaARemover);
+                            }
+                        }
+                        
                         NombreArchivos.Remove(NombreArchivos.Find(x => x.Contains(archivo.ToString())));
                         formulario.ListaArchivos.Remove(formulario.ListaArchivos.Find(x => x.Nombre.Contains(archivo.ToString())));
                     }
@@ -240,17 +265,36 @@ namespace Transcripcion
             try
             {
                 string[] datos = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-
+                List<string> archivosNuevos = new List<string>();
+                
                 foreach (var archivoMp3 in datos)
                 {
-                    NombreArchivos.Add(Path.GetFileName(archivoMp3));
-                    //ListaArchivos.Add(archivoMp3);
+                    string nombreArchivo = Path.GetFileName(archivoMp3);
+                    
+                    // Verificar si el archivo ya existe por nombre
+                    if (!NombreArchivos.Contains(nombreArchivo))
+                    {
+                        // Crear el objeto BEArchivo y agregarlo a las listas
+                        BEArchivo archivo1 = new BEArchivo(archivoMp3);
+                        archivo1.Hash = calcularHash(archivoMp3);
+                        archivo1.Nro_Orden = formulario.ListaArchivos.Count + 1;
+                        
+                        formulario.ListaArchivos.Add(archivo1);
+                        NombreArchivos.Add(nombreArchivo);
+                        RutaArchivos.Add(archivoMp3);
+                        archivosNuevos.Add(nombreArchivo);
+                    }
                 }
 
-                listBoxArchivos.DataSource = null;
-                listBoxArchivos.DataSource = NombreArchivos;
-                //Reproductor.URL = RutasArchivos[0];
-                MessageBox.Show("Ar cargado Correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (archivosNuevos.Count > 0)
+                {
+                    Actualizar();
+                    MessageBox.Show($"{archivosNuevos.Count} archivo(s) cargado(s) correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Todos los archivos seleccionados ya han sido procesados.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
@@ -504,6 +548,15 @@ namespace Transcripcion
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
+            // Limpiar todas las listas para evitar procesamientos duplicados
+            NombreArchivos.Clear();
+            RutaArchivos.Clear();
+            formulario.ListaArchivos.Clear();
+            
+            // Actualizar la interfaz
+            Actualizar();
+            
+            // Reiniciar la aplicación
             Application.Restart();
         }
 
