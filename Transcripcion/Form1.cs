@@ -115,6 +115,11 @@ namespace Transcripcion
                     // La carpeta seleccionada por el usuario
                     carpetaSeleccionada = dialogoSeleccionCarpeta.SelectedPath;
 
+                    // Limpiar las listas antes de procesar nuevos archivos para evitar duplicaciones
+                    RutaArchivos.Clear();
+                    NombreArchivos.Clear();
+                    formulario.ListaArchivos.Clear();
+
                     MostrarSpriner();
 
 
@@ -183,10 +188,12 @@ namespace Transcripcion
             DgvElementos.Columns["PesoArchivo"].HeaderText = "Peso";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
+            DgvElementos.Columns["Tipo"].HeaderText = "Tipo";
             DgvElementos.Columns["Nro_Orden"].Width = 30;
             DgvElementos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             DgvElementos.Columns["Extension"].Width = 35;
             DgvElementos.Columns["PesoArchivo"].Width = 65;
+            DgvElementos.Columns["Tipo"].Width = 80;
             DgvElementos.Columns["Peso"].Visible= false;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             labelPesoTotal.Text = formulario.pesototal;
@@ -241,19 +248,54 @@ namespace Transcripcion
             {
                 string[] datos = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-                foreach (var archivoMp3 in datos)
+                MostrarSpriner();
+
+                // Contar total de archivos para el progreso
+                List<string> todosLosArchivos = new List<string>();
+                foreach (var elemento in datos)
                 {
-                    NombreArchivos.Add(Path.GetFileName(archivoMp3));
-                    //ListaArchivos.Add(archivoMp3);
+                    if (File.Exists(elemento))
+                    {
+                        todosLosArchivos.Add(elemento);
+                    }
+                    else if (Directory.Exists(elemento))
+                    {
+                        todosLosArchivos.AddRange(Directory.GetFiles(elemento, "*", SearchOption.AllDirectories));
+                    }
                 }
 
-                listBoxArchivos.DataSource = null;
-                listBoxArchivos.DataSource = NombreArchivos;
-                //Reproductor.URL = RutasArchivos[0];
-                MessageBox.Show("Ar cargado Correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                int totalArchivos = todosLosArchivos.Count;
+                circularProgressBar1.Maximum = totalArchivos;
+                int archivosProcesados = 0;
+
+                // Procesar cada archivo encontrado
+                foreach (var rutaArchivo in todosLosArchivos)
+                {
+                    // Verificar que el archivo no esté ya en la lista para evitar duplicados
+                    if (!RutaArchivos.Contains(rutaArchivo))
+                    {
+                        BEArchivo archivo1 = new BEArchivo(rutaArchivo);
+                        archivo1.Hash = calcularHash(rutaArchivo);
+
+                        archivo1.Nro_Orden = formulario.ListaArchivos.Count + 1;
+                        formulario.ListaArchivos.Add(archivo1);
+                        NombreArchivos.Add(archivo1.Nombre);
+                        RutaArchivos.Add(rutaArchivo);
+                    }
+
+                    archivosProcesados++;
+                    circularProgressBar1.Value = archivosProcesados;
+                    circularProgressBar1.Text = $"{(int)((archivosProcesados / (double)totalArchivos) * 100)}%";
+                }
+
+                OcultarSpriner();
+                Actualizar();
+
+                MessageBox.Show("Archivos cargados correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
+                OcultarSpriner();
                 MessageBox.Show(ex.Message);
             }
         }
