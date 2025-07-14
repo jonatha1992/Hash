@@ -117,6 +117,10 @@ namespace Transcripcion
 
                     MostrarSpriner();
 
+                    // Limpiar listas antes de agregar nuevos archivos para evitar duplicados
+                    RutaArchivos.Clear();
+                    NombreArchivos.Clear();
+                    formulario.ListaArchivos.Clear();
 
                     RutaArchivos.AddRange(Directory.GetFiles(carpetaSeleccionada, "*", SearchOption.AllDirectories));
 
@@ -183,10 +187,12 @@ namespace Transcripcion
             DgvElementos.Columns["PesoArchivo"].HeaderText = "Peso";
             DgvElementos.Columns["SI"].Visible = false;
             DgvElementos.Columns["Extension"].HeaderText = "Ext.";
+            DgvElementos.Columns["Tipo"].HeaderText = "Tipo";
             DgvElementos.Columns["Nro_Orden"].Width = 30;
             DgvElementos.Columns["Nombre"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             DgvElementos.Columns["Extension"].Width = 35;
             DgvElementos.Columns["PesoArchivo"].Width = 65;
+            DgvElementos.Columns["Tipo"].Width = 80;
             DgvElementos.Columns["Peso"].Visible= false;
             //DgvElementos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             labelPesoTotal.Text = formulario.pesototal;

@@ -12,6 +12,7 @@ namespace Hash
         public string PesoArchivo { get; set; }
         public string Hash { get; set; }
         public string Si { get => "SI"; }
+        public string Tipo { get; set; }
         public BEArchivo() { }
         public BEArchivo(string rutaArchivo)
         {
@@ -20,6 +21,7 @@ namespace Hash
             this.Nombre = Path.GetFileName(rutaArchivo);
 
             VerificarPeso();
+            DeterminarTipo();
 
         }
 
@@ -43,6 +45,32 @@ namespace Hash
                     double gigabytes = megabytes / 1024.0;
                     PesoArchivo = $"{gigabytes:F2} GB";
                 }
+            }
+        }
+
+        public void DeterminarTipo()
+        {
+            string ext = Extension?.ToLower();
+            
+            if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".bmp" || ext == ".gif")
+            {
+                Tipo = "Imágenes";
+            }
+            else if (ext == ".mp4" || ext == ".avi" || ext == ".mov" || ext == ".wmv")
+            {
+                Tipo = "Videos";
+            }
+            else if (ext == ".mp3" || ext == ".wav" || ext == ".flac")
+            {
+                Tipo = "Audio";
+            }
+            else if (ext == ".pdf" || ext == ".txt" || ext == ".docx" || ext == ".doc")
+            {
+                Tipo = "Documentos";
+            }
+            else
+            {
+                Tipo = "Varios";
             }
         }
     }
