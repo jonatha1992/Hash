@@ -318,6 +318,8 @@ def form_hash(request, formulario_id=None):
     
     # Obtener datos necesarios
     oficiales = Oficial.objects.select_related('jerarquia', 'destino').filter(activo=True)
+    jerarquias = Jerarquia.objects.all().order_by('orden')
+    destinos = Destino.objects.filter(activo=True).order_by('nombre')
     
     if formulario_id:
         # Modo edición - cargar formulario existente
@@ -360,6 +362,8 @@ def form_hash(request, formulario_id=None):
     context = {
         'formulario': formulario,
         'oficiales': oficiales,
+        'jerarquias': jerarquias,
+        'destinos': destinos,
         'siguiente_hash': siguiente_hash,
         'modo': modo,
         'title': f'Formulario Hash - {"Editar" if formulario and modo == "edicion" else "Nuevo" if modo == "creacion" else "Resultado"} Formulario'
@@ -493,7 +497,7 @@ def lista_custodias(request):
     return render(request, 'core/lista_custodias.html', context)
 
 
-from .forms import FormularioCustodiaForm, PersonalCustodiaForm
+from .forms import FormularioCustodiaForm, PersonalCustodiaForm, QuickOficialForm, QuickJerarquiaForm, QuickDestinoForm
 
 def crear_custodia(request):
     """Vista para crear un nuevo formulario de custodia"""
@@ -872,4 +876,135 @@ def api_eliminar_formulario(request, formulario_id):
         return Response({
             'success': False,
             'error': f'Error al eliminar formulario: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@permission_classes([])  # No authentication required
+def api_crear_oficial_rapido(request):
+    """API para crear un oficial rápidamente desde el formulario hash"""
+    try:
+        form = QuickOficialForm(request.data)
+        if form.is_valid():
+            oficial = form.save()
+            return Response({
+                'success': True,
+                'oficial': {
+                    'id': oficial.id,
+                    'nombre': oficial.nombre,
+                    'legajo': oficial.legajo,
+                    'nombre_completo_formateado': oficial.nombre_completo_formateado,
+                    'es_civil': oficial.es_civil
+                },
+                'message': 'Oficial creado exitosamente'
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response({
+                'success': False,
+                'errors': form.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({
+            'success': False,
+            'error': f'Error al crear oficial: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@permission_classes([])  # No authentication required
+def api_crear_jerarquia_rapida(request):
+    """API para crear una jerarquía rápidamente"""
+    try:
+        form = QuickJerarquiaForm(request.data)
+        if form.is_valid():
+            jerarquia = form.save()
+            return Response({
+                'success': True,
+                'jerarquia': {
+                    'id': jerarquia.id,
+                    'nombre': jerarquia.nombre,
+                    'abreviatura': jerarquia.abreviatura,
+                    'orden': jerarquia.orden
+                },
+                'message': 'Jerarquía creada exitosamente'
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response({
+                'success': False,
+                'errors': form.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({
+            'success': False,
+            'error': f'Error al crear jerarquía: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@permission_classes([])  # No authentication required
+def api_crear_destino_rapido(request):
+    """API para crear un destino rápidamente"""
+    try:
+        form = QuickDestinoForm(request.data)
+        if form.is_valid():
+            destino = form.save()
+            return Response({
+                'success': True,
+                'destino': {
+                    'id': destino.id,
+                    'nombre': destino.nombre
+                },
+                'message': 'Destino creado exitosamente'
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response({
+                'success': False,
+                'errors': form.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({
+            'success': False,
+            'error': f'Error al crear destino: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+@permission_classes([])  # No authentication required
+def api_obtener_opciones_formulario(request):
+    """API para obtener las opciones actualizadas de oficiales, jerarquías y destinos"""
+    try:
+        oficiales = Oficial.objects.filter(activo=True).select_related('jerarquia', 'destino')
+        jerarquias = Jerarquia.objects.all().order_by('orden')
+        destinos = Destino.objects.filter(activo=True).order_by('nombre')
+        
+        return Response({
+            'success': True,
+            'oficiales': [
+                {
+                    'id': oficial.id,
+                    'nombre_completo_formateado': oficial.nombre_completo_formateado,
+                    'es_civil': oficial.es_civil
+                }
+                for oficial in oficiales
+            ],
+            'jerarquias': [
+                {
+                    'id': jerarquia.id,
+                    'nombre': jerarquia.nombre,
+                    'abreviatura': jerarquia.abreviatura
+                }
+                for jerarquia in jerarquias
+            ],
+            'destinos': [
+                {
+                    'id': destino.id,
+                    'nombre': destino.nombre
+                }
+                for destino in destinos
+            ]
+        }, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({
+            'success': False,
+            'error': f'Error al obtener opciones: {str(e)}'
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

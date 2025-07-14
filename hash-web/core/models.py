@@ -37,7 +37,7 @@ class Oficial(models.Model):
     """Modelo para oficiales"""
     legajo = models.CharField(max_length=20, unique=True)
     nombre = models.CharField(max_length=200)
-    jerarquia = models.ForeignKey(Jerarquia, on_delete=models.CASCADE, related_name='oficiales')
+    jerarquia = models.ForeignKey(Jerarquia, on_delete=models.CASCADE, related_name='oficiales', null=True, blank=True)
     destino = models.ForeignKey(Destino, on_delete=models.CASCADE, related_name='oficiales')
     activo = models.BooleanField(default=True)
     
@@ -48,10 +48,13 @@ class Oficial(models.Model):
     class Meta:
         verbose_name = "Oficial"
         verbose_name_plural = "Oficiales"
-        ordering = ['jerarquia__orden', 'nombre']
+        ordering = ['-jerarquia__orden', 'nombre']  # Nulls last, then by hierarchy order and name
     
     def __str__(self):
-        return f"{self.jerarquia.abreviatura} {self.nombre}"
+        if self.jerarquia:
+            return f"{self.jerarquia.abreviatura} {self.nombre}"
+        else:
+            return f"Civil {self.nombre}"
     
     def get_full_name(self):
         """Retorna el nombre completo del oficial"""
@@ -59,7 +62,15 @@ class Oficial(models.Model):
     
     @property
     def nombre_completo_formateado(self):
-        return f"Leg. {self.legajo} - {self.jerarquia.abreviatura} {self.nombre}"
+        if self.jerarquia:
+            return f"Leg. {self.legajo} - {self.jerarquia.abreviatura} {self.nombre}"
+        else:
+            return f"Leg. {self.legajo} - Civil {self.nombre}"
+    
+    @property
+    def es_civil(self):
+        """Retorna True si es civil (sin jerarquía)"""
+        return self.jerarquia is None
 
 
 class TipoProcedimiento(models.Model):
