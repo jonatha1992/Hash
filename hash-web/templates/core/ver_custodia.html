@@ -23,6 +23,9 @@
                 <p><strong>Sumario:</strong> {{ custodia.sumario }}</p>
                 <p><strong>Juzgado/Fiscalía:</strong> {{ custodia.juzgado_fiscalia }}</p>
                 <p><strong>Secretaría:</strong> {{ custodia.secretaria }}</p>
+                {% if custodia.destino_custodia %}
+                <p><strong>Destino de Custodia:</strong> {{ custodia.destino_custodia.nombre }}</p>
+                {% endif %}
                 <p><strong>Otra Información:</strong> {{ custodia.otra_informacion }}</p>
                 <p><strong>Identificación del Material:</strong> {{ custodia.identificacion_material }}</p>
                 <p><strong>Breve Descripción:</strong> {{ custodia.breve_descripcion }}</p>
@@ -43,6 +46,7 @@
                             <th>Orden</th>
                             <th>Oficial</th>
                             <th>Función</th>
+                            <th>Destino Intervención</th>
                             <th>Descripción</th>
                             <th>Fecha</th>
                         </tr>
@@ -53,12 +57,19 @@
                             <td>{{ personal.orden }}</td>
                             <td>{{ personal.oficial }}</td>
                             <td>{{ personal.funcion }}</td>
+                            <td>
+                                {% if personal.destino_intervencion %}
+                                    {{ personal.destino_intervencion.nombre }}
+                                {% else %}
+                                    {{ personal.oficial.destino.nombre }}
+                                {% endif %}
+                            </td>
                             <td>{{ personal.descripcion }}</td>
                             <td>{{ personal.fecha_hora_intervencion|date:"d/m/Y H:i" }}</td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5" class="text-center">No hay personal agregado a esta custodia.</td>
+                            <td colspan="6" class="text-center">No hay personal agregado a esta custodia.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -75,7 +86,33 @@
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
-                    {{ personal_form.as_p }}
+                    <div class="mb-3">
+                        <label for="{{ personal_form.oficial.id_for_label }}" class="form-label">{{ personal_form.oficial.label }}</label>
+                        {{ personal_form.oficial }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ personal_form.funcion.id_for_label }}" class="form-label">{{ personal_form.funcion.label }}</label>
+                        {{ personal_form.funcion }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ personal_form.destino_intervencion.id_for_label }}" class="form-label">{{ personal_form.destino_intervencion.label }}</label>
+                        <div class="input-group">
+                            {{ personal_form.destino_intervencion }}
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#modalCrearDestino">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+                        <div class="form-text">Si no se especifica, se usará el destino base del oficial</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ personal_form.descripcion.id_for_label }}" class="form-label">{{ personal_form.descripcion.label }}</label>
+                        {{ personal_form.descripcion }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ personal_form.observaciones.id_for_label }}" class="form-label">{{ personal_form.observaciones.label }}</label>
+                        {{ personal_form.observaciones }}
+                    </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-plus-circle"></i> Agregar Personal
@@ -86,4 +123,73 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Crear Destino -->
+<div class="modal fade" id="modalCrearDestino" tabindex="-1" aria-labelledby="modalCrearDestinoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCrearDestinoLabel">
+                    <i class="bi bi-building-add"></i> Agregar Destino Rápidamente
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formCrearDestino">
+                    <div class="mb-3">
+                        <label for="destino_nombre" class="form-label">Nombre del Destino/Unidad *</label>
+                        <input type="text" class="form-control" id="destino_nombre" name="nombre" required
+                               placeholder="Ej: Comisaría 1ra, División Investigaciones">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearDestinoRapido()">
+                    <i class="bi bi-save"></i> Crear Destino
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function crearDestinoRapido() {
+    const form = document.getElementById('formCrearDestino');
+    const formData = new FormData(form);
+    
+    try {
+        const response = await fetch('{% url "core:api_crear_destino_rapido" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Agregar nuevo destino al select
+            const select = document.getElementById('{{ personal_form.destino_intervencion.id_for_label }}');
+            const option = new Option(data.destino.nombre, data.destino.id, true, true);
+            select.add(option);
+            
+            // Cerrar modal y limpiar formulario
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalCrearDestino'));
+            modal.hide();
+            form.reset();
+            
+            // Mostrar mensaje de éxito
+            alert('Destino creado exitosamente');
+        } else {
+            alert('Error al crear destino: ' + (data.error || 'Error desconocido'));
+        }
+    } catch (error) {
+        alert('Error de conexión: ' + error.message);
+    }
+}
+</script>
 {% endblock %}

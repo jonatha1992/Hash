@@ -36,6 +36,7 @@
                                 <th>#Custodia</th>
                                 <th>#Hash</th>
                                 <th>Carátula</th>
+                                <th>Destino</th>
                                 <th>Fecha Incidente</th>
                                 <th>Personal</th>
                                 <th>Estado</th>
@@ -59,6 +60,13 @@
                                         title="{{ custodia.caratula }}">
                                         {{ custodia.caratula }}
                                     </div>
+                                </td>
+                                <td>
+                                    {% if custodia.destino_custodia %}
+                                        <span class="badge bg-info">{{ custodia.destino_custodia.nombre|truncatechars:20 }}</span>
+                                    {% else %}
+                                        <span class="text-muted">No especificado</span>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <small>{{ custodia.fecha_hora_incidente|date:"d/m/Y H:i" }}</small>
