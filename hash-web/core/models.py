@@ -246,10 +246,12 @@ class Archivo(models.Model):
         # Determinar tipo de archivo
         if self.extension:
             ext = self.extension.lower()
-            self.es_imagen = ext in ['.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp']
-            self.es_video = ext in ['.mp4', '.avi', '.mov', '.wmv', '.flv', '.mkv', '.m4v', '.3gp']
-            self.es_audio = ext in ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.wma', '.m4a']
-            self.es_documento = ext in ['.pdf', '.txt', '.docx', '.doc', '.xlsx', '.xls', '.pptx', '.ppt', '.rtf']
+            # Asegurarse de que la extensión no tenga punto
+            ext = ext.lstrip('.')
+            self.es_imagen = ext in ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tiff', 'webp']
+            self.es_video = ext in ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mkv', 'm4v', '3gp']
+            self.es_audio = ext in ['mp3', 'wav', 'flac', 'aac', 'ogg', 'wma', 'm4a']
+            self.es_documento = ext in ['pdf', 'txt', 'docx', 'doc', 'xlsx', 'xls', 'pptx', 'ppt', 'rtf']
         
         super().save(*args, **kwargs)
         

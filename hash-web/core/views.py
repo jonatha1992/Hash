@@ -313,7 +313,7 @@ def dashboard(request):
     return render(request, 'core/dashboard.html', context)
 
 
-def form_hash(request, formulario_id=None):
+def hash(request, formulario_id=None):
     """Vista unificada del modo escritorio - permite crear y editar formularios"""
     
     # Obtener datos necesarios
@@ -344,18 +344,18 @@ def form_hash(request, formulario_id=None):
         siguiente_hash = (ultimo_hash or 0) + 1
     
     # Verificar si hay un formulario recién creado en la sesión
-    formulario_creado_id = request.session.get('formulario_creado_id')
-    if formulario_creado_id and modo == 'creacion':
+    hash_creado_id = request.session.get('hash_creado_id')
+    if hash_creado_id and modo == 'creacion':
         try:
-            formulario_creado = FormularioHash.objects.select_related(
+            hash_creado = FormularioHash.objects.select_related(
                 'oficial_entrega__jerarquia', 'oficial_entrega__destino',
                 'oficial_recibe__jerarquia', 'oficial_recibe__destino',
                 'tipo_procedimiento'
-            ).prefetch_related('archivos').get(id=formulario_creado_id)
+            ).prefetch_related('archivos').get(id=hash_creado_id)
             modo = 'resultado'
-            formulario = formulario_creado
+            formulario = hash_creado
             # Limpiar la sesión
-            del request.session['formulario_creado_id']
+            del request.session['hash_creado_id']
         except FormularioHash.DoesNotExist:
             pass
     
@@ -366,9 +366,9 @@ def form_hash(request, formulario_id=None):
         'destinos': destinos,
         'siguiente_hash': siguiente_hash,
         'modo': modo,
-        'title': f'Formulario Hash - {"Editar" if formulario and modo == "edicion" else "Nuevo" if modo == "creacion" else "Resultado"} Formulario'
+        'title': f'Hash - {"Editar" if formulario and modo == "edicion" else "Nuevo" if modo == "creacion" else "Resultado"} Hash'
     }
-    return render(request, 'core/form_hash.html', context)
+    return render(request, 'core/hash.html', context)
 
 
 from .forms import FormularioHashForm
@@ -404,7 +404,7 @@ def crear_hash(request):
                     )
 
 
-            return redirect('core:form_hash_editar', formulario_id=formulario.id)
+            return redirect('core:hash_editar', formulario_id=formulario.id)
     else:
         try:
             form = FormularioHashForm()
@@ -726,7 +726,7 @@ def procesar_carpeta(request):
         formulario.calcular_contadores()
         
         # Guardar ID del formulario en la sesión para mostrar resultados
-        request.session['formulario_creado_id'] = formulario.id
+        request.session['hash_creado_id'] = formulario.id
         
         # Retornar formulario completo con estadísticas
         formulario_serializer = FormularioHashSerializer(formulario)
@@ -741,7 +741,7 @@ def procesar_carpeta(request):
                 'texto': formulario.texto,
                 'varios': formulario.varios
             },
-            'redirect_url': f'/form_hash/{formulario.id}/'
+            'redirect_url': f'/hash/{formulario.id}/'
         }, status=status.HTTP_201_CREATED)
         
     except Exception as e:

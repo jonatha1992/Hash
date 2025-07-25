@@ -8,8 +8,8 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     
     # Hash
-    path('form_hash/', views.form_hash, name='form_hash'),
-    path('form_hash/<int:formulario_id>/', views.form_hash, name='form_hash_editar'),
+    path('hash/', views.hash, name='hash'),
+    path('hash/<int:formulario_id>/', views.hash, name='hash_editar'),
 
     # Listas
     path('hashes/', views.lista_hashes, name='lista_hashes'),
