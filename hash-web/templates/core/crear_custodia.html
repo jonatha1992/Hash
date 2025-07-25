@@ -20,7 +20,92 @@
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    
+                    <!-- Información básica -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="{{ form.nro_hash.id_for_label }}" class="form-label">{{ form.nro_hash.label }}</label>
+                            {{ form.nro_hash }}
+                            {% if form.nro_hash.help_text %}
+                                <div class="form-text">{{ form.nro_hash.help_text }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.destino_custodia.id_for_label }}" class="form-label">{{ form.destino_custodia.label }}</label>
+                            <div class="input-group">
+                                {{ form.destino_custodia }}
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#modalCrearDestino">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+                            {% if form.destino_custodia.help_text %}
+                                <div class="form-text">{{ form.destino_custodia.help_text }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Información del caso -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label for="{{ form.caratula.id_for_label }}" class="form-label">{{ form.caratula.label }}</label>
+                            {{ form.caratula }}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="{{ form.sumario.id_for_label }}" class="form-label">{{ form.sumario.label }}</label>
+                            {{ form.sumario }}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.juzgado_fiscalia.id_for_label }}" class="form-label">{{ form.juzgado_fiscalia.label }}</label>
+                            {{ form.juzgado_fiscalia }}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="{{ form.secretaria.id_for_label }}" class="form-label">{{ form.secretaria.label }}</label>
+                            {{ form.secretaria }}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.fecha_hora_incidente.id_for_label }}" class="form-label">{{ form.fecha_hora_incidente.label }}</label>
+                            {{ form.fecha_hora_incidente }}
+                        </div>
+                    </div>
+
+                    <!-- Información adicional -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="{{ form.otra_informacion.id_for_label }}" class="form-label">{{ form.otra_informacion.label }}</label>
+                            {{ form.otra_informacion }}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.identificacion_material.id_for_label }}" class="form-label">{{ form.identificacion_material.label }}</label>
+                            {{ form.identificacion_material }}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label for="{{ form.breve_descripcion.id_for_label }}" class="form-label">{{ form.breve_descripcion.label }}</label>
+                            {{ form.breve_descripcion }}
+                        </div>
+                    </div>
+
+                    <!-- Control -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="{{ form.nro_control.id_for_label }}" class="form-label">{{ form.nro_control.label }}</label>
+                            {{ form.nro_control }}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.nro_orden.id_for_label }}" class="form-label">{{ form.nro_orden.label }}</label>
+                            {{ form.nro_orden }}
+                        </div>
+                    </div>
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="{% url 'core:lista_custodias' %}" class="btn btn-secondary me-md-2">
                             <i class="bi bi-arrow-left"></i> Cancelar
@@ -44,8 +129,84 @@
                     Complete los detalles del formulario de custodia. Una vez creado, podrá agregar el personal
                     interviniente en la cadena de custodia.
                 </p>
+                <hr>
+                <h6>Nuevas Características:</h6>
+                <ul class="small">
+                    <li><strong>Destino de Custodia:</strong> Seleccione el destino donde se realiza la custodia</li>
+                    <li><strong>Control Mejorado:</strong> Mejor seguimiento de la cadena de custodia</li>
+                    <li><strong>Integración:</strong> Compatible con el sistema de hash</li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal Crear Destino -->
+<div class="modal fade" id="modalCrearDestino" tabindex="-1" aria-labelledby="modalCrearDestinoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCrearDestinoLabel">
+                    <i class="bi bi-building-add"></i> Agregar Destino Rápidamente
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formCrearDestino">
+                    <div class="mb-3">
+                        <label for="destino_nombre" class="form-label">Nombre del Destino/Unidad *</label>
+                        <input type="text" class="form-control" id="destino_nombre" name="nombre" required
+                               placeholder="Ej: Comisaría 1ra, División Investigaciones">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearDestinoRapido()">
+                    <i class="bi bi-save"></i> Crear Destino
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function crearDestinoRapido() {
+    const form = document.getElementById('formCrearDestino');
+    const formData = new FormData(form);
+    
+    try {
+        const response = await fetch('{% url "core:api_crear_destino_rapido" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Agregar nuevo destino al select
+            const select = document.getElementById('{{ form.destino_custodia.id_for_label }}');
+            const option = new Option(data.destino.nombre, data.destino.id, true, true);
+            select.add(option);
+            
+            // Cerrar modal y limpiar formulario
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalCrearDestino'));
+            modal.hide();
+            form.reset();
+            
+            // Mostrar mensaje de éxito
+            alert('Destino creado exitosamente');
+        } else {
+            alert('Error al crear destino: ' + (data.error || 'Error desconocido'));
+        }
+    } catch (error) {
+        alert('Error de conexión: ' + error.message);
+    }
+}
+</script>
 {% endblock %}

@@ -51,6 +51,7 @@ class FormularioCustodiaForm(forms.ModelForm):
             'sumario',
             'juzgado_fiscalia',
             'secretaria',
+            'destino_custodia',
             'otra_informacion',
             'identificacion_material',
             'breve_descripcion',
@@ -64,6 +65,7 @@ class FormularioCustodiaForm(forms.ModelForm):
             'sumario': forms.TextInput(attrs={'class': 'form-control'}),
             'juzgado_fiscalia': forms.TextInput(attrs={'class': 'form-control'}),
             'secretaria': forms.TextInput(attrs={'class': 'form-control'}),
+            'destino_custodia': forms.Select(attrs={'class': 'form-select'}),
             'otra_informacion': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
             'identificacion_material': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
             'breve_descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
@@ -75,22 +77,29 @@ class FormularioCustodiaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nro_hash'].queryset = FormularioHash.objects.filter(estado='FINALIZADO')
+        self.fields['destino_custodia'].queryset = Destino.objects.filter(activo=True).order_by('nombre')
+        # Make destino_custodia optional
+        self.fields['destino_custodia'].required = False
 
 
 class PersonalCustodiaForm(forms.ModelForm):
     class Meta:
         model = PersonalCustodia
-        fields = ['oficial', 'funcion', 'descripcion', 'observaciones']
+        fields = ['oficial', 'funcion', 'descripcion', 'destino_intervencion', 'observaciones']
         widgets = {
             'oficial': forms.Select(attrs={'class': 'form-select'}),
             'funcion': forms.TextInput(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'destino_intervencion': forms.Select(attrs={'class': 'form-select'}),
             'observaciones': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['oficial'].queryset = Oficial.objects.filter(activo=True)
+        self.fields['destino_intervencion'].queryset = Destino.objects.filter(activo=True).order_by('nombre')
+        # Make destino_intervencion optional
+        self.fields['destino_intervencion'].required = False
 
 
 class QuickOficialForm(forms.ModelForm):

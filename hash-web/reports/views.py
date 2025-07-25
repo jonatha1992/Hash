@@ -10,7 +10,7 @@ from reportlab.platypus.flowables import PageBreak
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from io import BytesIO
 from datetime import datetime
-from core.models import FormularioHash
+from core.models import FormularioHash, FormularioCustodia
 
 
 def generar_reporte_hash(request, formulario_id):
@@ -196,13 +196,20 @@ def generar_reporte_hash(request, formulario_id):
     return response
 
 
-def generar_reporte_custodia(request, formulario_id):
+def generar_reporte_custodia(request, custodia_id):
     """Genera el reporte PDF del acta de custodia"""
-    formulario = get_object_or_404(
-        FormularioHash.objects.select_related(
-            'oficial_entrega__jerarquia', 'oficial_recibe__jerarquia'
+    custodia = get_object_or_404(
+        FormularioCustodia.objects.select_related(
+            'nro_hash__oficial_entrega__jerarquia', 
+            'nro_hash__oficial_recibe__jerarquia',
+            'destino_custodia',
+            'creado_por'
+        ).prefetch_related(
+            'personal__oficial__jerarquia',
+            'personal__oficial__destino',
+            'personal__destino_intervencion'
         ),
-        id=formulario_id
+        id=custodia_id
     )
     
     # Crear el PDF
@@ -221,30 +228,89 @@ def generar_reporte_custodia(request, formulario_id):
         textColor=colors.black
     )
     
+    header_style = ParagraphStyle(
+        'CustomHeader',
+        parent=styles['Heading2'],
+        fontSize=12,
+        spaceAfter=12,
+        textColor=colors.black
+    )
+    
     # Título del documento
     story.append(Paragraph("ACTA DE CADENA DE CUSTODIA", title_style))
     story.append(Spacer(1, 20))
     
-    # Información básica
-    info_text = f"""
-    <b>Número de Hash:</b> #{formulario.nro_hash}<br/>
-    <b>Procedimiento:</b> {formulario.procedimiento}<br/>
-    <b>Fecha y Hora:</b> {formulario.fecha_creacion.strftime("%d/%m/%Y %H:%M:%S")}<br/>
-    <b>Total de Archivos:</b> {formulario.total_archivos}<br/>
-    <b>Peso Total:</b> {formulario.peso_total_formateado}
-    """
+    # Información de la custodia
+    info_data = [
+        ["Número de Custodia:", f"#{custodia.nro_custodia}"],
+        ["Número de Hash:", f"#{custodia.nro_hash.nro_hash}"],
+        ["Carátula:", custodia.caratula],
+        ["Sumario:", custodia.sumario or "N/A"],
+        ["Juzgado/Fiscalía:", custodia.juzgado_fiscalia or "N/A"],
+        ["Secretaría:", custodia.secretaria or "N/A"],
+        ["Destino de Custodia:", custodia.destino_custodia.nombre if custodia.destino_custodia else "No especificado"],
+        ["Fecha del Incidente:", custodia.fecha_hora_incidente.strftime("%d/%m/%Y %H:%M:%S")],
+        ["Fecha de Custodia:", custodia.fecha_hora_custodia.strftime("%d/%m/%Y %H:%M:%S")],
+    ]
     
-    story.append(Paragraph(info_text, styles['Normal']))
-    story.append(Spacer(1, 30))
+    info_table = Table(info_data, colWidths=[2*inch, 4*inch])
+    info_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (0, -1), colors.lightgrey),
+        ('TEXTCOLOR', (0, 0), (-1, -1), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+    ]))
+    
+    story.append(info_table)
+    story.append(Spacer(1, 20))
+    
+    # Personal interviniente
+    if custodia.personal.exists():
+        story.append(Paragraph("PERSONAL INTERVINIENTE", header_style))
+        
+        personal_data = [["Orden", "Oficial", "Función", "Destino", "Descripción"]]
+        
+        for personal in custodia.personal.all():
+            destino_display = personal.destino_intervencion.nombre if personal.destino_intervencion else personal.oficial.destino.nombre
+            personal_data.append([
+                str(personal.orden),
+                str(personal.oficial),
+                personal.funcion,
+                destino_display,
+                personal.descripcion[:100] + "..." if len(personal.descripcion) > 100 else personal.descripcion
+            ])
+        
+        personal_table = Table(personal_data, colWidths=[0.5*inch, 1.5*inch, 1.2*inch, 1.3*inch, 2*inch])
+        personal_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('TEXTCOLOR', (1, 1), (-1, -1), colors.black),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('ALIGN', (0, 0), (0, -1), 'CENTER'),  # Centrar números de orden
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTNAME', (1, 1), (-1, -1), 'Helvetica'),
+            ('FONTSIZE', (0, 0), (-1, -1), 8),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.black),
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ]))
+        
+        story.append(personal_table)
+        story.append(Spacer(1, 20))
     
     # Declaración de custodia
-    declaracion = """
+    declaracion = f"""
     Por medio del presente documento, se hace constar que los archivos digitales 
-    detallados en el Acta de Hash correspondiente, han sido entregados bajo estricta 
+    correspondientes al Hash #{custodia.nro_hash.nro_hash} han sido entregados bajo estricta 
     cadena de custodia, manteniendo su integridad mediante el cálculo de hash SHA-256.
     
     La cadena de custodia garantiza que los archivos no han sido alterados desde 
     su procesamiento inicial hasta su entrega final.
+    
+    Total de archivos bajo custodia: {custodia.nro_hash.total_archivos}
+    Peso total: {custodia.nro_hash.peso_total_formateado}
     """
     
     story.append(Paragraph(declaracion, styles['Normal']))
@@ -252,12 +318,12 @@ def generar_reporte_custodia(request, formulario_id):
     
     # Tabla de firmas con más espacio
     firma_data = [
-        ["ENTREGA", "RECIBE"],
+        ["RESPONSABLE DE CUSTODIA", "RECEPTOR"],
         ["", ""],
         ["", ""],
         ["", ""],
         ["_" * 40, "_" * 40],
-        [str(formulario.oficial_entrega), str(formulario.oficial_recibe)],
+        ["Nombre y Firma", "Nombre y Firma"],
         [f"Fecha: ___/___/______", f"Fecha: ___/___/______"],
         [f"Hora: ___:___", f"Hora: ___:___"],
     ]
@@ -280,6 +346,6 @@ def generar_reporte_custodia(request, formulario_id):
     # Retornar respuesta
     buffer.seek(0)
     response = HttpResponse(buffer.getvalue(), content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="acta_custodia_{formulario.nro_hash}.pdf"'
+    response['Content-Disposition'] = f'attachment; filename="acta_custodia_{custodia.nro_custodia}.pdf"'
     
     return response

@@ -299,6 +299,16 @@ class FormularioCustodia(models.Model):
     identificacion_material = models.TextField(blank=True)
     breve_descripcion = models.TextField(blank=True)
     
+    # Destino de custodia - similar al formulario hash
+    destino_custodia = models.ForeignKey(
+        Destino, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        related_name='custodias',
+        help_text="Destino donde se realiza la custodia"
+    )
+    
     # Fechas y horas
     fecha_hora_incidente = models.DateTimeField()
     fecha_hora_custodia = models.DateTimeField(auto_now_add=True)
@@ -351,6 +361,16 @@ class PersonalCustodia(models.Model):
     funcion = models.CharField(max_length=200, help_text="Función del oficial en la custodia")
     descripcion = models.TextField(help_text="Descripción de las actividades realizadas")
     orden = models.PositiveIntegerField(default=1)
+    
+    # Destino específico para esta intervención (puede ser diferente al destino base del oficial)
+    destino_intervencion = models.ForeignKey(
+        Destino,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='intervenciones_custodia',
+        help_text="Destino específico donde interviene el oficial en esta custodia"
+    )
     
     # Fechas de intervención
     fecha_hora_intervencion = models.DateTimeField(auto_now_add=True)
