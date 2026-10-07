@@ -13,6 +13,7 @@ from datetime import datetime
 from core.models import FormularioHash, FormularioCustodia
 
 
+@login_required
 def generar_reporte_hash(request, formulario_id):
     """Genera el reporte PDF del acta de hash"""
     formulario = get_object_or_404(
@@ -196,6 +197,7 @@ def generar_reporte_hash(request, formulario_id):
     return response
 
 
+@login_required
 def generar_reporte_custodia(request, custodia_id):
     """Genera el reporte PDF del acta de custodia"""
     custodia = get_object_or_404(
