@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Django: install dependencies",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "-m",
+        "pip",
+        "install",
+        "-r",
+        "requirements.txt"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/hash-web"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Django: run",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "manage.py",
+        "runserver",
+        "127.0.0.1:8000"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/hash-web"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Django: test",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "manage.py",
+        "test"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/hash-web"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

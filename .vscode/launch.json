@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Hash (Django)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/hash-web/manage.py",
+      "args": [
+        "runserver",
+        "127.0.0.1:8000"
+      ],
+      "django": true,
+      "justMyCode": true
+    },
+    {
+      "name": "Tests (Django)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/hash-web/manage.py",
+      "args": [
+        "test"
+      ],
+      "django": true,
+      "justMyCode": true
+    }
+  ]
+}
